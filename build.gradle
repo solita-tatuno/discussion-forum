@@ -1,34 +1,70 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.2.2'
-	id 'io.spring.dependency-management' version '1.1.4'
-	id 'org.flywaydb.flyway' version '9.22.3'
+    id 'java'
+    id 'org.springframework.boot' version '3.2.2'
+    id 'io.spring.dependency-management' version '1.1.4'
+    id 'org.flywaydb.flyway' version '9.22.3'
+    id 'org.jooq.jooq-codegen-gradle' version '3.19.3'
 }
 
 group = 'com.dev-academy'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	sourceCompatibility = '17'
+    sourceCompatibility = '17'
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.flywaydb:flyway-core'
-	implementation 'org.springframework.session:spring-session-core'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'org.postgresql:postgresql'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.boot:spring-boot-testcontainers'
-	testImplementation 'org.testcontainers:junit-jupiter'
-	testImplementation 'org.testcontainers:postgresql'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.springframework.session:spring-session-core'
+    implementation 'org.springframework.boot:spring-boot-starter-jooq'
+    implementation 'org.jooq:jooq:3.19.3'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+    testImplementation 'org.testcontainers:junit-jupiter'
+    testImplementation 'org.testcontainers:postgresql'
+    runtimeOnly 'org.postgresql:postgresql'
+    jooqCodegen 'org.postgresql:postgresql'
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
+}
+
+flyway {
+    url = providers.systemProperty('DATASOURCE').get()
+    user = providers.systemProperty('FLYWAY_USER').get()
+    password = providers.systemProperty('FLYWAY_PASSWORD').get()
+}
+
+jooq {
+    configuration {
+        // Configure the database connection here
+        jdbc {
+            url = providers.systemProperty('DATASOURCE').get()
+            user = providers.systemProperty('DB_USER').get()
+            password = providers.systemProperty('DB_USER_PASSWORD').get()
+        }
+
+        generator {
+            database {
+                name = 'org.jooq.meta.postgres.PostgresDatabase'
+                excludes = 'flyway_.*'
+                inputSchema = 'public'
+                generate {
+                    pojos = true
+                }
+                target {
+                    packageName = 'com.jooq.discussionforum'
+                    directory = 'src/main/java'
+                }
+            }
+        }
+    }
 }
