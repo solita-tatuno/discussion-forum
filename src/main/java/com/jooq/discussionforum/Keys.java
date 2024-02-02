@@ -4,9 +4,12 @@
 package com.jooq.discussionforum;
 
 
+import com.jooq.discussionforum.tables.Topics;
 import com.jooq.discussionforum.tables.Users;
+import com.jooq.discussionforum.tables.records.TopicsRecord;
 import com.jooq.discussionforum.tables.records.UsersRecord;
 
+import org.jooq.ForeignKey;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
@@ -24,5 +27,12 @@ public class Keys {
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
+    public static final UniqueKey<TopicsRecord> TOPICS_PKEY = Internal.createUniqueKey(Topics.TOPICS, DSL.name("topics_pkey"), new TableField[] { Topics.TOPICS.ID }, true);
     public static final UniqueKey<UsersRecord> USERS_PKEY = Internal.createUniqueKey(Users.USERS, DSL.name("users_pkey"), new TableField[] { Users.USERS.ID }, true);
+
+    // -------------------------------------------------------------------------
+    // FOREIGN KEY definitions
+    // -------------------------------------------------------------------------
+
+    public static final ForeignKey<TopicsRecord, UsersRecord> TOPICS__TOPICS_USER_ID_FKEY = Internal.createForeignKey(Topics.TOPICS, DSL.name("topics_user_id_fkey"), new TableField[] { Topics.TOPICS.USER_ID }, Keys.USERS_PKEY, new TableField[] { Users.USERS.ID }, true);
 }

@@ -4,6 +4,7 @@
 package com.jooq.discussionforum;
 
 
+import com.jooq.discussionforum.tables.Topics;
 import com.jooq.discussionforum.tables.Users;
 
 import java.util.Arrays;
@@ -28,6 +29,11 @@ public class Public extends SchemaImpl {
     public static final Public PUBLIC = new Public();
 
     /**
+     * The table <code>public.topics</code>.
+     */
+    public final Topics TOPICS = Topics.TOPICS;
+
+    /**
      * The table <code>public.users</code>.
      */
     public final Users USERS = Users.USERS;
@@ -48,6 +54,7 @@ public class Public extends SchemaImpl {
     @Override
     public final List<Table<?>> getTables() {
         return Arrays.asList(
+            Topics.TOPICS,
             Users.USERS
         );
     }
