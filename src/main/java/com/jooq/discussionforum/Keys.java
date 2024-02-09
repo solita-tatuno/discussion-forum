@@ -4,8 +4,10 @@
 package com.jooq.discussionforum;
 
 
+import com.jooq.discussionforum.tables.Messages;
 import com.jooq.discussionforum.tables.Topics;
 import com.jooq.discussionforum.tables.Users;
+import com.jooq.discussionforum.tables.records.MessagesRecord;
 import com.jooq.discussionforum.tables.records.TopicsRecord;
 import com.jooq.discussionforum.tables.records.UsersRecord;
 
@@ -27,6 +29,7 @@ public class Keys {
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
+    public static final UniqueKey<MessagesRecord> MESSAGES_PKEY = Internal.createUniqueKey(Messages.MESSAGES, DSL.name("messages_pkey"), new TableField[] { Messages.MESSAGES.ID }, true);
     public static final UniqueKey<TopicsRecord> TOPICS_PKEY = Internal.createUniqueKey(Topics.TOPICS, DSL.name("topics_pkey"), new TableField[] { Topics.TOPICS.ID }, true);
     public static final UniqueKey<UsersRecord> USERS_PKEY = Internal.createUniqueKey(Users.USERS, DSL.name("users_pkey"), new TableField[] { Users.USERS.ID }, true);
 
@@ -34,5 +37,7 @@ public class Keys {
     // FOREIGN KEY definitions
     // -------------------------------------------------------------------------
 
+    public static final ForeignKey<MessagesRecord, TopicsRecord> MESSAGES__MESSAGES_TOPIC_ID_FKEY = Internal.createForeignKey(Messages.MESSAGES, DSL.name("messages_topic_id_fkey"), new TableField[] { Messages.MESSAGES.TOPIC_ID }, Keys.TOPICS_PKEY, new TableField[] { Topics.TOPICS.ID }, true);
+    public static final ForeignKey<MessagesRecord, UsersRecord> MESSAGES__MESSAGES_USER_ID_FKEY = Internal.createForeignKey(Messages.MESSAGES, DSL.name("messages_user_id_fkey"), new TableField[] { Messages.MESSAGES.USER_ID }, Keys.USERS_PKEY, new TableField[] { Users.USERS.ID }, true);
     public static final ForeignKey<TopicsRecord, UsersRecord> TOPICS__TOPICS_USER_ID_FKEY = Internal.createForeignKey(Topics.TOPICS, DSL.name("topics_user_id_fkey"), new TableField[] { Topics.TOPICS.USER_ID }, Keys.USERS_PKEY, new TableField[] { Users.USERS.ID }, true);
 }

@@ -4,6 +4,7 @@
 package com.jooq.discussionforum;
 
 
+import com.jooq.discussionforum.tables.Messages;
 import com.jooq.discussionforum.tables.Topics;
 import com.jooq.discussionforum.tables.Users;
 
@@ -27,6 +28,11 @@ public class Public extends SchemaImpl {
      * The reference instance of <code>public</code>
      */
     public static final Public PUBLIC = new Public();
+
+    /**
+     * The table <code>public.messages</code>.
+     */
+    public final Messages MESSAGES = Messages.MESSAGES;
 
     /**
      * The table <code>public.topics</code>.
@@ -54,6 +60,7 @@ public class Public extends SchemaImpl {
     @Override
     public final List<Table<?>> getTables() {
         return Arrays.asList(
+            Messages.MESSAGES,
             Topics.TOPICS,
             Users.USERS
         );

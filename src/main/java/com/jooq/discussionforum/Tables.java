@@ -4,6 +4,7 @@
 package com.jooq.discussionforum;
 
 
+import com.jooq.discussionforum.tables.Messages;
 import com.jooq.discussionforum.tables.Topics;
 import com.jooq.discussionforum.tables.Users;
 
@@ -13,6 +14,11 @@ import com.jooq.discussionforum.tables.Users;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class Tables {
+
+    /**
+     * The table <code>public.messages</code>.
+     */
+    public static final Messages MESSAGES = Messages.MESSAGES;
 
     /**
      * The table <code>public.topics</code>.

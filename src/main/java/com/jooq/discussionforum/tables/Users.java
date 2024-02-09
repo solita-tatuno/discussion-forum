@@ -6,6 +6,7 @@ package com.jooq.discussionforum.tables;
 
 import com.jooq.discussionforum.Keys;
 import com.jooq.discussionforum.Public;
+import com.jooq.discussionforum.tables.Messages.MessagesPath;
 import com.jooq.discussionforum.tables.Topics.TopicsPath;
 import com.jooq.discussionforum.tables.records.UsersRecord;
 
@@ -148,6 +149,19 @@ public class Users extends TableImpl<UsersRecord> {
     @Override
     public UniqueKey<UsersRecord> getPrimaryKey() {
         return Keys.USERS_PKEY;
+    }
+
+    private transient MessagesPath _messages;
+
+    /**
+     * Get the implicit to-many join path to the <code>public.messages</code>
+     * table
+     */
+    public MessagesPath messages() {
+        if (_messages == null)
+            _messages = new MessagesPath(this, null, Keys.MESSAGES__MESSAGES_USER_ID_FKEY.getInverseKey());
+
+        return _messages;
     }
 
     private transient TopicsPath _topics;
