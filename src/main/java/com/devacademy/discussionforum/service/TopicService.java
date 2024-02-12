@@ -1,5 +1,6 @@
 package com.devacademy.discussionforum.service;
 
+import com.devacademy.discussionforum.model.SingleTopic;
 import com.devacademy.discussionforum.model.TopicWithUser;
 import com.devacademy.discussionforum.repostitory.TopicRepository;
 import com.jooq.discussionforum.tables.pojos.Topics;
@@ -20,5 +21,9 @@ public class TopicService {
 
     public List<TopicWithUser> getAll() {
         return topicRepository.findAll();
+    }
+
+    public SingleTopic findOne(int id) {
+        return topicRepository.findOne(id);
     }
 }

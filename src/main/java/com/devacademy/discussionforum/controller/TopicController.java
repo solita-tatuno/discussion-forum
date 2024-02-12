@@ -1,5 +1,6 @@
 package com.devacademy.discussionforum.controller;
 
+import com.devacademy.discussionforum.model.SingleTopic;
 import com.devacademy.discussionforum.model.TopicWithUser;
 import com.devacademy.discussionforum.service.TopicService;
 import com.jooq.discussionforum.tables.pojos.Topics;
@@ -28,5 +29,11 @@ public class TopicController {
     public ResponseEntity<List<TopicWithUser>> getAll() {
         List<TopicWithUser> allTopics = topicService.getAll();
         return new ResponseEntity<>(allTopics, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<SingleTopic> findOne(@PathVariable("id") int id) {
+        SingleTopic topic = topicService.findOne(id);
+        return new ResponseEntity<>(topic, HttpStatus.OK);
     }
 }
