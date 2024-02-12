@@ -1,17 +1,15 @@
 package com.devacademy.discussionforum.repostitory;
 
+import com.devacademy.discussionforum.model.MessageWithUser;
 import com.devacademy.discussionforum.model.TopicWithUser;
 import com.devacademy.discussionforum.model.UsersResponse;
 import com.devacademy.discussionforum.model.SingleTopic;
 import com.jooq.discussionforum.Tables;
-import com.jooq.discussionforum.tables.pojos.Messages;
 import com.jooq.discussionforum.tables.pojos.Topics;
 import org.jooq.*;
-import org.jooq.Record;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.time.OffsetDateTime;
 import java.util.List;
 
 import static org.jooq.impl.DSL.*;
@@ -55,13 +53,19 @@ public class TopicRepository {
                                 select(
                                         row(
                                                 Tables.MESSAGES.ID,
-                                                Tables.MESSAGES.USER_ID,
                                                 Tables.MESSAGES.TOPIC_ID,
                                                 Tables.MESSAGES.MESSAGE,
                                                 Tables.MESSAGES.UP_VOTES,
                                                 Tables.MESSAGES.CREATED_AT,
-                                                Tables.MESSAGES.UPDATED_AT)
-                                                .mapping(Messages.class, Messages::new))
+                                                Tables.MESSAGES.UPDATED_AT,
+                                                row(
+                                                        Tables.USERS.ID,
+                                                        Tables.USERS.USERNAME,
+                                                        Tables.USERS.IS_ADMIN)
+                                                        .mapping(UsersResponse::new)
+
+                                        )
+                                                .mapping(MessageWithUser.class, MessageWithUser::new))
                                         .from(Tables.MESSAGES)
                                         .where(Tables.MESSAGES.TOPIC_ID.eq(Tables.TOPICS.ID))
                         )
