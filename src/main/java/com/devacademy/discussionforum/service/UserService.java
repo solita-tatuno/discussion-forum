@@ -4,14 +4,16 @@ import com.devacademy.discussionforum.dto.UsersResponse;
 import com.devacademy.discussionforum.repostitory.UserRepository;
 import com.jooq.discussionforum.tables.pojos.Users;
 import com.jooq.discussionforum.tables.records.UsersRecord;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public UsersResponse addUser(Users user) {
         UsersRecord record = userRepository.save(user);

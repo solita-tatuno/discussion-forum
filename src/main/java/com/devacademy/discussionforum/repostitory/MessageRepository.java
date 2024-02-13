@@ -3,14 +3,16 @@ package com.devacademy.discussionforum.repostitory;
 import com.jooq.discussionforum.Tables;
 import com.jooq.discussionforum.tables.pojos.Messages;
 import org.jooq.DSLContext;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class MessageRepository {
 
-    @Autowired
-    DSLContext dsl;
+    private final DSLContext dsl;
+
+    public MessageRepository(DSLContext dsl) {
+        this.dsl = dsl;
+    }
 
     public Messages save(Messages message) {
         return dsl.insertInto(Tables.MESSAGES,

@@ -4,7 +4,6 @@ import com.devacademy.discussionforum.dto.SingleTopic;
 import com.devacademy.discussionforum.dto.TopicWithUser;
 import com.devacademy.discussionforum.service.TopicService;
 import com.jooq.discussionforum.tables.pojos.Topics;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +14,11 @@ import java.util.List;
 @RequestMapping("/api/topics")
 public class TopicController {
 
-    @Autowired
-    TopicService topicService;
+    private final TopicService topicService;
+
+    public TopicController(TopicService topicService) {
+        this.topicService = topicService;
+    }
 
     @PostMapping
     public ResponseEntity<Topics> addTopic(@RequestBody Topics topic) {

@@ -7,7 +7,6 @@ import com.devacademy.discussionforum.dto.SingleTopic;
 import com.jooq.discussionforum.Tables;
 import com.jooq.discussionforum.tables.pojos.Topics;
 import org.jooq.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,8 +16,11 @@ import static org.jooq.impl.DSL.*;
 @Repository
 public class TopicRepository {
 
-    @Autowired
-    DSLContext dsl;
+    private final DSLContext dsl;
+
+    public TopicRepository(DSLContext dsl) {
+        this.dsl = dsl;
+    }
 
     public Topics save(Topics topic) {
         return dsl.insertInto(Tables.TOPICS, Tables.TOPICS.USER_ID, Tables.TOPICS.NAME)

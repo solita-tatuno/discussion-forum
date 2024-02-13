@@ -4,7 +4,6 @@ import com.devacademy.discussionforum.dto.SingleTopic;
 import com.devacademy.discussionforum.dto.TopicWithUser;
 import com.devacademy.discussionforum.repostitory.TopicRepository;
 import com.jooq.discussionforum.tables.pojos.Topics;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,8 +11,11 @@ import java.util.List;
 @Service
 public class TopicService {
 
-    @Autowired
-    TopicRepository topicRepository;
+    private final TopicRepository topicRepository;
+
+    public TopicService(TopicRepository topicRepository) {
+        this.topicRepository = topicRepository;
+    }
 
     public Topics addTopic(Topics topic) {
         return topicRepository.save(topic);
