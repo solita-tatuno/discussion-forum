@@ -1,6 +1,6 @@
 package com.devacademy.discussionforum.controller;
 
-import com.devacademy.discussionforum.model.UsersResponse;
+import com.devacademy.discussionforum.dto.UsersResponse;
 import com.devacademy.discussionforum.service.UserService;
 import com.jooq.discussionforum.tables.pojos.Users;
 import org.springframework.beans.factory.annotation.Autowired;

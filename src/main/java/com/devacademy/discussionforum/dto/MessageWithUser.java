@@ -1,4 +1,4 @@
-package com.devacademy.discussionforum.model;
+package com.devacademy.discussionforum.dto;
 
 import java.time.OffsetDateTime;
 

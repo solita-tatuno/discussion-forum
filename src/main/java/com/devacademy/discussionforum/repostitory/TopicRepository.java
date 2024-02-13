@@ -1,9 +1,9 @@
 package com.devacademy.discussionforum.repostitory;
 
-import com.devacademy.discussionforum.model.MessageWithUser;
-import com.devacademy.discussionforum.model.TopicWithUser;
-import com.devacademy.discussionforum.model.UsersResponse;
-import com.devacademy.discussionforum.model.SingleTopic;
+import com.devacademy.discussionforum.dto.MessageWithUser;
+import com.devacademy.discussionforum.dto.TopicWithUser;
+import com.devacademy.discussionforum.dto.UsersResponse;
+import com.devacademy.discussionforum.dto.SingleTopic;
 import com.jooq.discussionforum.Tables;
 import com.jooq.discussionforum.tables.pojos.Topics;
 import org.jooq.*;

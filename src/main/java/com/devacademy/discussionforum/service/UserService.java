@@ -1,6 +1,6 @@
 package com.devacademy.discussionforum.service;
 
-import com.devacademy.discussionforum.model.UsersResponse;
+import com.devacademy.discussionforum.dto.UsersResponse;
 import com.devacademy.discussionforum.repostitory.UserRepository;
 import com.jooq.discussionforum.tables.pojos.Users;
 import com.jooq.discussionforum.tables.records.UsersRecord;

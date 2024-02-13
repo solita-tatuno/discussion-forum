@@ -1,7 +1,7 @@
 package com.devacademy.discussionforum.service;
 
-import com.devacademy.discussionforum.model.SingleTopic;
-import com.devacademy.discussionforum.model.TopicWithUser;
+import com.devacademy.discussionforum.dto.SingleTopic;
+import com.devacademy.discussionforum.dto.TopicWithUser;
 import com.devacademy.discussionforum.repostitory.TopicRepository;
 import com.jooq.discussionforum.tables.pojos.Topics;
 import org.springframework.beans.factory.annotation.Autowired;
