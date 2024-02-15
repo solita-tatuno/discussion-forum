@@ -8,5 +8,5 @@ public record MessageWithUser(int id,
                               int upVotes,
                               OffsetDateTime createdAt,
                               OffsetDateTime updatedAt,
-                              UsersResponse user) {
+                              UserResponse user) {
 }

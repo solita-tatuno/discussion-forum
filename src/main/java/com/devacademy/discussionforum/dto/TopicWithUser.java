@@ -6,6 +6,6 @@ public record TopicWithUser(int id,
                             String name,
                             OffsetDateTime createdAt,
                             OffsetDateTime updatedAt,
-                            UsersResponse user) {
+                            UserResponse user) {
 }
 

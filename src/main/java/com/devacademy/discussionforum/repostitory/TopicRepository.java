@@ -2,7 +2,7 @@ package com.devacademy.discussionforum.repostitory;
 
 import com.devacademy.discussionforum.dto.MessageWithUser;
 import com.devacademy.discussionforum.dto.TopicWithUser;
-import com.devacademy.discussionforum.dto.UsersResponse;
+import com.devacademy.discussionforum.dto.UserResponse;
 import com.devacademy.discussionforum.dto.SingleTopic;
 import com.jooq.discussionforum.Tables;
 import com.jooq.discussionforum.tables.pojos.Topics;
@@ -35,7 +35,7 @@ public class TopicRepository {
                         Tables.TOPICS.CREATED_AT,
                         Tables.TOPICS.UPDATED_AT,
                         row(Tables.USERS.ID, Tables.USERS.USERNAME, Tables.USERS.IS_ADMIN)
-                                .mapping(UsersResponse::new))
+                                .mapping(UserResponse::new))
                 .from(Tables.TOPICS)
                 .join(Tables.USERS).on(Tables.TOPICS.USER_ID.eq(Tables.USERS.ID))
                 .fetch(Records.mapping(TopicWithUser::new));
@@ -50,7 +50,7 @@ public class TopicRepository {
                                 Tables.USERS.ID,
                                 Tables.USERS.USERNAME,
                                 Tables.USERS.IS_ADMIN)
-                                .mapping(UsersResponse::new),
+                                .mapping(UserResponse::new),
                         array(
                                 select(
                                         row(
@@ -64,7 +64,7 @@ public class TopicRepository {
                                                         Tables.USERS.ID,
                                                         Tables.USERS.USERNAME,
                                                         Tables.USERS.IS_ADMIN)
-                                                        .mapping(UsersResponse::new)
+                                                        .mapping(UserResponse::new)
 
                                         )
                                                 .mapping(MessageWithUser.class, MessageWithUser::new))

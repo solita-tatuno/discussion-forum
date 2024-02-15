@@ -1,6 +1,6 @@
 package com.devacademy.discussionforum.service;
 
-import com.devacademy.discussionforum.dto.UsersResponse;
+import com.devacademy.discussionforum.dto.UserResponse;
 import com.devacademy.discussionforum.repostitory.UserRepository;
 import com.jooq.discussionforum.tables.pojos.Users;
 import com.jooq.discussionforum.tables.records.UsersRecord;
@@ -15,8 +15,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public UsersResponse addUser(Users user) {
-        UsersRecord record = userRepository.save(user);
-        return new UsersResponse(record.getId(), record.getUsername(), record.getIsAdmin());
+    public UserResponse addUser(Users user) {
+        return userRepository.save(user);
     }
 }
