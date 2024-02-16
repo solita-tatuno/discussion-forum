@@ -1,10 +1,10 @@
 package com.devacademy.discussionforum.repository;
 
 
+import com.devacademy.discussionforum.TestHelper;
 import com.devacademy.discussionforum.dto.UserResponse;
 import com.devacademy.discussionforum.repostitory.UserRepository;
 import com.jooq.discussionforum.tables.pojos.Users;
-import org.jooq.DSLContext;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,10 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @Testcontainers
-public class UserRepositoryTests {
-
-    @Autowired
-    private DSLContext dsl;
+public class UserRepositoryTests extends TestHelper {
 
     @Autowired
     private UserRepository userRepository;
