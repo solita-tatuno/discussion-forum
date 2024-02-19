@@ -1,12 +1,15 @@
 package com.devacademy.discussionforum.repository;
 
-import com.devacademy.discussionforum.TestHelper;
 import com.devacademy.discussionforum.dto.SingleTopic;
 import com.devacademy.discussionforum.dto.TopicWithUser;
+import com.devacademy.discussionforum.helpers.MessageHelper;
+import com.devacademy.discussionforum.helpers.TopicHelper;
+import com.devacademy.discussionforum.helpers.UserHelper;
 import com.devacademy.discussionforum.repostitory.TopicRepository;
 import com.jooq.discussionforum.tables.pojos.Messages;
 import com.jooq.discussionforum.tables.pojos.Topics;
 import com.jooq.discussionforum.tables.pojos.Users;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,20 +22,35 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Testcontainers
-public class TopicRepositoryTests extends TestHelper {
-
+public class TopicRepositoryTests {
+    
     @Autowired
     private TopicRepository topicRepository;
 
+    @Autowired
+    private UserHelper userHelper;
+
+    @Autowired
+    private MessageHelper messageHelper;
+
+    @Autowired
+    private TopicHelper topicHelper;
+
+    @BeforeEach
+    void setUp() {
+        userHelper.clearTable();
+        topicHelper.clearTable();
+        messageHelper.clearTable();
+    }
+
     @Test
     void savesTopicWhenValidTopic() {
-        Users user = super.createUser("newUser");
+        Users user = userHelper.createUser("newUser");
 
         Topics topic = new Topics(null, user.getId(), "newTopic", null, null);
         Topics newTopic = topicRepository.save(topic);
 
-        String query = "SELECT * FROM topics WHERE name = ?";
-        List<Topics> topics = dsl.fetch(query, topic.getName()).into(Topics.class);
+        List<Topics> topics = topicHelper.findTopicsByName(topic.getName());
 
         assertEquals(1, topics.size(), "There should be only one topic");
         assertEquals(newTopic.getName(), topics.get(0).getName(), "Topic name should match");
@@ -41,10 +59,10 @@ public class TopicRepositoryTests extends TestHelper {
 
     @Test
     void findsAllTopics() {
-        Users user = super.createUser("newUser");
+        Users user = userHelper.createUser("newUser");
 
-        Topics topic = super.createTopic("newTopic", user);
-        Topics topic2 = super.createTopic("newTopic2", user);
+        Topics topic = topicHelper.createTopic("newTopic", user);
+        Topics topic2 = topicHelper.createTopic("newTopic2", user);
 
         List<TopicWithUser> topics = topicRepository.findAll();
         assertEquals(2, topics.size(), "There should be 2 topics");
@@ -60,9 +78,9 @@ public class TopicRepositoryTests extends TestHelper {
 
     @Test
     void findsSingleTopicWhenValidId() {
-        Users user = super.createUser("newUser");
-        Topics topic = super.createTopic("newTopic", user);
-        Messages message = super.createMessage("newMessage", user, topic);
+        Users user = userHelper.createUser("newUser");
+        Topics topic = topicHelper.createTopic("newTopic", user);
+        Messages message = messageHelper.createMessage("newMessage", user, topic);
 
         SingleTopic singleTopic = topicRepository.findOne(topic.getId());
 

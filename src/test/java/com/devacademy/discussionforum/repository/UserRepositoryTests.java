@@ -1,10 +1,11 @@
 package com.devacademy.discussionforum.repository;
 
 
-import com.devacademy.discussionforum.TestHelper;
 import com.devacademy.discussionforum.dto.UserResponse;
+import com.devacademy.discussionforum.helpers.UserHelper;
 import com.devacademy.discussionforum.repostitory.UserRepository;
 import com.jooq.discussionforum.tables.pojos.Users;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,10 +17,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @Testcontainers
-public class UserRepositoryTests extends TestHelper {
+public class UserRepositoryTests {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserHelper userHelper;
+
+    @BeforeEach
+    void setUp() {
+        userHelper.clearTable();
+    }
 
     @Test
     void savesUserWhenValidUser() {
@@ -27,9 +36,7 @@ public class UserRepositoryTests extends TestHelper {
 
         UserResponse newUser = userRepository.save(user);
 
-        String query = "SELECT * FROM users WHERE username = ?";
-        List<Users> users = dsl.fetch(query, user.getUsername()).into(Users.class);
-
+        List<Users> users = userHelper.findUsersByUsername(user.getUsername());
         assertEquals(1, users.size(), "There should be only one user");
 
         assertEquals(newUser.username(), users.get(0).getUsername(), "Username should match");
