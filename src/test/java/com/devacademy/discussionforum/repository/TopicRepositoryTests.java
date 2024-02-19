@@ -1,8 +1,10 @@
 package com.devacademy.discussionforum.repository;
 
 import com.devacademy.discussionforum.TestHelper;
+import com.devacademy.discussionforum.dto.SingleTopic;
 import com.devacademy.discussionforum.dto.TopicWithUser;
 import com.devacademy.discussionforum.repostitory.TopicRepository;
+import com.jooq.discussionforum.tables.pojos.Messages;
 import com.jooq.discussionforum.tables.pojos.Topics;
 import com.jooq.discussionforum.tables.pojos.Users;
 import org.junit.jupiter.api.Test;
@@ -54,5 +56,19 @@ public class TopicRepositoryTests extends TestHelper {
 
         assertTrue(topicFound, "Topic should be found");
         assertTrue(topic2Found, "Topic 2 should be found");
+    }
+
+    @Test
+    void findsSingleTopicWhenValidId() {
+        Users user = super.createUser("newUser");
+        Topics topic = super.createTopic("newTopic", user);
+        Messages message = super.createMessage("newMessage", user, topic);
+
+        SingleTopic singleTopic = topicRepository.findOne(topic.getId());
+
+        assertEquals(topic.getName(), singleTopic.name(), "Topic name should match");
+        assertEquals(user.getId(), singleTopic.user().id(), "UserId should match");
+        assertEquals(1, singleTopic.messages().length, "There should be 1 message");
+        assertEquals(message.getMessage(), singleTopic.messages()[0].message(), "Message should match");
     }
 }
