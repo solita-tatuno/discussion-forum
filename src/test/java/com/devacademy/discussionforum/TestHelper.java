@@ -1,15 +1,16 @@
 package com.devacademy.discussionforum;
 
 import com.jooq.discussionforum.Tables;
+import com.jooq.discussionforum.tables.pojos.Topics;
 import com.jooq.discussionforum.tables.pojos.Users;
 import org.jooq.DSLContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.stereotype.Component;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-@Component
+import java.util.Objects;
+
 @SpringBootTest
 @Testcontainers
 public abstract class TestHelper {
@@ -19,16 +20,19 @@ public abstract class TestHelper {
 
     @BeforeEach
     void clearTables() {
-        dsl.truncate(Tables.USERS, Tables.TOPICS).cascade().execute();
+        dsl.truncate(Tables.USERS,
+                Tables.TOPICS,
+                Tables.MESSAGES
+        ).cascade().execute();
     }
 
     public Users createUser(String username) {
-        Users user = new Users(null, username, "password", false);
-        return dsl.insertInto(Tables.USERS)
-                .set(Tables.USERS.USERNAME, user.getUsername())
-                .set(Tables.USERS.PASSWORD_HASH, user.getPasswordHash())
-                .set(Tables.USERS.IS_ADMIN, user.getIsAdmin())
-                .returning()
-                .fetchOneInto(Users.class);
+        String query = "INSERT INTO users (username, password_hash, is_admin) VALUES (?, ?, ?) RETURNING *";
+        return Objects.requireNonNull(dsl.fetchOne(query, username, "password", false)).into(Users.class);
+    }
+
+    public Topics createTopic(String topicName, Users user) {
+        String query = "INSERT INTO topics (user_id, name) VALUES (?, ?) RETURNING *";
+        return Objects.requireNonNull(dsl.fetchOne(query, user.getId(), topicName)).into(Topics.class);
     }
 }

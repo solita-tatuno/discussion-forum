@@ -23,17 +23,16 @@ public class UserRepositoryTests extends TestHelper {
 
     @Test
     void savesUserWhenValidUser() {
-        String username = "newUser";
-        Users user = new Users(null, username, "password", false);
+        Users user = new Users(null, "newUser", "password", false);
 
         UserResponse newUser = userRepository.save(user);
 
         String query = "SELECT * FROM users WHERE username = ?";
-        List<Users> users = dsl.fetch(query, username).into(Users.class);
+        List<Users> users = dsl.fetch(query, user.getUsername()).into(Users.class);
 
         assertEquals(1, users.size(), "There should be only one user");
 
-        assertEquals(username, users.get(0).getUsername(), "Username should match");
+        assertEquals(newUser.username(), users.get(0).getUsername(), "Username should match");
         assertEquals(newUser.id(), users.get(0).getId(), "UserId should match");
     }
 }
