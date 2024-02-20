@@ -1,6 +1,7 @@
 package com.devacademy.discussionforum.service;
 
 import com.devacademy.discussionforum.dto.SingleTopic;
+import com.devacademy.discussionforum.dto.TopicRequest;
 import com.devacademy.discussionforum.dto.TopicWithUser;
 import com.devacademy.discussionforum.repostitory.TopicRepository;
 import com.jooq.discussionforum.tables.pojos.Topics;
@@ -17,7 +18,7 @@ public class TopicService {
         this.topicRepository = topicRepository;
     }
 
-    public Topics addTopic(Topics topic) {
+    public Topics addTopic(TopicRequest topic) {
         return topicRepository.save(topic);
     }
 

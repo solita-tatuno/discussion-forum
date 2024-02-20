@@ -1,9 +1,6 @@
 package com.devacademy.discussionforum.repostitory;
 
-import com.devacademy.discussionforum.dto.MessageWithUser;
-import com.devacademy.discussionforum.dto.TopicWithUser;
-import com.devacademy.discussionforum.dto.UserResponse;
-import com.devacademy.discussionforum.dto.SingleTopic;
+import com.devacademy.discussionforum.dto.*;
 import com.jooq.discussionforum.Tables;
 import com.jooq.discussionforum.tables.pojos.Topics;
 import org.jooq.*;
@@ -22,9 +19,9 @@ public class TopicRepository {
         this.dsl = dsl;
     }
 
-    public Topics save(Topics topic) {
+    public Topics save(TopicRequest topic) {
         return dsl.insertInto(Tables.TOPICS, Tables.TOPICS.USER_ID, Tables.TOPICS.NAME)
-                .values(topic.getUserId(), topic.getName())
+                .values(topic.userId(), topic.name())
                 .returning()
                 .fetchOneInto(Topics.class);
     }

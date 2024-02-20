@@ -1,6 +1,7 @@
 package com.devacademy.discussionforum.repository;
 
 import com.devacademy.discussionforum.dto.SingleTopic;
+import com.devacademy.discussionforum.dto.TopicRequest;
 import com.devacademy.discussionforum.dto.TopicWithUser;
 import com.devacademy.discussionforum.helpers.MessageHelper;
 import com.devacademy.discussionforum.helpers.TopicHelper;
@@ -23,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @Testcontainers
 public class TopicRepositoryTests {
-    
+
     @Autowired
     private TopicRepository topicRepository;
 
@@ -47,10 +48,10 @@ public class TopicRepositoryTests {
     void savesTopicWhenValidTopic() {
         Users user = userHelper.createUser("newUser");
 
-        Topics topic = new Topics(null, user.getId(), "newTopic", null, null);
+        TopicRequest topic = new TopicRequest(user.getId(), "newTopic");
         Topics newTopic = topicRepository.save(topic);
 
-        List<Topics> topics = topicHelper.findTopicsByName(topic.getName());
+        List<Topics> topics = topicHelper.findTopicsByName(topic.name());
 
         assertEquals(1, topics.size(), "There should be only one topic");
         assertEquals(newTopic.getName(), topics.get(0).getName(), "Topic name should match");

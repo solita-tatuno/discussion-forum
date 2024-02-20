@@ -1,9 +1,11 @@
 package com.devacademy.discussionforum.controller;
 
 import com.devacademy.discussionforum.dto.SingleTopic;
+import com.devacademy.discussionforum.dto.TopicRequest;
 import com.devacademy.discussionforum.dto.TopicWithUser;
 import com.devacademy.discussionforum.service.TopicService;
 import com.jooq.discussionforum.tables.pojos.Topics;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +23,7 @@ public class TopicController {
     }
 
     @PostMapping
-    public ResponseEntity<Topics> addTopic(@RequestBody Topics topic) {
+    public ResponseEntity<Topics> addTopic(@RequestBody @Valid TopicRequest topic) {
         Topics newTopic = topicService.addTopic(topic);
 
         return new ResponseEntity<>(newTopic, HttpStatus.CREATED);
