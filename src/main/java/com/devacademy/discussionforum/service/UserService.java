@@ -1,8 +1,8 @@
 package com.devacademy.discussionforum.service;
 
+import com.devacademy.discussionforum.dto.UserRequest;
 import com.devacademy.discussionforum.dto.UserResponse;
 import com.devacademy.discussionforum.repostitory.UserRepository;
-import com.jooq.discussionforum.tables.pojos.Users;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,7 +14,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public UserResponse addUser(Users user) {
+    public UserResponse addUser(UserRequest user) {
         return userRepository.save(user);
     }
 }

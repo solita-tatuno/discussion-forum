@@ -1,6 +1,7 @@
 package com.devacademy.discussionforum.repository;
 
 
+import com.devacademy.discussionforum.dto.UserRequest;
 import com.devacademy.discussionforum.dto.UserResponse;
 import com.devacademy.discussionforum.helpers.UserHelper;
 import com.devacademy.discussionforum.repostitory.UserRepository;
@@ -32,11 +33,11 @@ public class UserRepositoryTests {
 
     @Test
     void savesUserWhenValidUser() {
-        Users user = new Users(null, "newUser", "password", false);
+        UserRequest user = new UserRequest("newUser", "password");
 
         UserResponse newUser = userRepository.save(user);
 
-        List<Users> users = userHelper.findUsersByUsername(user.getUsername());
+        List<Users> users = userHelper.findUsersByUsername(user.username());
         assertEquals(1, users.size(), "There should be only one user");
 
         assertEquals(newUser.username(), users.get(0).getUsername(), "Username should match");
