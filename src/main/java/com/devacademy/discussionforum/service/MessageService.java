@@ -1,5 +1,6 @@
 package com.devacademy.discussionforum.service;
 
+import com.devacademy.discussionforum.dto.MessageRequest;
 import com.devacademy.discussionforum.repostitory.MessageRepository;
 import com.jooq.discussionforum.tables.pojos.Messages;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ public class MessageService {
         this.messageRepository = messageRepository;
     }
 
-    public Messages addMessage(Messages message) {
+    public Messages addMessage(MessageRequest message) {
         return messageRepository.save(message);
     }
 }

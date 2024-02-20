@@ -1,5 +1,6 @@
 package com.devacademy.discussionforum.repository;
 
+import com.devacademy.discussionforum.dto.MessageRequest;
 import com.devacademy.discussionforum.helpers.MessageHelper;
 import com.devacademy.discussionforum.helpers.TopicHelper;
 import com.devacademy.discussionforum.helpers.UserHelper;
@@ -45,10 +46,10 @@ public class MessageRepositoryTests {
         Users user = userHelper.createUser("newUser");
         Topics topic = topicHelper.createTopic("newTopic", user);
 
-        Messages message = new Messages(null, user.getId(), topic.getId(), "newMessage", 0, null, null);
+        MessageRequest message = new MessageRequest(user.getId(), topic.getId(), "newMessage", 0);
         Messages newMessage = messageRepository.save(message);
 
-        List<Messages> messages = messageHelper.findMessagesByMessage(message.getMessage());
+        List<Messages> messages = messageHelper.findMessagesByMessage(message.message());
 
         assertEquals(1, messages.size(), "There should be only one message");
         assertEquals(newMessage.getMessage(), messages.get(0).getMessage(), "Message should match");

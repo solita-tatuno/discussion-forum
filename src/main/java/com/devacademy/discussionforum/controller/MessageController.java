@@ -1,7 +1,9 @@
 package com.devacademy.discussionforum.controller;
 
+import com.devacademy.discussionforum.dto.MessageRequest;
 import com.devacademy.discussionforum.service.MessageService;
 import com.jooq.discussionforum.tables.pojos.Messages;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +23,7 @@ public class MessageController {
     }
 
     @PostMapping
-    public ResponseEntity<Messages> addMessage(@RequestBody Messages message) {
+    public ResponseEntity<Messages> addMessage(@RequestBody @Valid MessageRequest message) {
         Messages newMessage = messageService.addMessage(message);
 
         return new ResponseEntity<>(newMessage, HttpStatus.CREATED);
