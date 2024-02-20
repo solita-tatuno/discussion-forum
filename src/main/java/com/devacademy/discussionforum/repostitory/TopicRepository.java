@@ -7,6 +7,7 @@ import org.jooq.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.jooq.impl.DSL.*;
 
@@ -38,7 +39,7 @@ public class TopicRepository {
                 .fetch(Records.mapping(TopicWithUser::new));
     }
 
-    public SingleTopic findOne(int id) {
+    public Optional<SingleTopic> findOne(Integer id) {
         return dsl.select(Tables.TOPICS.ID,
                         Tables.TOPICS.NAME,
                         Tables.TOPICS.CREATED_AT,
@@ -72,6 +73,6 @@ public class TopicRepository {
                 .from(Tables.TOPICS)
                 .join(Tables.USERS).on(Tables.TOPICS.USER_ID.eq(Tables.USERS.ID))
                 .where(Tables.TOPICS.ID.eq(id))
-                .fetchOne(Records.mapping(SingleTopic::new));
+                .fetchOptional(Records.mapping(SingleTopic::new));
     }
 }

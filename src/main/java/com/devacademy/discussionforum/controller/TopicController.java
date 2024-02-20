@@ -36,7 +36,7 @@ public class TopicController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SingleTopic> findOne(@PathVariable("id") int id) {
+    public ResponseEntity<SingleTopic> findOne(@PathVariable("id") Integer id) {
         SingleTopic topic = topicService.findOne(id);
         return new ResponseEntity<>(topic, HttpStatus.OK);
     }

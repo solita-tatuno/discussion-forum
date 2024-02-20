@@ -18,6 +18,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -83,7 +84,11 @@ public class TopicRepositoryTests {
         Topics topic = topicHelper.createTopic("newTopic", user);
         Messages message = messageHelper.createMessage("newMessage", user, topic);
 
-        SingleTopic singleTopic = topicRepository.findOne(topic.getId());
+        Optional<SingleTopic> optionalSingleTopic = topicRepository.findOne(topic.getId());
+
+        assertTrue(optionalSingleTopic.isPresent(), "SingleTopic should be present");
+
+        SingleTopic singleTopic = optionalSingleTopic.get();
 
         assertEquals(topic.getName(), singleTopic.name(), "Topic name should match");
         assertEquals(user.getId(), singleTopic.user().id(), "UserId should match");
