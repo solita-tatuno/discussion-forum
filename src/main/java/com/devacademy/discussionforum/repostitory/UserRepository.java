@@ -3,8 +3,11 @@ package com.devacademy.discussionforum.repostitory;
 import com.devacademy.discussionforum.dto.UserRequest;
 import com.devacademy.discussionforum.dto.UserResponse;
 import com.jooq.discussionforum.Tables;
+import com.jooq.discussionforum.tables.pojos.Users;
 import org.springframework.stereotype.Repository;
 import org.jooq.DSLContext;
+
+import java.util.Optional;
 
 @Repository
 public class UserRepository {
@@ -20,5 +23,12 @@ public class UserRepository {
                 .values(user.username(), hashedPassword)
                 .returningResult(Tables.USERS.ID, Tables.USERS.USERNAME, Tables.USERS.IS_ADMIN)
                 .fetchOneInto(UserResponse.class);
+    }
+
+    public Optional<Users> findByUsername(String username) {
+        return dsl.select(Tables.USERS.fields())
+                .from(Tables.USERS)
+                .where(Tables.USERS.USERNAME.eq(username))
+                .fetchOptionalInto(Users.class);
     }
 }
