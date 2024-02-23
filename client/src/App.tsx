@@ -1,8 +1,10 @@
+import SignupForm from "./components/SignupForm.tsx";
+
 function App() {
   return (
-      <div>
-        <p>Hello discussion forum</p>
-      </div>
+    <main className="min-h-screen flex flex-col">
+      <SignupForm />
+    </main>
   );
 }
 
