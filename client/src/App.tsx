@@ -1,9 +1,25 @@
-import SignupForm from "./components/SignupForm.tsx";
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+import Signup from "./routes/Signup.tsx";
+import Login from "./routes/Login.tsx";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Signup />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+]);
 
 function App() {
   return (
     <main className="min-h-screen flex flex-col">
-      <SignupForm />
+      <RouterProvider router={router} />
     </main>
   );
 }
