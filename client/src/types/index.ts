@@ -3,12 +3,15 @@ export interface UserCredentials {
   password: string;
 }
 
-export interface ApiError {
-  message: string;
-}
-
 export interface User {
   id: number;
   username: string;
   isAdmin: boolean;
+}
+
+export interface Topic {
+  id: number;
+  name: string;
+  // created at.. updated at..
+  user: User;
 }
