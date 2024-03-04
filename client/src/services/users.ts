@@ -1,4 +1,5 @@
 import { User, UserCredentials } from "../types";
+import { getTokenFromLocalStorage } from "../utils";
 
 const baseUrl = "http://localhost:8080/api/users";
 
@@ -19,4 +20,21 @@ const createOne = async (userCredentials: UserCredentials): Promise<User> => {
   return response.json();
 };
 
-export default { createOne };
+const getCurrentUser = async (): Promise<User> => {
+  const token = getTokenFromLocalStorage();
+
+  const response = await fetch(`${baseUrl}/me`, {
+    headers: {
+      "Authorization": `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    const res = await response.json() as Error;
+    throw new Error(res.message);
+  }
+
+  return response.json();
+};
+
+export default { createOne, getCurrentUser };

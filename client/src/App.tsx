@@ -5,6 +5,7 @@ import {
 import Signup from "./routes/Signup.tsx";
 import Login from "./routes/Login.tsx";
 import Topics from "./routes/Topics.tsx";
+import ProtectedRoute from "./routes/ProtectedRoute.tsx";
 
 const router = createBrowserRouter([
   {
@@ -17,7 +18,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/topics",
-    element: <Topics />,
+    element: <ProtectedRoute children={<Topics />} />,
   },
 ]);
 
