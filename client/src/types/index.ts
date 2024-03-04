@@ -12,6 +12,18 @@ export interface User {
 export interface Topic {
   id: number;
   name: string;
-  // created at.. updated at..
   user: User;
+  // created at.. updated at..
+}
+
+export interface Message {
+  id: number;
+  message: string;
+  topicId: number;
+  user: User;
+  // created at.. updated at..
+}
+
+export interface SingleTopic extends Topic {
+  messages: Message[];
 }

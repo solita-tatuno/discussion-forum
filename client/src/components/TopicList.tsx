@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Topic } from "../types";
 
 
@@ -27,8 +28,12 @@ function TopicList({ topics, isPending, error }: Props) {
           <th>Creator</th>
         </tr>
         {topics.map((topic) => (
-          <tr className="border-b" key={topic.id}>
-            <td className="py-6">{topic.name}</td>
+          <tr className="border-b hover:bg-gray-300" key={topic.id}>
+            <td className="py-6">
+              <Link className="no-underline text-black hover:text-blue-500" to={`/topics/${topic.id}`}>
+                {topic.name}
+              </Link>
+            </td>
             <td className="py-6">{topic.user.username}</td>
           </tr>
         ))}
