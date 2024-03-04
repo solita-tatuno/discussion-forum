@@ -1,4 +1,4 @@
-package com.devacademy.discussionforum.spring;
+package com.devacademy.discussionforum.security;
 
 import com.devacademy.discussionforum.config.RsaKeyProperties;
 import com.devacademy.discussionforum.service.UserService;
