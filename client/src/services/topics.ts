@@ -37,7 +37,34 @@ const findOne = async (id: string): Promise<SingleTopic> => {
   return response.json();
 };
 
+interface CreateTopicPayload {
+  name: string;
+  userId: number;
+}
+
+
+const create = async (payload: CreateTopicPayload): Promise<Topic> => {
+  const token = getTokenFromLocalStorage();
+
+  const response = await fetch(baseUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    const res = await response.json() as Error;
+    throw new Error(res.message);
+  }
+
+  return response.json();
+};
+
 export default {
   getAll,
   findOne,
+  create,
 };

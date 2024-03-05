@@ -19,7 +19,7 @@ function TopicList({ topics, isPending, error }: Props) {
   }
 
   return (
-    <div className="flex flex-col flex-1">
+    <>
       {error && <div>{error.message}</div>}
       <table className="text-left">
         <tbody>
@@ -39,7 +39,7 @@ function TopicList({ topics, isPending, error }: Props) {
         ))}
         </tbody>
       </table>
-    </div>
+    </>
   );
 }
 
