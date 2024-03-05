@@ -20,7 +20,7 @@ const getAll = async (): Promise<Topic[]> => {
   return response.json();
 };
 
-const findOne = async (id: string): Promise<SingleTopic> => {
+const findOne = async (id: number): Promise<SingleTopic> => {
   const token = getTokenFromLocalStorage();
 
   const response = await fetch(`${baseUrl}/${id}`, {
