@@ -1,4 +1,5 @@
 import { SingleTopic as SingleTopicType } from "../types";
+import { Link } from "react-router-dom";
 
 interface Props {
   topic: SingleTopicType | undefined;
@@ -18,7 +19,15 @@ function SingleTopic({ topic, isPending }: Props) {
 
   return (
     <div className="flex-1">
-      <h1>{topic.name}</h1>
+      <div className="flex gap-2 text-2xl font-bold">
+        <Link className="text-black no-underline" to="/topics">
+          Topics
+        </Link>
+        <span>&gt; </span>
+        <Link className="text-black no-underline" to={`/topics/${topic.id}`}>
+          {topic.name}
+        </Link>
+      </div>
       <p>Created by {topic.user.username} on XX.XX.XXXX</p>
       <div>
         {topic.messages.map((message) => (
