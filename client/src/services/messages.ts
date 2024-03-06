@@ -5,7 +5,6 @@ const baseUrl = "http://localhost:8080/api/messages";
 
 interface CreateMessagePayload {
   message: string;
-  userId: number;
   topicId: number;
   upVotes: number;
 }

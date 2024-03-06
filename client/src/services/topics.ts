@@ -33,17 +33,11 @@ const findOne = async (id: number): Promise<SingleTopic> => {
     const res = await response.json() as Error;
     throw new Error(res.message);
   }
-  
+
   return response.json();
 };
 
-interface CreateTopicPayload {
-  name: string;
-  userId: number;
-}
-
-
-const create = async (payload: CreateTopicPayload): Promise<Topic> => {
+const create = async (name: string): Promise<Topic> => {
   const token = getTokenFromLocalStorage();
 
   const response = await fetch(baseUrl, {
@@ -52,7 +46,7 @@ const create = async (payload: CreateTopicPayload): Promise<Topic> => {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${token}`,
     },
-    body: JSON.stringify(payload),
+    body: JSON.stringify({ name }),
   });
 
   if (!response.ok) {

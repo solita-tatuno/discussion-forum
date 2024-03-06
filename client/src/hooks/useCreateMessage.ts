@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import useCurrentUser from "./useCurrentUser";
 import messageService from "../services/messages";
 
 
@@ -10,12 +9,10 @@ interface NewMessage {
 
 const useCreateMessage = (topicId: number) => {
   const queryClient = useQueryClient();
-  const { currentUser } = useCurrentUser();
 
   const { mutate, error } = useMutation({
     mutationFn: (args: NewMessage) => messageService.create({
       ...args,
-      userId: currentUser!.id,
       upVotes: 0,
     }),
     onSuccess: () => {
