@@ -1,11 +1,11 @@
 package com.devacademy.discussionforum.service;
 
-import com.devacademy.discussionforum.dto.SingleTopic;
-import com.devacademy.discussionforum.dto.TopicRequest;
-import com.devacademy.discussionforum.dto.TopicWithUser;
+import com.devacademy.discussionforum.dto.*;
 import com.devacademy.discussionforum.exception.ResourceNotFoundException;
 import com.devacademy.discussionforum.repostitory.TopicRepository;
+import com.devacademy.discussionforum.security.TokenService;
 import com.jooq.discussionforum.tables.pojos.Topics;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,12 +16,16 @@ public class TopicService {
 
     private final TopicRepository topicRepository;
 
-    public TopicService(TopicRepository topicRepository) {
+    private final TokenService tokenService;
+
+    public TopicService(TopicRepository topicRepository, TokenService tokenService) {
         this.topicRepository = topicRepository;
+        this.tokenService = tokenService;
     }
 
-    public Topics addTopic(TopicRequest topic) {
-        return topicRepository.save(topic);
+    public Topics addTopic(AddTopic topic, Authentication authentication) {
+        Integer userId = tokenService.extractUserIdFromAuthentication(authentication);
+        return topicRepository.save(topic.withUserId(userId));
     }
 
     public List<TopicWithUser> getAll() {

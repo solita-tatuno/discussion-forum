@@ -20,7 +20,7 @@ public class TopicRepository {
         this.dsl = dsl;
     }
 
-    public Topics save(TopicRequest topic) {
+    public Topics save(AddTopic topic) {
         return dsl.insertInto(Tables.TOPICS, Tables.TOPICS.USER_ID, Tables.TOPICS.NAME)
                 .values(topic.userId(), topic.name())
                 .returning()

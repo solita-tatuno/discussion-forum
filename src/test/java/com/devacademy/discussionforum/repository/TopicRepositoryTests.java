@@ -1,8 +1,6 @@
 package com.devacademy.discussionforum.repository;
 
-import com.devacademy.discussionforum.dto.SingleTopic;
-import com.devacademy.discussionforum.dto.TopicRequest;
-import com.devacademy.discussionforum.dto.TopicWithUser;
+import com.devacademy.discussionforum.dto.*;
 import com.devacademy.discussionforum.helpers.MessageHelper;
 import com.devacademy.discussionforum.helpers.TopicHelper;
 import com.devacademy.discussionforum.helpers.UserHelper;
@@ -49,14 +47,14 @@ public class TopicRepositoryTests {
     void savesTopicWhenValidTopic() {
         Users user = userHelper.createUser("newUser");
 
-        TopicRequest topic = new TopicRequest(user.getId(), "newTopic");
-        Topics newTopic = topicRepository.save(topic);
+        AddTopic topic = new AddTopic("newTopic", user.getId());
+        Topics insertedTopic = topicRepository.save(topic);
 
         List<Topics> topics = topicHelper.findTopicsByName(topic.name());
 
         assertEquals(1, topics.size(), "There should be only one topic");
-        assertEquals(newTopic.getName(), topics.get(0).getName(), "Topic name should match");
-        assertEquals(newTopic.getUserId(), topics.get(0).getUserId(), "TopicUserId should match");
+        assertEquals(insertedTopic.getName(), topics.get(0).getName(), "Topic name should match");
+        assertEquals(insertedTopic.getUserId(), topics.get(0).getUserId(), "TopicUserId should match");
     }
 
     @Test
