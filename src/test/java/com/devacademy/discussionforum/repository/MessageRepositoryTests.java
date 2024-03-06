@@ -1,6 +1,6 @@
 package com.devacademy.discussionforum.repository;
 
-import com.devacademy.discussionforum.dto.MessageRequest;
+import com.devacademy.discussionforum.dto.AddMessage;
 import com.devacademy.discussionforum.helpers.MessageHelper;
 import com.devacademy.discussionforum.helpers.TopicHelper;
 import com.devacademy.discussionforum.helpers.UserHelper;
@@ -45,15 +45,15 @@ public class MessageRepositoryTests {
     void savesMessageWhenValidMessage() {
         Users user = userHelper.createUser("newUser");
         Topics topic = topicHelper.createTopic("newTopic", user);
+        AddMessage message = new AddMessage(topic.getId(), "newMessage", 0, user.getId());
 
-        MessageRequest message = new MessageRequest(user.getId(), topic.getId(), "newMessage", 0);
-        Messages newMessage = messageRepository.save(message);
+        Messages insertedMessage = messageRepository.save(message);
 
         List<Messages> messages = messageHelper.findMessagesByMessage(message.message());
 
         assertEquals(1, messages.size(), "There should be only one message");
-        assertEquals(newMessage.getMessage(), messages.get(0).getMessage(), "Message should match");
-        assertEquals(newMessage.getUserId(), messages.get(0).getUserId(), "MessageUserId should match");
-        assertEquals(newMessage.getTopicId(), messages.get(0).getTopicId(), "MessageTopicId should match");
+        assertEquals(insertedMessage.getMessage(), messages.get(0).getMessage(), "Message should match");
+        assertEquals(insertedMessage.getUserId(), messages.get(0).getUserId(), "MessageUserId should match");
+        assertEquals(insertedMessage.getTopicId(), messages.get(0).getTopicId(), "MessageTopicId should match");
     }
 }

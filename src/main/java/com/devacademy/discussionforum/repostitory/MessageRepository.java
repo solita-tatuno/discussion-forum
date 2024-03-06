@@ -1,6 +1,6 @@
 package com.devacademy.discussionforum.repostitory;
 
-import com.devacademy.discussionforum.dto.MessageRequest;
+import com.devacademy.discussionforum.dto.AddMessage;
 import com.jooq.discussionforum.Tables;
 import com.jooq.discussionforum.tables.pojos.Messages;
 import org.jooq.DSLContext;
@@ -15,7 +15,7 @@ public class MessageRepository {
         this.dsl = dsl;
     }
 
-    public Messages save(MessageRequest message) {
+    public Messages save(AddMessage message) {
         return dsl.insertInto(Tables.MESSAGES,
                         Tables.MESSAGES.MESSAGE,
                         Tables.MESSAGES.TOPIC_ID,
