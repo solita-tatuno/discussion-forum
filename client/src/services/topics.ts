@@ -33,7 +33,7 @@ const findOne = async (id: number): Promise<SingleTopic> => {
     const res = await response.json() as Error;
     throw new Error(res.message);
   }
-
+  
   return response.json();
 };
 

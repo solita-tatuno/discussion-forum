@@ -13,7 +13,7 @@ export interface Topic {
   id: number;
   name: string;
   user: User;
-  // created at.. updated at..
+  createdAt: string;
 }
 
 export interface Message {
@@ -21,7 +21,7 @@ export interface Message {
   message: string;
   topicId: number;
   user: User;
-  // created at.. updated at..
+  createdAt: string;
 }
 
 export interface SingleTopic extends Topic {

@@ -1,5 +1,6 @@
-import { SingleTopic as SingleTopicType } from "../types";
 import { Link } from "react-router-dom";
+import { formatDateString } from "../utils";
+import { SingleTopic as SingleTopicType } from "../types";
 
 interface Props {
   topic: SingleTopicType | undefined;
@@ -28,7 +29,7 @@ function SingleTopic({ topic, isPending }: Props) {
           {topic.name}
         </Link>
       </div>
-      <p>Created by {topic.user.username} on XX.XX.XXXX</p>
+      <p>Created by {topic.user.username} {formatDateString(topic.createdAt)}</p>
       <div>
         {topic.messages.map((message) => (
           <div key={message.id} className="flex mb-6 border-2 rounded-md">
@@ -36,7 +37,7 @@ function SingleTopic({ topic, isPending }: Props) {
               <h3 className="border-b font-bold">{message.user.username}</h3>
             </div>
             <div className="flex flex-col gap-3 p-6 basis-3/4">
-              <p className="border-b">Posted on XX.XX.XXXX</p>
+              <p className="border-b">{formatDateString(message.createdAt)}</p>
               <p>{message.message}</p>
             </div>
           </div>
