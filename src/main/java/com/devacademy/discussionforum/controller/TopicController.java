@@ -40,4 +40,10 @@ public class TopicController {
         SingleTopic topic = topicService.findOne(id);
         return new ResponseEntity<>(topic, HttpStatus.OK);
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteTopic(@PathVariable("id") Integer id) {
+        topicService.deleteOne(id);
+    }
 }

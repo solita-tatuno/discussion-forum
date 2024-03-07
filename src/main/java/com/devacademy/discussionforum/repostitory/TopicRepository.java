@@ -75,4 +75,14 @@ public class TopicRepository {
                 .where(Tables.TOPICS.ID.eq(id))
                 .fetchOptional(Records.mapping(SingleTopic::new));
     }
+
+    public int deleteOne(Integer id) {
+        dsl.deleteFrom(Tables.MESSAGES)
+                .where(Tables.MESSAGES.TOPIC_ID.eq(id))
+                .execute();
+
+        return dsl.deleteFrom(Tables.TOPICS)
+                .where(Tables.TOPICS.ID.eq(id))
+                .execute();
+    }
 }

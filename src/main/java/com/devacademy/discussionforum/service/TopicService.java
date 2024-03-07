@@ -36,4 +36,11 @@ public class TopicService {
         Optional<SingleTopic> topic = topicRepository.findOne(id);
         return topic.orElseThrow(() -> new ResourceNotFoundException("Topic not found"));
     }
+
+    public void deleteOne(Integer id) {
+        int deletedTopicRowsCount = topicRepository.deleteOne(id);
+        if (deletedTopicRowsCount == 0) {
+            throw new ResourceNotFoundException("Topic not found");
+        }
+    }
 }
