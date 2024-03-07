@@ -4,6 +4,7 @@ import com.devacademy.discussionforum.security.CustomUserDetails;
 import com.devacademy.discussionforum.dto.UserRequest;
 import com.devacademy.discussionforum.dto.UserResponse;
 import com.devacademy.discussionforum.repostitory.UserRepository;
+import com.devacademy.discussionforum.security.UserRole;
 import com.jooq.discussionforum.tables.pojos.Users;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -44,8 +45,8 @@ public class UserService implements UserDetailsService {
         Users validUser = userFromDb.get();
 
         List<GrantedAuthority> authorities = new ArrayList<>();
-        String role = validUser.getIsAdmin() ? "ADMIN" : "USER";
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
+        UserRole role = validUser.getIsAdmin() ? UserRole.ROLE_ADMIN : UserRole.ROLE_USER;
+        authorities.add(new SimpleGrantedAuthority(role.toString()));
 
         return new CustomUserDetails(
                 validUser.getUsername(),
