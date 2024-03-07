@@ -93,4 +93,15 @@ public class TopicRepositoryTests {
         assertEquals(1, singleTopic.messages().length, "There should be 1 message");
         assertEquals(message.getMessage(), singleTopic.messages()[0].message(), "Message should match");
     }
+
+    @Test
+    void deletesTopicWhenValidId() {
+        Users user = userHelper.createUser("newUser");
+        Topics topic = topicHelper.createTopic("newTopic", user);
+
+        int deletedTopicRowsCount = topicRepository.deleteOne(topic.getId());
+
+        assertEquals(1, deletedTopicRowsCount, "One row should be deleted");
+        assertTrue(topicHelper.findTopicsByName(topic.getName()).isEmpty(), "Topic should be deleted");
+    }
 }
