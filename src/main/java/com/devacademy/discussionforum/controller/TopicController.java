@@ -48,4 +48,12 @@ public class TopicController {
     public void deleteTopic(@PathVariable("id") Integer id) {
         topicService.deleteOne(id);
     }
+
+
+    @PreAuthorize("hasRole(T(com.devacademy.discussionforum.security.UserRole).ROLE_ADMIN)")
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Topics updateTopic(@PathVariable("id") Integer id, @RequestBody @Valid AddTopic topic) {
+        return topicService.updateTopic(id, topic);
+    }
 }

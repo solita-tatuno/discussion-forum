@@ -85,4 +85,12 @@ public class TopicRepository {
                 .where(Tables.TOPICS.ID.eq(id))
                 .execute();
     }
+
+    public Optional<Topics> update(Integer id, AddTopic topic) {
+        return Optional.ofNullable(dsl.update(Tables.TOPICS)
+                .set(Tables.TOPICS.NAME, topic.name())
+                .where(Tables.TOPICS.ID.eq(id))
+                .returning()
+                .fetchOneInto(Topics.class));
+    }
 }

@@ -43,4 +43,9 @@ public class TopicService {
             throw new ResourceNotFoundException("Topic not found");
         }
     }
+
+    public Topics updateTopic(Integer id, AddTopic topic) {
+        return topicRepository.update(id, topic)
+                .orElseThrow(() -> new ResourceNotFoundException("Topic not found"));
+    }
 }
