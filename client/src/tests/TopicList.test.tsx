@@ -9,6 +9,7 @@ const topics: Topic[] = [
   {
     id: 1,
     name: "test topic",
+    createdAt: "",
     user: {
       id: 1,
       username: "test user",
@@ -18,6 +19,7 @@ const topics: Topic[] = [
   {
     id: 2,
     name: "test topic 2",
+    createdAt: "",
     user: {
       id: 2,
       username: "test user 2",

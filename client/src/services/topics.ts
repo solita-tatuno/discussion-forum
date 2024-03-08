@@ -57,8 +57,25 @@ const create = async (name: string): Promise<Topic> => {
   return response.json();
 };
 
+const deleteOne = async (id: number): Promise<void> => {
+  const token = getTokenFromLocalStorage();
+
+  const response = await fetch(`${baseUrl}/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Authorization": `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    const res = await response.json() as Error;
+    throw new Error(res.message);
+  }
+};
+
 export default {
   getAll,
   findOne,
   create,
+  deleteOne,
 };
