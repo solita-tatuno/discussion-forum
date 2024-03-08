@@ -104,4 +104,18 @@ public class TopicRepositoryTests {
         assertEquals(1, deletedTopicRowsCount, "One row should be deleted");
         assertTrue(topicHelper.findTopicsByName(topic.getName()).isEmpty(), "Topic should be deleted");
     }
+
+    @Test
+    void updatesTopicWhenValidId() {
+        Users user = userHelper.createUser("newUser");
+        Topics topic = topicHelper.createTopic("newTopic", user);
+
+        AddTopic topicUpdate = new AddTopic("updatedTopic", null);
+        Topics updatedTopic = topicRepository.update(topic.getId(), topicUpdate).orElse(null);
+
+
+        assertNotNull(updatedTopic, "New topic should not be null");
+        assertEquals(topicUpdate.name(), updatedTopic.getName(), "Topic should have updated name");
+        assertNotEquals(updatedTopic.getUpdatedAt(), topic.getUpdatedAt(), "Topic updated at timestamp should be updated");
+    }
 }
