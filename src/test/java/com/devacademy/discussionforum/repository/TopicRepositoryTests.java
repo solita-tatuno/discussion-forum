@@ -77,6 +77,19 @@ public class TopicRepositoryTests {
     }
 
     @Test
+    void correctMessageCountWhenTopicHasMessages() {
+        Users user = userHelper.createUser("newUser");
+        Topics topic = topicHelper.createTopic("newTopic", user);
+        messageHelper.createMessage("newMessage", user, topic);
+
+        List<TopicWithUser> topics = topicRepository.findAll();
+        assertEquals(1, topics.size(), "There should be 1 topic");
+
+        TopicWithUser singleTopic = topics.get(0);
+        assertEquals(1, singleTopic.messageCount(), "Message count should be 1");
+    }
+
+    @Test
     void findsSingleTopicWhenValidId() {
         Users user = userHelper.createUser("newUser");
         Topics topic = topicHelper.createTopic("newTopic", user);

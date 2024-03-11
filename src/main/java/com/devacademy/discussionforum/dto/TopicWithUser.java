@@ -6,6 +6,9 @@ public record TopicWithUser(int id,
                             String name,
                             OffsetDateTime createdAt,
                             OffsetDateTime updatedAt,
-                            UserResponse user) {
+                            UserResponse user,
+                            int messageCount,
+                            OffsetDateTime lastMessageTime
+) {
 }
 

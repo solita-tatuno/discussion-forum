@@ -33,9 +33,21 @@ public class TopicRepository {
                         Tables.TOPICS.CREATED_AT,
                         Tables.TOPICS.UPDATED_AT,
                         row(Tables.USERS.ID, Tables.USERS.USERNAME, Tables.USERS.IS_ADMIN)
-                                .mapping(UserResponse::new))
+                                .mapping(UserResponse::new),
+                        count(Tables.MESSAGES.ID).as("messageCount"),
+                        max(Tables.MESSAGES.CREATED_AT).as("lastMessageTime"))
                 .from(Tables.TOPICS)
                 .join(Tables.USERS).on(Tables.TOPICS.USER_ID.eq(Tables.USERS.ID))
+                .leftJoin(Tables.MESSAGES)
+                .on(Tables.MESSAGES.TOPIC_ID.eq(Tables.TOPICS.ID))
+                .groupBy(Tables.TOPICS.ID,
+                        Tables.TOPICS.NAME,
+                        Tables.TOPICS.CREATED_AT,
+                        Tables.TOPICS.UPDATED_AT,
+                        Tables.USERS.ID,
+                        Tables.USERS.USERNAME,
+                        Tables.USERS.IS_ADMIN)
+                .orderBy(max(Tables.MESSAGES.CREATED_AT).desc().nullsLast())
                 .fetch(Records.mapping(TopicWithUser::new));
     }
 
