@@ -1,16 +1,14 @@
-import { Link } from "react-router-dom";
 import { Topic } from "../types";
-import TopicActions from "./TopicActions.tsx";
+import TopicRow from "./TopicRow.tsx";
 
 
 interface Props {
   topics: Topic[] | undefined;
   isPending: boolean;
   error: Error | null;
-  showActions?: boolean;
 }
 
-function TopicList({ topics, isPending, error, showActions }: Props) {
+function TopicList({ topics, isPending, error }: Props) {
 
   if (isPending) {
     return <p>Loading...</p>;
@@ -30,19 +28,10 @@ function TopicList({ topics, isPending, error, showActions }: Props) {
           <th>Creator</th>
         </tr>
         {topics.map((topic) => (
-          <tr className="border-b hover:bg-gray-300" key={topic.id}>
-            <td className="py-6">
-              <div className="flex flex-col gap-2">
-                <Link className="no-underline text-black hover:text-blue-500" to={`/topics/${topic.id}`}>
-                  {topic.name}
-                </Link>
-                {showActions && (
-                  <TopicActions topicId={topic.id} />
-                )}
-              </div>
-            </td>
-            <td className="py-6">{topic.user.username}</td>
-          </tr>
+          <TopicRow
+            key={topic.id}
+            topic={topic}
+          />
         ))}
         </tbody>
       </table>

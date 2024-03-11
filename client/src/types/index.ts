@@ -16,6 +16,8 @@ export interface Topic {
   createdAt: string;
 }
 
+export type TopicUpdate = Pick<Topic, "id" | "name">
+
 export interface Message {
   id: number;
   message: string;

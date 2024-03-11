@@ -4,6 +4,7 @@ import { render, screen } from "@testing-library/react";
 
 import TopicList from "../components/TopicList.tsx";
 import { Topic } from "../types";
+import { createQueryClientWrapper } from "./helper.tsx";
 
 const topics: Topic[] = [
   {
@@ -53,6 +54,9 @@ describe("TopicList tests", () => {
       <MemoryRouter>
         <TopicList topics={topics} isPending={false} error={null} />
       </MemoryRouter>,
+      {
+        wrapper: createQueryClientWrapper(),
+      },
     );
 
     topics.forEach((topic) => {
