@@ -26,6 +26,8 @@ function TopicList({ topics, isPending, error }: Props) {
         <tr className="border-b">
           <th>Topic</th>
           <th>Creator</th>
+          <th>Message count</th>
+          <th>Last message</th>
         </tr>
         {topics.map((topic) => (
           <TopicRow

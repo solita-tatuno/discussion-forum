@@ -14,6 +14,8 @@ export interface Topic {
   name: string;
   user: User;
   createdAt: string;
+  messageCount: number;
+  lastMessageTime?: string;
 }
 
 export type TopicUpdate = Pick<Topic, "id" | "name">

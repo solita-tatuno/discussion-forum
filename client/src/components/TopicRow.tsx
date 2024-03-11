@@ -5,6 +5,7 @@ import TopicActions from "./TopicActions.tsx";
 import useUpdateTopic from "../hooks/useUpdateTopic.ts";
 import Modal from "./Modal.tsx";
 import useDeleteTopic from "../hooks/useDeleteTopic.ts";
+import { formatDateString } from "../utils";
 
 interface Props {
   topic: Topic;
@@ -49,6 +50,8 @@ function TopicRow({ topic }: Props) {
           />
         </td>
         <td className="py-6">{topic.user.username}</td>
+        <td className="py-6">{topic.messageCount}</td>
+        <td className="py-6">{formatDateString(topic.lastMessageTime)}</td>
       </tr>
 
       <Modal isOpen={editModalOpen} onClose={handleEditModalClose}>
