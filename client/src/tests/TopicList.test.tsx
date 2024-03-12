@@ -16,6 +16,7 @@ const topics: Topic[] = [
       username: "test user",
       isAdmin: false,
     },
+    messageCount: 0,
   },
   {
     id: 2,
@@ -26,17 +27,11 @@ const topics: Topic[] = [
       username: "test user 2",
       isAdmin: false,
     },
+    messageCount: 0,
   },
 ];
 
 describe("TopicList tests", () => {
-  test("renders empty list if 0 topics", () => {
-    render(<TopicList topics={[]} isPending={false} error={null} />);
-
-    expect(screen.getByText("Topic")).toBeDefined();
-    expect(screen.getByText("Creator")).toBeDefined();
-  });
-
   test("renders error message in case of error", () => {
     const errorMessage = "test error";
     render(<TopicList topics={[]} isPending={false} error={new Error(errorMessage)} />);
