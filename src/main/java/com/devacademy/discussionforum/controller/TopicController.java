@@ -2,17 +2,16 @@ package com.devacademy.discussionforum.controller;
 
 import com.devacademy.discussionforum.dto.AddTopic;
 import com.devacademy.discussionforum.dto.SingleTopic;
-import com.devacademy.discussionforum.dto.TopicWithUser;
+import com.devacademy.discussionforum.dto.TopicsDTO;
 import com.devacademy.discussionforum.service.TopicService;
 import com.jooq.discussionforum.tables.pojos.Topics;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/topics")
@@ -31,8 +30,8 @@ public class TopicController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TopicWithUser>> getAll() {
-        List<TopicWithUser> allTopics = topicService.getAll();
+    public ResponseEntity<TopicsDTO> getAll(Pageable pageable) {
+        TopicsDTO allTopics = topicService.getAll(pageable);
         return new ResponseEntity<>(allTopics, HttpStatus.OK);
     }
 

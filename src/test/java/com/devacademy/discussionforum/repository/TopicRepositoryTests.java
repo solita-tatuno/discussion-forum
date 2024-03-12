@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Pageable;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.List;
@@ -63,13 +64,14 @@ public class TopicRepositoryTests {
 
         Topics topic = topicHelper.createTopic("newTopic", user);
         Topics topic2 = topicHelper.createTopic("newTopic2", user);
+        Pageable pageable = Pageable.ofSize(10);
 
-        List<TopicWithUser> topics = topicRepository.findAll();
-        assertEquals(2, topics.size(), "There should be 2 topics");
+        TopicsDTO dto = topicRepository.findAll(pageable);
+        assertEquals(2, dto.topics().size(), "There should be 2 topics");
 
-        boolean topicFound = topics.stream()
+        boolean topicFound = dto.topics().stream()
                 .anyMatch(t -> t.name().equals(topic.getName()) && Objects.equals(t.user().id(), user.getId()));
-        boolean topic2Found = topics.stream()
+        boolean topic2Found = dto.topics().stream()
                 .anyMatch(t -> t.name().equals(topic2.getName()) && Objects.equals(t.user().id(), user.getId()));
 
         assertTrue(topicFound, "Topic should be found");
@@ -81,11 +83,12 @@ public class TopicRepositoryTests {
         Users user = userHelper.createUser("newUser");
         Topics topic = topicHelper.createTopic("newTopic", user);
         messageHelper.createMessage("newMessage", user, topic);
+        Pageable pageable = Pageable.ofSize(10);
 
-        List<TopicWithUser> topics = topicRepository.findAll();
-        assertEquals(1, topics.size(), "There should be 1 topic");
+        TopicsDTO dto = topicRepository.findAll(pageable);
+        assertEquals(1, dto.topics().size(), "There should be 1 topic");
 
-        TopicWithUser singleTopic = topics.get(0);
+        TopicWithUser singleTopic = dto.topics().get(0);
         assertEquals(1, singleTopic.messageCount(), "Message count should be 1");
     }
 

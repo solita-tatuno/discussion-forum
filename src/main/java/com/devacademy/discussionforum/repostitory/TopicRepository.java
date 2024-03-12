@@ -4,6 +4,7 @@ import com.devacademy.discussionforum.dto.*;
 import com.jooq.discussionforum.Tables;
 import com.jooq.discussionforum.tables.pojos.Topics;
 import org.jooq.*;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -27,8 +28,10 @@ public class TopicRepository {
                 .fetchOneInto(Topics.class);
     }
 
-    public List<TopicWithUser> findAll() {
-        return dsl.select(Tables.TOPICS.ID,
+    public TopicsDTO findAll(Pageable pageable) {
+        int totalRows = countTotalTopics();
+
+        List<TopicWithUser> topics = dsl.select(Tables.TOPICS.ID,
                         Tables.TOPICS.NAME,
                         Tables.TOPICS.CREATED_AT,
                         Tables.TOPICS.UPDATED_AT,
@@ -48,7 +51,15 @@ public class TopicRepository {
                         Tables.USERS.USERNAME,
                         Tables.USERS.IS_ADMIN)
                 .orderBy(max(Tables.MESSAGES.CREATED_AT).desc().nullsLast())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch(Records.mapping(TopicWithUser::new));
+
+        return new TopicsDTO(totalRows, topics);
+    }
+
+    public int countTotalTopics() {
+        return dsl.fetchCount(dsl.selectFrom(Tables.TOPICS));
     }
 
     public Optional<SingleTopic> findOne(Integer id) {
