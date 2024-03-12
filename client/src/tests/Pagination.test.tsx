@@ -12,24 +12,25 @@ describe("useCreateTopic tests", () => {
     expect(screen.getByText("4")).toBeDefined();
   });
 
-  test("set page is called with correct value when page number is clicked", () => {
+  test("set page is called with correct value when next link is clicked", async () => {
     const setPage = vi.fn();
 
-    render(<Pagination itemCount={15} page={0} setPage={setPage} limit={5} />);
+    render(<Pagination itemCount={15} page={1} setPage={setPage} limit={5} />);
 
-    fireEvent.click(screen.getByText("2"));
-    expect(setPage).toHaveBeenCalledWith(1);
-
-    fireEvent.click(screen.getByText("3"));
+    fireEvent.click(screen.getByText(">"));
     expect(setPage).toHaveBeenCalledWith(2);
+
+
+    fireEvent.click(screen.getByText(">"));
+    expect(setPage).toHaveBeenCalledWith(3);
   });
 
   test("renders correct range text", async () => {
     const testCases = [
-      { page: 0, expectedText: "Showing 1 to 5 of 16 results" },
-      { page: 1, expectedText: "Showing 6 to 10 of 16 results" },
-      { page: 2, expectedText: "Showing 11 to 15 of 16 results" },
-      { page: 3, expectedText: "Showing 16 to 16 of 16 results" },
+      { page: 1, expectedText: "Showing 1 to 5 of 16 results" },
+      { page: 2, expectedText: "Showing 6 to 10 of 16 results" },
+      { page: 3, expectedText: "Showing 11 to 15 of 16 results" },
+      { page: 4, expectedText: "Showing 16 to 16 of 16 results" },
     ];
 
     testCases.forEach(({ page, expectedText }) => {

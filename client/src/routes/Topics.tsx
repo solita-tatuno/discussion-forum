@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import TopicList from "../components/TopicList";
 import CreateTopic from "../components/CreateTopic.tsx";
 import useTopics from "../hooks/useTopics";
@@ -6,9 +6,15 @@ import Pagination from "../components/Pagination.tsx";
 
 
 function Topics() {
-  const limit = 6;
-  const [page, setPage] = useState(0);
+  const [searchParams, setSearchParams] = useSearchParams({ page: "1", limit: "6" });
+  const page = Number(searchParams.get("page"));
+  const limit = Number(searchParams.get("limit"));
+
   const { data, isPending, error } = useTopics({ limit, page });
+
+  const setPage = (page: number) => {
+    setSearchParams({ page: page.toString(), limit: limit.toString() });
+  };
 
   return (
     <section className="flex flex-col flex-1 p-12 max-h-screen justify-between">

@@ -10,11 +10,11 @@ interface Props {
 
 function Pagination({ itemCount, page, setPage, limit }: Props) {
   const pageCount = itemCount ? Math.ceil(itemCount / limit) : 0;
-  const first = page * limit + 1;
-  const last = Math.min((page + 1) * limit, itemCount || 0);
+  const first = Math.min((page - 1) * limit + 1, itemCount || 0);
+  const last = Math.min(page * limit, itemCount || 0);
 
   const handlePageClick = ({ selected }: { selected: number }) => {
-    setPage(selected);
+    setPage(selected + 1);
   };
 
   return (
