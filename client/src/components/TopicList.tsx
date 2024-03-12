@@ -21,22 +21,14 @@ function TopicList({ topics, isPending, error }: Props) {
   return (
     <>
       {error && <div>{error.message}</div>}
-      <table className="text-left">
-        <tbody>
-        <tr className="border-b">
-          <th>Topic</th>
-          <th>Creator</th>
-          <th>Message count</th>
-          <th>Last message</th>
-        </tr>
-        {topics.map((topic) => (
-          <TopicRow
-            key={topic.id}
-            topic={topic}
-          />
-        ))}
-        </tbody>
-      </table>
+        <ul className="flex flex-col gap-3">
+          {topics.map((topic) => (
+            <TopicRow
+              key={topic.id}
+              topic={topic}
+            />
+          ))}
+        </ul>
     </>
   );
 }

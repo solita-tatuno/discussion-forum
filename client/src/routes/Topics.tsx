@@ -6,7 +6,7 @@ import Pagination from "../components/Pagination.tsx";
 
 
 function Topics() {
-  const limit = 9;
+  const limit = 6;
   const [page, setPage] = useState(0);
   const { data, isPending, error } = useTopics({ limit, page });
 

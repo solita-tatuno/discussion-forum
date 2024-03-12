@@ -38,21 +38,36 @@ function TopicRow({ topic }: Props) {
   };
 
   return (
-    <>
-      <tr className="relative border-b hover:bg-gray-300 group">
-        <td className="py-6">
-          <Link className="no-underline text-black hover:text-blue-500" to={`/topics/${topic.id}`}>
-            {topic.name}
-          </Link>
-          <TopicActions
-            setEditModalOpen={setEditModalOpen}
-            handleDelete={handleDelete}
-          />
-        </td>
-        <td className="py-6">{topic.user.username}</td>
-        <td className="py-6">{topic.messageCount}</td>
-        <td className="py-6">{formatDateString(topic.lastMessageTime)}</td>
-      </tr>
+    <li className="group relative">
+      <Link className="no-underline text-black" to={`/topics/${topic.id}`}>
+        <div
+          className="border-2 p-6 rounded-md flex justify-between hover:bg-gray-300 sm:flex-row flex-col items-start gap-3">
+          <div className="basis-1/4 break-all">
+            <p className="font-bold">Topic</p>
+            <p>
+              {topic.name}
+            </p>
+          </div>
+
+          <div className="basis-1/4">
+            <p className="font-bold">Created by</p>
+            <p>{topic.user.username}</p>
+          </div>
+          <div className="basis-1/4">
+            <p className="font-bold">Message count</p>
+            <p>{topic.messageCount}</p>
+          </div>
+          <div className="basis-1/4">
+            <p className="font-bold">Last message</p>
+            <p> {formatDateString(topic.lastMessageTime)}</p>
+          </div>
+        </div>
+      </Link>
+
+      <TopicActions
+        setEditModalOpen={setEditModalOpen}
+        handleDelete={handleDelete}
+      />
 
       <Modal isOpen={editModalOpen} onClose={handleEditModalClose}>
         <div className="flex flex-col gap-3 text-center">
@@ -66,7 +81,8 @@ function TopicRow({ topic }: Props) {
           <button className="bg-green-600 rounded-md p-3" onClick={handleUpdateTopic}>Update</button>
         </div>
       </Modal>
-    </>
+
+    </li>
   );
 }
 
