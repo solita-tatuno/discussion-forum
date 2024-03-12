@@ -1,14 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import topicService from "../services/topics";
+import { PaginationValues } from "../types";
 
-const useTopics = () => {
+const useTopics = (pagination: PaginationValues) => {
   const { data, isPending, isError, error } = useQuery({
-      queryKey: ["topics"],
-      queryFn: () => topicService.getAll(),
+      queryKey: ["topics", pagination],
+      queryFn: () => topicService.getAll(pagination),
     },
   );
 
-  return { topics: data, isPending, isError, error };
+  return { data, isPending, isError, error };
 };
 
 export default useTopics;

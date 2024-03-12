@@ -5,10 +5,10 @@ import com.devacademy.discussionforum.exception.ResourceNotFoundException;
 import com.devacademy.discussionforum.repostitory.TopicRepository;
 import com.devacademy.discussionforum.security.TokenService;
 import com.jooq.discussionforum.tables.pojos.Topics;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,8 +28,8 @@ public class TopicService {
         return topicRepository.save(topic.withUserId(userId));
     }
 
-    public List<TopicWithUser> getAll() {
-        return topicRepository.findAll();
+    public TopicsDTO getAll(Pageable pageable) {
+        return topicRepository.findAll(pageable);
     }
 
     public SingleTopic findOne(Integer id) {

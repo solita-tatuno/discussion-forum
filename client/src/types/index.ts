@@ -9,6 +9,11 @@ export interface User {
   isAdmin: boolean;
 }
 
+export interface PageableTopics {
+  topics: Topic[];
+  totalCount: number;
+}
+
 export interface Topic {
   id: number;
   name: string;
@@ -30,4 +35,9 @@ export interface Message {
 
 export interface SingleTopic extends Topic {
   messages: Message[];
+}
+
+export interface PaginationValues {
+  limit: number;
+  page: number;
 }

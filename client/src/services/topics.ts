@@ -1,12 +1,12 @@
-import { Topic, SingleTopic, TopicUpdate } from "../types";
+import { Topic, SingleTopic, TopicUpdate, PaginationValues, PageableTopics } from "../types";
 import { getTokenFromLocalStorage } from "../utils";
 
 const baseUrl = "http://localhost:8080/api/topics";
 
-const getAll = async (): Promise<Topic[]> => {
+const getAll = async ({ page, limit }: PaginationValues): Promise<PageableTopics> => {
   const token = getTokenFromLocalStorage();
 
-  const response = await fetch(baseUrl, {
+  const response = await fetch(`${baseUrl}?page=${page}&size=${limit}`, {
     headers: {
       "Authorization": `Bearer ${token}`,
     },
