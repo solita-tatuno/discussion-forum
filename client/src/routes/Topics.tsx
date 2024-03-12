@@ -15,8 +15,10 @@ function Topics() {
       <div className="flex flex-col flex-1 overflow-auto">
         <TopicList topics={data?.topics} isPending={isPending} error={error} />
       </div>
-      <CreateTopic />
-      <Pagination itemCount={data?.totalCount} page={page} setPage={setPage} limit={limit} />
+      <div className="flex justify-between items-center gap-3 flex-wrap sm:flex-row flex-col">
+        <CreateTopic />
+        <Pagination itemCount={data?.totalCount} page={page} setPage={setPage} limit={limit} />
+      </div>
     </section>
   );
 }
