@@ -16,14 +16,22 @@ function Topics() {
     setSearchParams({ page: page.toString(), limit: limit.toString() });
   };
 
+  if (isPending) {
+    return <p>Loading...</p>;
+  }
+
+  if (!data) {
+    return <p>No topics found</p>;
+  }
+
   return (
     <section className="flex flex-col flex-1 p-12 max-h-screen justify-between">
       <div className="flex flex-col flex-1 overflow-auto">
-        <TopicList topics={data?.topics} isPending={isPending} />
+        <TopicList topics={data.topics} />
       </div>
       <div className="flex justify-between items-center gap-3 flex-wrap sm:flex-row flex-col">
         <CreateTopic />
-        <Pagination itemCount={data?.totalCount} page={page} setPage={setPage} limit={limit} />
+        <Pagination itemCount={data.totalCount} page={page} setPage={setPage} limit={limit} />
       </div>
     </section>
   );

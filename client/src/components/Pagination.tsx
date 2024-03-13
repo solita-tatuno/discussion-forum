@@ -2,16 +2,16 @@ import { Dispatch } from "react";
 import ReactPaginate from "react-paginate";
 
 interface Props {
-  itemCount?: number;
+  itemCount: number;
   page: number;
   setPage: Dispatch<number>;
   limit: number;
 }
 
 function Pagination({ itemCount, page, setPage, limit }: Props) {
-  const pageCount = itemCount ? Math.ceil(itemCount / limit) : 0;
-  const first = Math.min((page - 1) * limit + 1, itemCount || 0);
-  const last = Math.min(page * limit, itemCount || 0);
+  const pageCount = Math.ceil(itemCount / limit);
+  const first = Math.min((page - 1) * limit + 1);
+  const last = Math.min(page * limit, itemCount);
 
   const handlePageClick = ({ selected }: { selected: number }) => {
     setPage(selected + 1);

@@ -8,15 +8,10 @@ import { createQueryClientWrapper } from "./helper.tsx";
 
 
 describe("TopicList tests", () => {
-  test("renders loading message if pending", () => {
-    render(<TopicList topics={[]} isPending={true}  />);
-    expect(screen.getByText("Loading...")).toBeDefined();
-  });
-
-  test("renders topics when not pending", () => {
+  test("renders topics", () => {
     render(
       <MemoryRouter>
-        <TopicList topics={testTopics} isPending={false} />
+        <TopicList topics={testTopics} />
       </MemoryRouter>,
       {
         wrapper: createQueryClientWrapper(),

@@ -3,21 +3,10 @@ import { formatDateString } from "../utils";
 import { SingleTopic as SingleTopicType } from "../types";
 
 interface Props {
-  topic: SingleTopicType | undefined;
-  isPending: boolean;
+  topic: SingleTopicType;
 }
 
-function SingleTopic({ topic, isPending }: Props) {
-
-  if (isPending) {
-    return <p>Loading...</p>;
-  }
-
-
-  if (!topic) {
-    return <p>No topic found</p>;
-  }
-
+function SingleTopic({ topic }: Props) {
   return (
     <div className="flex-1">
       <div className="flex gap-2 text-2xl font-bold">
