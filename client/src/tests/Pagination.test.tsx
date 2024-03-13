@@ -2,7 +2,7 @@ import { expect, describe, test, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import Pagination from "../components/Pagination";
 
-describe("useCreateTopic tests", () => {
+describe("Pagination tests", () => {
 
   test("renders correct page count", () => {
     render(<Pagination itemCount={16} page={0} setPage={() => null} limit={5} />);

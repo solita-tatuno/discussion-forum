@@ -4,7 +4,7 @@ import AuthForm from "../components/AuthForm";
 
 describe("AuthForm tests", () => {
   test("initially renders empty form", () => {
-    render(<AuthForm handleSubmit={() => null} error={null} />);
+    render(<AuthForm handleSubmit={() => null} />);
     const usernameInput = screen.getByPlaceholderText("username");
     const passwordInput = screen.getByPlaceholderText("password");
 
@@ -12,17 +12,10 @@ describe("AuthForm tests", () => {
     expect(usernameInput.textContent).toBe("");
   });
 
-  test("renders error message in case of error", () => {
-    const errorMessage = "test error";
-    render(<AuthForm handleSubmit={() => null} error={new Error(errorMessage)} />);
-
-    expect(screen.getByText(errorMessage)).toBeDefined();
-  });
-
   test("calls handleSubmit on form submission", async () => {
     const handleSubmit = vi.fn();
 
-    render(<AuthForm handleSubmit={handleSubmit} error={null} />);
+    render(<AuthForm handleSubmit={handleSubmit} />);
 
     const usernameInput = screen.getByPlaceholderText("username");
     const passwordInput = screen.getByPlaceholderText("password");

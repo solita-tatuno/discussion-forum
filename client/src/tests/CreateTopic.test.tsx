@@ -8,10 +8,9 @@ describe("useCreateTopic tests", () => {
   const spy = vi.spyOn(useCreateTopic, "default");
   const handleSubmit = vi.fn();
 
-  test("renders correctly when no errors", () => {
+  test("renders correctly", () => {
     spy.mockReturnValue({
       createTopic: handleSubmit,
-      error: null,
     });
 
     render(
@@ -25,30 +24,11 @@ describe("useCreateTopic tests", () => {
     expect(screen.getByText("Create")).toBeDefined();
   });
 
-  test("renders error message in case of error", () => {
-    const errorMessage = "test error";
-
-    spy.mockReturnValue({
-      createTopic: handleSubmit,
-      error: new Error(errorMessage),
-    });
-
-    render(
-      <CreateTopic />,
-      {
-        wrapper: createQueryClientWrapper(),
-      },
-    );
-
-    expect(screen.getByText(errorMessage)).toBeDefined();
-  });
-
   test("calls createTopic once with correct values", async () => {
     const newTopicName = "new topic";
 
     spy.mockReturnValue({
       createTopic: handleSubmit,
-      error: null,
     });
 
     render(
