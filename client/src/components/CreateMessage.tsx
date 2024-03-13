@@ -8,7 +8,7 @@ interface Props {
 
 function CreateMessage({ topicId }: Props) {
   const [message, setMessage] = useState<string>("");
-  const { createMessage, error } = useCreateMessage(topicId);
+  const { createMessage } = useCreateMessage(topicId);
 
   const handleCreateMessage = (topicId: number) => {
     createMessage({ message, topicId });
@@ -28,7 +28,6 @@ function CreateMessage({ topicId }: Props) {
       >
         Create
       </button>
-      {error && <p className="text-red-600">{error.message}</p>}
     </section>
   );
 }

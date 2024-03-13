@@ -3,13 +3,13 @@ import topicService from "../services/topics";
 import { PaginationValues } from "../types";
 
 const useTopics = (pagination: PaginationValues) => {
-  const { data, isPending, isError, error } = useQuery({
+  const { data, isPending } = useQuery({
       queryKey: ["topics", pagination],
       queryFn: () => topicService.getAll(pagination),
     },
   );
 
-  return { data, isPending, isError, error };
+  return { data, isPending };
 };
 
 export default useTopics;

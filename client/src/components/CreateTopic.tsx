@@ -3,7 +3,7 @@ import useCreateTopic from "../hooks/useCreateTopic.ts";
 
 function CreateTopic() {
   const [topicName, setTopicName] = useState<string>("");
-  const { createTopic, error } = useCreateTopic();
+  const { createTopic } = useCreateTopic();
 
   const handleCreateTopic = () => {
     createTopic(topicName);
@@ -22,7 +22,6 @@ function CreateTopic() {
       >
         Create
       </button>
-      {error && <p className="text-red-600">{error.message}</p>}
     </section>
   );
 }

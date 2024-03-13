@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 import messageService from "../services/messages";
 
 
@@ -10,17 +11,21 @@ interface NewMessage {
 const useCreateMessage = (topicId: number) => {
   const queryClient = useQueryClient();
 
-  const { mutate, error } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: (args: NewMessage) => messageService.create({
       ...args,
       upVotes: 0,
     }),
     onSuccess: () => {
+      toast.success("Message created");
       return queryClient.invalidateQueries({ queryKey: ["topic", topicId] });
+    },
+    onError: (error) => {
+      toast.error(error.message);
     },
   });
 
-  return { createMessage: mutate, error };
+  return { createMessage: mutate };
 };
 
 export default useCreateMessage;

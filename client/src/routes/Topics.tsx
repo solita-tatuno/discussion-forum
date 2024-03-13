@@ -10,7 +10,7 @@ function Topics() {
   const page = Number(searchParams.get("page"));
   const limit = Number(searchParams.get("limit"));
 
-  const { data, isPending, error } = useTopics({ limit, page });
+  const { data, isPending } = useTopics({ limit, page });
 
   const setPage = (page: number) => {
     setSearchParams({ page: page.toString(), limit: limit.toString() });
@@ -19,7 +19,7 @@ function Topics() {
   return (
     <section className="flex flex-col flex-1 p-12 max-h-screen justify-between">
       <div className="flex flex-col flex-1 overflow-auto">
-        <TopicList topics={data?.topics} isPending={isPending} error={error} />
+        <TopicList topics={data?.topics} isPending={isPending} />
       </div>
       <div className="flex justify-between items-center gap-3 flex-wrap sm:flex-row flex-col">
         <CreateTopic />

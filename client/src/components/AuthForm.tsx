@@ -4,10 +4,9 @@ import { UseMutateFunction } from "@tanstack/react-query";
 
 interface Props {
   handleSubmit: UseMutateFunction<unknown, Error, UserCredentials, unknown>,
-  error: Error | null,
 }
 
-function AuthForm({ handleSubmit, error }: Props) {
+function AuthForm({ handleSubmit }: Props) {
   const initialValues: UserCredentials = {
     username: "",
     password: "",
@@ -24,11 +23,6 @@ function AuthForm({ handleSubmit, error }: Props) {
           <ErrorMessage name="email" component="div" />
           <Field className="border-2 border-black" type="password" name="password" placeholder="password" />
           <ErrorMessage name="password" component="div" />
-          {error &&
-            <div>
-              <span className="text-red-600">{error.message} </span>
-            </div>
-          }
           <button className="bg-green-600 p-2 rounded-md" type="submit">
             Submit
           </button>

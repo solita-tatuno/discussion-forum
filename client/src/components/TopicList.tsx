@@ -5,10 +5,9 @@ import TopicRow from "./TopicRow.tsx";
 interface Props {
   topics: Topic[] | undefined;
   isPending: boolean;
-  error: Error | null;
 }
 
-function TopicList({ topics, isPending, error }: Props) {
+function TopicList({ topics, isPending }: Props) {
 
   if (isPending) {
     return <p>Loading...</p>;
@@ -20,15 +19,14 @@ function TopicList({ topics, isPending, error }: Props) {
 
   return (
     <>
-      {error && <div>{error.message}</div>}
-        <ul className="flex flex-col gap-3">
-          {topics.map((topic) => (
-            <TopicRow
-              key={topic.id}
-              topic={topic}
-            />
-          ))}
-        </ul>
+      <ul className="flex flex-col gap-3">
+        {topics.map((topic) => (
+          <TopicRow
+            key={topic.id}
+            topic={topic}
+          />
+        ))}
+      </ul>
     </>
   );
 }
