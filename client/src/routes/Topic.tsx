@@ -2,10 +2,13 @@ import { useParams } from "react-router-dom";
 import SingleTopic from "../components/SingleTopic.tsx";
 import useSingleTopic from "../hooks/useSingleTopic.ts";
 import CreateMessage from "../components/CreateMessage.tsx";
+import Pagination from "../components/Pagination.tsx";
+import useURLSearchParams from "../hooks/useURLSearchParams.ts";
 
 function Topic() {
+  const { page, size, setPage } = useURLSearchParams({ initialPage: "1", initialSize: "5" });
   const { id } = useParams();
-  const { topic, isPending } = useSingleTopic(Number(id));
+  const { topic, isPending } = useSingleTopic(Number(id), { page, size });
 
   if (isPending) {
     return <p>Loading...</p>;
@@ -20,7 +23,10 @@ function Topic() {
       <div className="flex flex-col flex-1 overflow-auto">
         <SingleTopic topic={topic} />
       </div>
-      <CreateMessage topicId={Number(id)} />
+      <div className="flex justify-between items-center gap-3 flex-wrap sm:flex-row flex-col">
+        <CreateMessage topicId={Number(id)} />
+        <Pagination itemCount={topic.messageCount} page={page} setPage={setPage} size={size} />
+      </div>
     </section>
   );
 }

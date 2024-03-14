@@ -5,7 +5,7 @@ import Pagination from "../components/Pagination";
 describe("Pagination tests", () => {
 
   test("renders correct page count", () => {
-    render(<Pagination itemCount={16} page={0} setPage={() => null} limit={5} />);
+    render(<Pagination itemCount={16} page={0} setPage={() => null} size={5} />);
     expect(screen.getByText("1")).toBeDefined();
     expect(screen.getByText("2")).toBeDefined();
     expect(screen.getByText("3")).toBeDefined();
@@ -15,7 +15,7 @@ describe("Pagination tests", () => {
   test("set page is called with correct value when next link is clicked", async () => {
     const setPage = vi.fn();
 
-    render(<Pagination itemCount={15} page={1} setPage={setPage} limit={5} />);
+    render(<Pagination itemCount={15} page={1} setPage={setPage} size={5} />);
 
     fireEvent.click(screen.getByText(">"));
     expect(setPage).toHaveBeenCalledWith(2);
@@ -34,7 +34,7 @@ describe("Pagination tests", () => {
     ];
 
     testCases.forEach(({ page, expectedText }) => {
-      render(<Pagination itemCount={16} page={page} setPage={() => null} limit={5} />);
+      render(<Pagination itemCount={16} page={page} setPage={() => null} size={5} />);
       expect(screen.getByText(expectedText)).toBeDefined();
     });
   });

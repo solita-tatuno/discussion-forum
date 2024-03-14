@@ -38,6 +38,6 @@ export interface SingleTopic extends Topic {
 }
 
 export interface PaginationValues {
-  limit: number;
   page: number;
+  size: number;
 }

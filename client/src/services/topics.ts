@@ -3,10 +3,10 @@ import { getTokenFromLocalStorage } from "../utils";
 
 const baseUrl = "http://localhost:8080/api/topics";
 
-const getAll = async ({ page, limit }: PaginationValues): Promise<PageableTopics> => {
+const getAll = async ({ page, size }: PaginationValues): Promise<PageableTopics> => {
   const token = getTokenFromLocalStorage();
 
-  const response = await fetch(`${baseUrl}?page=${page}&size=${limit}`, {
+  const response = await fetch(`${baseUrl}?page=${page}&size=${size}`, {
     headers: {
       "Authorization": `Bearer ${token}`,
     },
@@ -20,10 +20,10 @@ const getAll = async ({ page, limit }: PaginationValues): Promise<PageableTopics
   return response.json();
 };
 
-const findOne = async (id: number): Promise<SingleTopic> => {
+const findOne = async (id: number, pagination: PaginationValues): Promise<SingleTopic> => {
   const token = getTokenFromLocalStorage();
 
-  const response = await fetch(`${baseUrl}/${id}`, {
+  const response = await fetch(`${baseUrl}/${id}?page=${pagination.page}&size=${pagination.size}`, {
     headers: {
       "Authorization": `Bearer ${token}`,
     },

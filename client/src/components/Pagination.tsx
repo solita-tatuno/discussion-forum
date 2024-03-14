@@ -5,15 +5,16 @@ interface Props {
   itemCount: number;
   page: number;
   setPage: Dispatch<number>;
-  limit: number;
+  size: number;
 }
 
-function Pagination({ itemCount, page, setPage, limit }: Props) {
-  const pageCount = Math.ceil(itemCount / limit);
-  const first = Math.min((page - 1) * limit + 1);
-  const last = Math.min(page * limit, itemCount);
+function Pagination({ itemCount, page, setPage, size }: Props) {
+  const pageCount = Math.ceil(itemCount / size);
+  const first = Math.min((page - 1) * size + 1);
+  const last = Math.min(page * size, itemCount);
 
   const handlePageClick = ({ selected }: { selected: number }) => {
+    // react paginate uses 0-based index
     setPage(selected + 1);
   };
 
@@ -44,6 +45,7 @@ function Pagination({ itemCount, page, setPage, limit }: Props) {
         pageCount={pageCount}
         previousLabel="<"
         renderOnZeroPageCount={null}
+        forcePage={page - 1}
       />
       <p>
         Showing {first} to {last} of {itemCount} results

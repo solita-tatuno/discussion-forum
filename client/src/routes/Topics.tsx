@@ -1,20 +1,15 @@
-import { useSearchParams } from "react-router-dom";
 import TopicList from "../components/TopicList";
 import CreateTopic from "../components/CreateTopic.tsx";
 import useTopics from "../hooks/useTopics";
 import Pagination from "../components/Pagination.tsx";
+import useURLSearchParams from "../hooks/useURLSearchParams.ts";
 
 
 function Topics() {
-  const [searchParams, setSearchParams] = useSearchParams({ page: "1", limit: "6" });
-  const page = Number(searchParams.get("page"));
-  const limit = Number(searchParams.get("limit"));
+  const { page, size, setPage } = useURLSearchParams({ initialPage: "1", initialSize: "6" });
 
-  const { data, isPending } = useTopics({ limit, page });
+  const { data, isPending } = useTopics({ page, size });
 
-  const setPage = (page: number) => {
-    setSearchParams({ page: page.toString(), limit: limit.toString() });
-  };
 
   if (isPending) {
     return <p>Loading...</p>;
@@ -31,7 +26,7 @@ function Topics() {
       </div>
       <div className="flex justify-between items-center gap-3 flex-wrap sm:flex-row flex-col">
         <CreateTopic />
-        <Pagination itemCount={data.totalCount} page={page} setPage={setPage} limit={limit} />
+        <Pagination itemCount={data.totalCount} page={page} setPage={setPage} size={size} />
       </div>
     </section>
   );
