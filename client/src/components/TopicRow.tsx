@@ -71,7 +71,7 @@ function TopicRow({ topic }: Props) {
 
       <Modal isOpen={editModalOpen} onClose={handleEditModalClose}>
         <div className="flex flex-col gap-3 text-center">
-          <h1 className="text-2xl font-semibold">Update Topic</h1>
+          <h2 className="text-2xl font-semibold">Update Topic</h2>
           <input
             type="text"
             placeholder="New topic name"

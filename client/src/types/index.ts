@@ -30,8 +30,11 @@ export interface Message {
   message: string;
   topicId: number;
   user: User;
+  upVotes: number;
   createdAt: string;
 }
+
+export type MessageUpdate = Pick<Message, "id" | "message" | "upVotes"> & { userId: number };
 
 export interface SingleTopic extends Topic {
   messages: Message[];

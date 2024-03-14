@@ -12,8 +12,6 @@ const useURLSearchParams = ({ initialPage, initialSize }: Params) => {
   const page = Number(searchParams.get("page"));
   const size = Number(searchParams.get("size"));
 
-  console.log(page, size)
-
   const setPage = (page: number) => {
     setSearchParams({ page: page.toString(), size: initialSize.toString() });
   };

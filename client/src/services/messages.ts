@@ -1,5 +1,5 @@
 import { getTokenFromLocalStorage } from "../utils";
-import { Message } from "../types";
+import { Message, MessageUpdate } from "../types";
 
 const baseUrl = "http://localhost:8080/api/messages";
 
@@ -29,6 +29,28 @@ const create = async (payload: CreateMessagePayload): Promise<Message> => {
   return response.json();
 };
 
+
+const updateOne = async ({ id, message, userId, upVotes}: MessageUpdate): Promise<Message> => {
+  const token = getTokenFromLocalStorage();
+
+  const response = await fetch(`${baseUrl}/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`,
+    },
+    body: JSON.stringify({ message, userId, upVotes }),
+  });
+
+  if (!response.ok) {
+    const res = await response.json() as Error;
+    throw new Error(res.message);
+  }
+
+  return response.json();
+};
+
 export default {
   create,
+  updateOne,
 };
