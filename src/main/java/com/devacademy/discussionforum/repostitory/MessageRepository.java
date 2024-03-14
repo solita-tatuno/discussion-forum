@@ -36,4 +36,10 @@ public class MessageRepository {
                 .returning()
                 .fetchOneInto(Messages.class);
     }
+
+    public int deleteTopicMessages(Integer topicId) {
+        return dsl.deleteFrom(Tables.MESSAGES)
+                .where(Tables.MESSAGES.TOPIC_ID.eq(topicId))
+                .execute();
+    }
 }
