@@ -90,6 +90,7 @@ public class TopicRepository {
                                         )
                                                 .mapping(MessageWithUser.class, MessageWithUser::new))
                                         .from(Tables.MESSAGES)
+                                        .join(Tables.USERS).on(Tables.MESSAGES.USER_ID.eq(Tables.USERS.ID))
                                         .where(Tables.MESSAGES.TOPIC_ID.eq(Tables.TOPICS.ID))
                                         .offset(pageable.getOffset())
                                         .limit(pageable.getPageSize())
