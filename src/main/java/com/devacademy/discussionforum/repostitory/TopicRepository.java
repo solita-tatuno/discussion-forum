@@ -62,7 +62,7 @@ public class TopicRepository {
         return dsl.fetchCount(dsl.selectFrom(Tables.TOPICS));
     }
 
-    public Optional<SingleTopic> findOne(Integer id) {
+    public Optional<SingleTopic> findOne(Integer id, Pageable pageable) {
         return dsl.select(Tables.TOPICS.ID,
                         Tables.TOPICS.NAME,
                         Tables.TOPICS.CREATED_AT,
@@ -91,11 +91,22 @@ public class TopicRepository {
                                                 .mapping(MessageWithUser.class, MessageWithUser::new))
                                         .from(Tables.MESSAGES)
                                         .where(Tables.MESSAGES.TOPIC_ID.eq(Tables.TOPICS.ID))
-                        )
+                                        .offset(pageable.getOffset())
+                                        .limit(pageable.getPageSize())
+                        ),
+                        count(Tables.MESSAGES.ID).as("messageCount")
                 )
                 .from(Tables.TOPICS)
                 .join(Tables.USERS).on(Tables.TOPICS.USER_ID.eq(Tables.USERS.ID))
+                .leftJoin(Tables.MESSAGES).on(Tables.MESSAGES.TOPIC_ID.eq(Tables.TOPICS.ID))
                 .where(Tables.TOPICS.ID.eq(id))
+                .groupBy(Tables.TOPICS.ID,
+                        Tables.TOPICS.NAME,
+                        Tables.TOPICS.CREATED_AT,
+                        Tables.TOPICS.UPDATED_AT,
+                        Tables.USERS.ID,
+                        Tables.USERS.USERNAME,
+                        Tables.USERS.IS_ADMIN)
                 .fetchOptional(Records.mapping(SingleTopic::new));
     }
 

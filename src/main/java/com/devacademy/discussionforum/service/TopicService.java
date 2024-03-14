@@ -32,8 +32,8 @@ public class TopicService {
         return topicRepository.findAll(pageable);
     }
 
-    public SingleTopic findOne(Integer id) {
-        Optional<SingleTopic> topic = topicRepository.findOne(id);
+    public SingleTopic findOne(Integer id, Pageable pageable) {
+        Optional<SingleTopic> topic = topicRepository.findOne(id, pageable);
         return topic.orElseThrow(() -> new ResourceNotFoundException("Topic not found"));
     }
 

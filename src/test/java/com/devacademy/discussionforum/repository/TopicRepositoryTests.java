@@ -97,8 +97,9 @@ public class TopicRepositoryTests {
         Users user = userHelper.createUser("newUser");
         Topics topic = topicHelper.createTopic("newTopic", user);
         Messages message = messageHelper.createMessage("newMessage", user, topic);
+        Pageable pageable = Pageable.ofSize(10);
 
-        Optional<SingleTopic> optionalSingleTopic = topicRepository.findOne(topic.getId());
+        Optional<SingleTopic> optionalSingleTopic = topicRepository.findOne(topic.getId(), pageable);
 
         assertTrue(optionalSingleTopic.isPresent(), "SingleTopic should be present");
 

@@ -6,6 +6,7 @@ import com.devacademy.discussionforum.dto.TopicsDTO;
 import com.devacademy.discussionforum.service.TopicService;
 import com.jooq.discussionforum.tables.pojos.Topics;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,8 +37,8 @@ public class TopicController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SingleTopic> findOne(@PathVariable("id") Integer id) {
-        SingleTopic topic = topicService.findOne(id);
+    public ResponseEntity<SingleTopic> findOne(@PathVariable("id") Integer id, Pageable pageable) {
+        SingleTopic topic = topicService.findOne(id, pageable);
         return new ResponseEntity<>(topic, HttpStatus.OK);
     }
 
