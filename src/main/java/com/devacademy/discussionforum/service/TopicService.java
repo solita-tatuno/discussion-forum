@@ -54,4 +54,8 @@ public class TopicService {
         return topicRepository.update(id, topic)
                 .orElseThrow(() -> new ResourceNotFoundException("Topic not found"));
     }
+
+    public MessagesDTO getTopicMessages(Integer id, Pageable pageable) {
+        return messageRepository.getTopicMessages(id, pageable);
+    }
 }

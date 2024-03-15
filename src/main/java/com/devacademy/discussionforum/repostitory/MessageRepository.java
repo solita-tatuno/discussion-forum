@@ -2,12 +2,20 @@ package com.devacademy.discussionforum.repostitory;
 
 import com.devacademy.discussionforum.dto.AddMessage;
 import com.devacademy.discussionforum.dto.MessageUpdate;
+import com.devacademy.discussionforum.dto.MessageWithUser;
+import com.devacademy.discussionforum.dto.UserResponse;
+import com.devacademy.discussionforum.dto.MessagesDTO;
 import com.jooq.discussionforum.Tables;
 import com.jooq.discussionforum.tables.pojos.Messages;
 import org.jooq.DSLContext;
+import org.jooq.Records;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
+
+import static org.jooq.impl.DSL.*;
 
 @Repository
 public class MessageRepository {
@@ -43,5 +51,32 @@ public class MessageRepository {
         return dsl.deleteFrom(Tables.MESSAGES)
                 .where(Tables.MESSAGES.TOPIC_ID.eq(topicId))
                 .execute();
+    }
+
+    public MessagesDTO getTopicMessages(Integer id, Pageable pageable) {
+        List<MessageWithUser> m = dsl.select(
+                        Tables.MESSAGES.ID,
+                        Tables.MESSAGES.TOPIC_ID,
+                        Tables.MESSAGES.MESSAGE,
+                        Tables.MESSAGES.UP_VOTES,
+                        Tables.MESSAGES.CREATED_AT,
+                        Tables.MESSAGES.UPDATED_AT,
+                        row(
+                                Tables.USERS.ID,
+                                Tables.USERS.USERNAME,
+                                Tables.USERS.IS_ADMIN
+                        )
+                                .mapping(UserResponse::new))
+                .from(Tables.MESSAGES)
+                .join(Tables.USERS).on(Tables.MESSAGES.USER_ID.eq(Tables.USERS.ID))
+                .where(Tables.MESSAGES.TOPIC_ID.eq(id))
+                .orderBy(Tables.MESSAGES.CREATED_AT.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch(Records.mapping(MessageWithUser::new));
+
+        int totalCount = dsl.fetchCount(selectFrom(Tables.MESSAGES).where(Tables.MESSAGES.TOPIC_ID.eq(id)));
+
+        return new MessagesDTO(m, totalCount);
     }
 }
