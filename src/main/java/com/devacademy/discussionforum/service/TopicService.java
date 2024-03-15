@@ -11,8 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 public class TopicService {
 
@@ -33,11 +31,6 @@ public class TopicService {
 
     public TopicsDTO getAll(Pageable pageable) {
         return topicRepository.findAll(pageable);
-    }
-
-    public SingleTopic findOne(Integer id, Pageable pageable) {
-        Optional<SingleTopic> topic = topicRepository.findOne(id, pageable);
-        return topic.orElseThrow(() -> new ResourceNotFoundException("Topic not found"));
     }
 
     @Transactional

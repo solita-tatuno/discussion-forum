@@ -1,4 +1,4 @@
-import { Topic, SingleTopic, TopicUpdate, PaginationValues, PageableTopics, PageableMessages } from "../types";
+import { Topic, TopicUpdate, PaginationValues, PageableTopics, PageableMessages } from "../types";
 import { getTokenFromLocalStorage } from "../utils";
 
 const baseUrl = "http://localhost:8080/api/topics";
@@ -7,23 +7,6 @@ const getAll = async ({ page, size }: PaginationValues): Promise<PageableTopics>
   const token = getTokenFromLocalStorage();
 
   const response = await fetch(`${baseUrl}?page=${page}&size=${size}`, {
-    headers: {
-      "Authorization": `Bearer ${token}`,
-    },
-  });
-
-  if (!response.ok) {
-    const res = await response.json() as Error;
-    throw new Error(res.message);
-  }
-
-  return response.json();
-};
-
-const findOne = async (id: number, pagination: PaginationValues): Promise<SingleTopic> => {
-  const token = getTokenFromLocalStorage();
-
-  const response = await fetch(`${baseUrl}/${id}?page=${pagination.page}&size=${pagination.size}`, {
     headers: {
       "Authorization": `Bearer ${token}`,
     },
@@ -111,7 +94,6 @@ const getMessages = async (topicId: number, pagination: PaginationValues): Promi
 
 export default {
   getAll,
-  findOne,
   create,
   deleteOne,
   updateOne,

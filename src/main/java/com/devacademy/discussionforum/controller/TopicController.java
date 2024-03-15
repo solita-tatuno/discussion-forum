@@ -33,12 +33,6 @@ public class TopicController {
         return new ResponseEntity<>(allTopics, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<SingleTopic> findOne(@PathVariable("id") Integer id, Pageable pageable) {
-        SingleTopic topic = topicService.findOne(id, pageable);
-        return new ResponseEntity<>(topic, HttpStatus.OK);
-    }
-
     @GetMapping("/{id}/messages")
     public MessagesDTO getMessages(@PathVariable("id") Integer id, Pageable pageable) {
         return topicService.getTopicMessages(id, pageable);

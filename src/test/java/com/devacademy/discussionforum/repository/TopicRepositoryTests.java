@@ -5,7 +5,6 @@ import com.devacademy.discussionforum.helpers.MessageHelper;
 import com.devacademy.discussionforum.helpers.TopicHelper;
 import com.devacademy.discussionforum.helpers.UserHelper;
 import com.devacademy.discussionforum.repostitory.TopicRepository;
-import com.jooq.discussionforum.tables.pojos.Messages;
 import com.jooq.discussionforum.tables.pojos.Topics;
 import com.jooq.discussionforum.tables.pojos.Users;
 import org.junit.jupiter.api.BeforeEach;
@@ -97,25 +96,6 @@ public class TopicRepositoryTests {
 
         TopicWithUser singleTopic = dto.topics().get(0);
         assertEquals(numberOfMessages, singleTopic.messageCount(), "Message count should be " + numberOfMessages);
-    }
-
-    @Test
-    void findsSingleTopicWhenValidId() {
-        Users user = userHelper.createUser("newUser");
-        Topics topic = topicHelper.createTopic("newTopic", user);
-        Messages message = messageHelper.createMessage("newMessage", user, topic);
-        Pageable pageable = Pageable.ofSize(10);
-
-        Optional<SingleTopic> optionalSingleTopic = topicRepository.findOne(topic.getId(), pageable);
-
-        assertTrue(optionalSingleTopic.isPresent(), "SingleTopic should be present");
-
-        SingleTopic singleTopic = optionalSingleTopic.get();
-
-        assertEquals(topic.getName(), singleTopic.name(), "Topic name should match");
-        assertEquals(user.getId(), singleTopic.user().id(), "UserId should match");
-        assertEquals(1, singleTopic.messages().length, "There should be 1 message");
-        assertEquals(message.getMessage(), singleTopic.messages()[0].message(), "Message should match");
     }
 
     @Test
