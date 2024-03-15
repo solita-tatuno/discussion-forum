@@ -34,6 +34,11 @@ export interface Message {
   createdAt: string;
 }
 
+export interface PageableMessages {
+  messages: Message[];
+  totalCount: number;
+}
+
 export type MessageUpdate = Pick<Message, "id" | "message" | "upVotes"> & { userId: number };
 
 export interface SingleTopic extends Topic {

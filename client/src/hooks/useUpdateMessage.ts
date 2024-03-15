@@ -9,7 +9,7 @@ const useUpdateMessage = () => {
     mutationFn: (payload: MessageUpdate) => messageService.updateOne(payload),
     onSuccess: (data) => {
       toast.success("Message updated");
-      return queryClient.invalidateQueries({ queryKey: ["topic", data.topicId] });
+      return queryClient.invalidateQueries({ queryKey: ["topicMessages", data.topicId] });
     },
     onError: (error) => {
       toast.error(error.message);

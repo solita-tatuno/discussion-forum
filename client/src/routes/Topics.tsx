@@ -6,8 +6,8 @@ import useURLSearchParams from "../hooks/useURLSearchParams.ts";
 
 
 function Topics() {
-  const { page, size, setPage } = useURLSearchParams({ initialPage: "1", initialSize: "6" });
-
+  const size = 6;
+  const { page, setPage } = useURLSearchParams({ initialPage: "1" });
   const { data, isPending } = useTopics({ page, size });
 
 

@@ -30,7 +30,7 @@ const create = async (payload: CreateMessagePayload): Promise<Message> => {
 };
 
 
-const updateOne = async ({ id, message, userId, upVotes}: MessageUpdate): Promise<Message> => {
+const updateOne = async ({ id, message, userId, upVotes }: MessageUpdate): Promise<Message> => {
   const token = getTokenFromLocalStorage();
 
   const response = await fetch(`${baseUrl}/${id}`, {

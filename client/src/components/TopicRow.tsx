@@ -39,7 +39,7 @@ function TopicRow({ topic }: Props) {
 
   return (
     <li className="group relative">
-      <Link className="no-underline text-black" to={`/topics/${topic.id}`}>
+      <Link className="no-underline text-black" to={`/topics/${topic.id}`} state={topic}>
         <div
           className="border-2 p-6 rounded-md flex justify-between hover:bg-gray-300 sm:flex-row flex-col items-start gap-3">
           <div className="basis-1/4 break-all">
