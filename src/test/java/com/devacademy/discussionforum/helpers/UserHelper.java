@@ -24,8 +24,8 @@ public class UserHelper {
         return Objects.requireNonNull(dsl.fetchOne(query, username, "password", false)).into(Users.class);
     }
 
-    public List<Users> findUsersByUsername(String username) {
-        String query = "SELECT * FROM users WHERE username = ?";
-        return dsl.fetch(query, username).into(Users.class);
+    public List<Users> getAllUsers() {
+        String query = "SELECT * FROM users";
+        return dsl.fetch(query).into(Users.class);
     }
 }

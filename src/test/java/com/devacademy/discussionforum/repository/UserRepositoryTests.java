@@ -37,7 +37,7 @@ public class UserRepositoryTests {
 
         UserResponse newUser = userRepository.save(user, "hashedPassword");
 
-        List<Users> users = userHelper.findUsersByUsername(user.username());
+        List<Users> users = userHelper.getAllUsers();
         assertEquals(1, users.size(), "There should be only one user");
 
         assertEquals(newUser.username(), users.get(0).getUsername(), "Username should match");
