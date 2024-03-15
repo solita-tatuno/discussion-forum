@@ -7,6 +7,8 @@ import com.jooq.discussionforum.tables.pojos.Messages;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public class MessageRepository {
 
@@ -28,13 +30,13 @@ public class MessageRepository {
                 .fetchOneInto(Messages.class);
     }
 
-    public Messages update(Integer messageId, MessageUpdate message) {
+    public Optional<Messages> update(Integer messageId, MessageUpdate message) {
         return dsl.update(Tables.MESSAGES)
                 .set(Tables.MESSAGES.MESSAGE, message.message())
                 .set(Tables.MESSAGES.UP_VOTES, message.upVotes())
                 .where(Tables.MESSAGES.ID.eq(messageId))
                 .returning()
-                .fetchOneInto(Messages.class);
+                .fetchOptionalInto(Messages.class);
     }
 
     public int deleteTopicMessages(Integer topicId) {

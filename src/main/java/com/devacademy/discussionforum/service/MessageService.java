@@ -2,6 +2,7 @@ package com.devacademy.discussionforum.service;
 
 import com.devacademy.discussionforum.dto.AddMessage;
 import com.devacademy.discussionforum.dto.MessageUpdate;
+import com.devacademy.discussionforum.exception.ResourceNotFoundException;
 import com.devacademy.discussionforum.repostitory.MessageRepository;
 import com.devacademy.discussionforum.security.TokenService;
 import com.jooq.discussionforum.tables.pojos.Messages;
@@ -34,6 +35,7 @@ public class MessageService {
             throw new IllegalArgumentException("User id does not match");
         }
 
-        return messageRepository.update(messageId, message);
+        return messageRepository.update(messageId, message)
+                .orElseThrow(() -> new ResourceNotFoundException("Message not found"));
     }
 }

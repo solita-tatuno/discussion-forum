@@ -30,8 +30,8 @@ public class MessageHelper {
         return Objects.requireNonNull(dsl.fetchOne(query, user.getId(), topic.getId(), message, 0)).into(Messages.class);
     }
 
-    public List<Messages> findMessagesByMessage(String message) {
-        String query = "SELECT * FROM messages WHERE message = ?";
-        return dsl.fetch(query, message).into(Messages.class);
+    public List<Messages> getAllMessages() {
+        String query = "SELECT * FROM messages";
+        return dsl.fetch(query).into(Messages.class);
     }
 }
