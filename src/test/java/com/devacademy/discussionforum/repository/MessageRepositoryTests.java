@@ -2,6 +2,7 @@ package com.devacademy.discussionforum.repository;
 
 import com.devacademy.discussionforum.dto.AddMessage;
 import com.devacademy.discussionforum.dto.MessageUpdate;
+import com.devacademy.discussionforum.dto.MessagesDTO;
 import com.devacademy.discussionforum.helpers.MessageHelper;
 import com.devacademy.discussionforum.helpers.TopicHelper;
 import com.devacademy.discussionforum.helpers.UserHelper;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Pageable;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.List;
@@ -78,6 +80,14 @@ public class MessageRepositoryTests {
     }
 
     @Test
+    void updateReturnsEmptyIfInvalidId() {
+        MessageUpdate messageUpdate = new MessageUpdate("updatedMessage", 0, 1);
+        Optional<Messages> updatedMessage = messageRepository.update(0, messageUpdate);
+
+        assertTrue(updatedMessage.isEmpty(), "Updated message should be empty");
+    }
+
+    @Test
     void deletesTopicMessagesWhenValidTopicId() {
         Users user = userHelper.createUser("newUser");
         Topics topic = topicHelper.createTopic("newTopic", user);
@@ -94,10 +104,16 @@ public class MessageRepositoryTests {
     }
 
     @Test
-    void updateReturnsEmptyIfInvalidId() {
-        MessageUpdate messageUpdate = new MessageUpdate("updatedMessage", 0, 1);
-        Optional<Messages> updatedMessage = messageRepository.update(0, messageUpdate);
+    void getTopicMessagesReturnsAllTopicMessagesWithCorrectTotal() {
+        Users user = userHelper.createUser("newUser");
+        Topics topic = topicHelper.createTopic("newTopic", user);
 
-        assertTrue(updatedMessage.isEmpty(), "Updated message should be empty");
+        messageHelper.createMessage("newMessage", user, topic);
+        messageHelper.createMessage("newMessage2", user, topic);
+
+        MessagesDTO messages = messageRepository.getTopicMessages(topic.getId(), Pageable.ofSize(10));
+
+        assertEquals(2, messages.totalCount(), "There should be 2 messages");
+        assertEquals(2, messages.messages().size(), "There should be 2 messages");
     }
 }
