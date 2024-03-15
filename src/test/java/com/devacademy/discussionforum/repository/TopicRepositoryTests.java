@@ -10,14 +10,19 @@ import com.jooq.discussionforum.tables.pojos.Topics;
 import com.jooq.discussionforum.tables.pojos.Users;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Pageable;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -49,13 +54,13 @@ public class TopicRepositoryTests {
         Users user = userHelper.createUser("newUser");
 
         AddTopic topic = new AddTopic("newTopic", user.getId());
-        Topics insertedTopic = topicRepository.save(topic);
+        topicRepository.save(topic);
 
-        List<Topics> topics = topicHelper.findTopicsByName(topic.name());
+        List<Topics> topics = topicHelper.getAllTopics();
 
         assertEquals(1, topics.size(), "There should be only one topic");
-        assertEquals(insertedTopic.getName(), topics.get(0).getName(), "Topic name should match");
-        assertEquals(insertedTopic.getUserId(), topics.get(0).getUserId(), "TopicUserId should match");
+        assertEquals(topic.name(), topics.get(0).getName(), "Topic name should match");
+        assertEquals(topic.userId(), topics.get(0).getUserId(), "TopicUserId should match");
     }
 
     @Test
@@ -78,18 +83,21 @@ public class TopicRepositoryTests {
         assertTrue(topic2Found, "Topic 2 should be found");
     }
 
-    @Test
-    void correctMessageCountWhenTopicHasMessages() {
+    @ParameterizedTest
+    @ValueSource(ints = {1, 5, 10})
+    void correctMessageCountWhenTopicHasMessages(int numberOfMessages) {
         Users user = userHelper.createUser("newUser");
         Topics topic = topicHelper.createTopic("newTopic", user);
-        messageHelper.createMessage("newMessage", user, topic);
+
+        IntStream.range(0, numberOfMessages).forEach(i -> messageHelper.createMessage("Message " + i, user, topic));
+
         Pageable pageable = Pageable.ofSize(10);
 
         TopicsDTO dto = topicRepository.findAll(pageable);
         assertEquals(1, dto.topics().size(), "There should be 1 topic");
 
         TopicWithUser singleTopic = dto.topics().get(0);
-        assertEquals(1, singleTopic.messageCount(), "Message count should be 1");
+        assertEquals(numberOfMessages, singleTopic.messageCount(), "Message count should be " + numberOfMessages);
     }
 
     @Test
@@ -117,9 +125,19 @@ public class TopicRepositoryTests {
         Topics topic = topicHelper.createTopic("newTopic", user);
 
         int deletedTopicRowsCount = topicRepository.deleteOne(topic.getId());
+        List<Topics> topics = topicHelper.getAllTopics();
 
         assertEquals(1, deletedTopicRowsCount, "One row should be deleted");
-        assertTrue(topicHelper.findTopicsByName(topic.getName()).isEmpty(), "Topic should be deleted");
+        assertTrue(topics.isEmpty(), "There should be no topics");
+    }
+
+    @Test
+    void exceptionIfDeletingTopicWithMessages() {
+        Users user = userHelper.createUser("newUser");
+        Topics topic = topicHelper.createTopic("newTopic", user);
+        messageHelper.createMessage("newMessage", user, topic);
+
+        assertThrows(DataAccessException.class, () -> topicRepository.deleteOne(topic.getId()), "Should throw exception");
     }
 
     @Test
@@ -128,11 +146,22 @@ public class TopicRepositoryTests {
         Topics topic = topicHelper.createTopic("newTopic", user);
 
         AddTopic topicUpdate = new AddTopic("updatedTopic", null);
-        Topics updatedTopic = topicRepository.update(topic.getId(), topicUpdate).orElse(null);
+
+        topicRepository.update(topic.getId(), topicUpdate);
+
+        List<Topics> topicsInDb = topicHelper.getAllTopics();
 
 
-        assertNotNull(updatedTopic, "New topic should not be null");
-        assertEquals(topicUpdate.name(), updatedTopic.getName(), "Topic should have updated name");
-        assertNotEquals(updatedTopic.getUpdatedAt(), topic.getUpdatedAt(), "Topic updated at timestamp should be updated");
+        assertEquals(1, topicsInDb.size(), "There should be only one topic");
+        assertEquals(topicUpdate.name(), topicsInDb.get(0).getName(), "Topic should have updated name");
+        assertEquals(user.getId(), topicsInDb.get(0).getUserId(), "UserId should remain the same");
+    }
+
+    @Test
+    void updateReturnsEmptyIfInvalidId() {
+        AddTopic topicUpdate = new AddTopic("updatedTopic", null);
+        Optional<Topics> updatedTopic = topicRepository.update(0, topicUpdate);
+
+        assertTrue(updatedTopic.isEmpty(), "Updated topic should be empty");
     }
 }

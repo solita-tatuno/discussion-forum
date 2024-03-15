@@ -25,8 +25,8 @@ public class TopicHelper {
         return Objects.requireNonNull(dsl.fetchOne(query, user.getId(), topicName)).into(Topics.class);
     }
 
-    public List<Topics> findTopicsByName(String name) {
-        String query = "SELECT * FROM topics WHERE name = ?";
-        return dsl.fetch(query, name).into(Topics.class);
+    public List<Topics> getAllTopics() {
+        String query = "SELECT * FROM topics";
+        return dsl.fetch(query).into(Topics.class);
     }
 }
