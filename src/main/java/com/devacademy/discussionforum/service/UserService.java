@@ -1,8 +1,8 @@
 package com.devacademy.discussionforum.service;
 
 import com.devacademy.discussionforum.security.CustomUserDetails;
-import com.devacademy.discussionforum.dto.UserRequest;
-import com.devacademy.discussionforum.dto.UserResponse;
+import com.devacademy.discussionforum.dto.AddUserDTO;
+import com.devacademy.discussionforum.dto.UserDTO;
 import com.devacademy.discussionforum.repostitory.UserRepository;
 import com.devacademy.discussionforum.security.UserRole;
 import com.jooq.discussionforum.tables.pojos.Users;
@@ -29,7 +29,7 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public UserResponse addUser(UserRequest user) {
+    public UserDTO addUser(AddUserDTO user) {
         String hashedPassword = passwordEncoder.encode(user.password());
         return userRepository.create(user, hashedPassword);
     }

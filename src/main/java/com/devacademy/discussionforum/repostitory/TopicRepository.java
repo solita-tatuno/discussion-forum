@@ -32,12 +32,12 @@ public class TopicRepository {
     public TopicsDTO getAll(Pageable pageable) {
         int totalRows = countTotalTopics();
 
-        List<TopicWithUser> topics = dsl.select(Tables.TOPICS.ID,
+        List<UserTopicDTO> topics = dsl.select(Tables.TOPICS.ID,
                         Tables.TOPICS.NAME,
                         Tables.TOPICS.CREATED_AT,
                         Tables.TOPICS.UPDATED_AT,
                         row(Tables.USERS.ID, Tables.USERS.USERNAME, Tables.USERS.IS_ADMIN)
-                                .mapping(UserResponse::new),
+                                .mapping(UserDTO::new),
                         count(Tables.MESSAGES.ID).as("messageCount"),
                         max(Tables.MESSAGES.CREATED_AT).as("lastMessageTime"))
                 .from(Tables.TOPICS)
@@ -54,7 +54,7 @@ public class TopicRepository {
                 .orderBy(max(Tables.MESSAGES.CREATED_AT).desc().nullsLast())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .fetch(Records.mapping(TopicWithUser::new));
+                .fetch(Records.mapping(UserTopicDTO::new));
 
         return new TopicsDTO(totalRows, topics);
     }

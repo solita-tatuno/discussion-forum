@@ -1,7 +1,7 @@
 package com.devacademy.discussionforum.repostitory;
 
-import com.devacademy.discussionforum.dto.UserRequest;
-import com.devacademy.discussionforum.dto.UserResponse;
+import com.devacademy.discussionforum.dto.AddUserDTO;
+import com.devacademy.discussionforum.dto.UserDTO;
 import com.jooq.discussionforum.Tables;
 import com.jooq.discussionforum.tables.pojos.Users;
 import org.springframework.stereotype.Repository;
@@ -18,12 +18,12 @@ public class UserRepository {
         this.dsl = dsl;
     }
 
-    public UserResponse create(UserRequest user, String hashedPassword) {
+    public UserDTO create(AddUserDTO user, String hashedPassword) {
         return dsl.insertInto(Tables.USERS)
                 .set(Tables.USERS.USERNAME, user.username())
                 .set(Tables.USERS.PASSWORD_HASH, hashedPassword)
                 .returningResult(Tables.USERS.ID, Tables.USERS.USERNAME, Tables.USERS.IS_ADMIN)
-                .fetchOneInto(UserResponse.class);
+                .fetchOneInto(UserDTO.class);
     }
 
     public Optional<Users> findByUsername(String username) {

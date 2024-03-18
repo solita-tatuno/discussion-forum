@@ -94,7 +94,7 @@ public class TopicRepositoryTests {
         TopicsDTO dto = topicRepository.getAll(pageable);
         assertEquals(1, dto.topics().size(), "There should be 1 topic");
 
-        TopicWithUser singleTopic = dto.topics().get(0);
+        UserTopicDTO singleTopic = dto.topics().get(0);
         assertEquals(numberOfMessages, singleTopic.messageCount(), "Message count should be " + numberOfMessages);
     }
 

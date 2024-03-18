@@ -1,8 +1,8 @@
 package com.devacademy.discussionforum.repository;
 
 
-import com.devacademy.discussionforum.dto.UserRequest;
-import com.devacademy.discussionforum.dto.UserResponse;
+import com.devacademy.discussionforum.dto.AddUserDTO;
+import com.devacademy.discussionforum.dto.UserDTO;
 import com.devacademy.discussionforum.helpers.UserHelper;
 import com.devacademy.discussionforum.repostitory.UserRepository;
 import com.jooq.discussionforum.tables.pojos.Users;
@@ -33,9 +33,9 @@ public class UserRepositoryTests {
 
     @Test
     void savesUserWhenValidUser() {
-        UserRequest user = new UserRequest("newUser", "password");
+        AddUserDTO user = new AddUserDTO("newUser", "password");
 
-        UserResponse newUser = userRepository.create(user, "hashedPassword");
+        UserDTO newUser = userRepository.create(user, "hashedPassword");
 
         List<Users> users = userHelper.getAllUsers();
         assertEquals(1, users.size(), "There should be only one user");

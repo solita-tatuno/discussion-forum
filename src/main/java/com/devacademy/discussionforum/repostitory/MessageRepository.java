@@ -2,8 +2,8 @@ package com.devacademy.discussionforum.repostitory;
 
 import com.devacademy.discussionforum.dto.AddMessageDTO;
 import com.devacademy.discussionforum.dto.MessageUpdateDTO;
-import com.devacademy.discussionforum.dto.MessageWithUser;
-import com.devacademy.discussionforum.dto.UserResponse;
+import com.devacademy.discussionforum.dto.UserMessageDTO;
+import com.devacademy.discussionforum.dto.UserDTO;
 import com.devacademy.discussionforum.dto.MessagesDTO;
 import com.jooq.discussionforum.Tables;
 import com.jooq.discussionforum.tables.pojos.Messages;
@@ -52,7 +52,7 @@ public class MessageRepository {
     }
 
     public MessagesDTO getTopicMessages(Integer id, Pageable pageable) {
-        List<MessageWithUser> messages = dsl.select(
+        List<UserMessageDTO> messages = dsl.select(
                         Tables.MESSAGES.ID,
                         Tables.MESSAGES.TOPIC_ID,
                         Tables.MESSAGES.MESSAGE,
@@ -64,14 +64,14 @@ public class MessageRepository {
                                 Tables.USERS.USERNAME,
                                 Tables.USERS.IS_ADMIN
                         )
-                                .mapping(UserResponse::new))
+                                .mapping(UserDTO::new))
                 .from(Tables.MESSAGES)
                 .join(Tables.USERS).on(Tables.MESSAGES.USER_ID.eq(Tables.USERS.ID))
                 .where(Tables.MESSAGES.TOPIC_ID.eq(id))
                 .orderBy(Tables.MESSAGES.CREATED_AT.asc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .fetch(Records.mapping(MessageWithUser::new));
+                .fetch(Records.mapping(UserMessageDTO::new));
 
         int totalCount = dsl.fetchCount(selectFrom(Tables.MESSAGES).where(Tables.MESSAGES.TOPIC_ID.eq(id)));
 

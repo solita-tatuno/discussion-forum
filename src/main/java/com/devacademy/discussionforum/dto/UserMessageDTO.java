@@ -2,13 +2,12 @@ package com.devacademy.discussionforum.dto;
 
 import java.time.OffsetDateTime;
 
-public record SingleTopic(
+public record UserMessageDTO(
         int id,
-        String name,
+        int topicId,
+        String message,
+        int upVotes,
         OffsetDateTime createdAt,
         OffsetDateTime updatedAt,
-        UserDTO user,
-        UserMessageDTO[] messages,
-        int messageCount
-) {
+        UserDTO user) {
 }
