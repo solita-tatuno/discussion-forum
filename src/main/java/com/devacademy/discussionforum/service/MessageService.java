@@ -4,8 +4,8 @@ import com.devacademy.discussionforum.dto.AddMessage;
 import com.devacademy.discussionforum.dto.MessageUpdate;
 import com.devacademy.discussionforum.exception.ResourceNotFoundException;
 import com.devacademy.discussionforum.repostitory.MessageRepository;
-import com.devacademy.discussionforum.security.TokenService;
 import com.jooq.discussionforum.tables.pojos.Messages;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -31,8 +31,7 @@ public class MessageService {
         Integer userId = tokenService.extractUserIdFromAuthentication(authentication);
 
         if (!Objects.equals(userId, message.userId())) {
-            // TODO: throw authentication error
-            throw new IllegalArgumentException("User id does not match");
+            throw new InsufficientAuthenticationException("You can only update your own messages.");
         }
 
         return messageRepository.update(messageId, message)

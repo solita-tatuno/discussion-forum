@@ -4,7 +4,6 @@ import com.devacademy.discussionforum.dto.*;
 import com.devacademy.discussionforum.exception.ResourceNotFoundException;
 import com.devacademy.discussionforum.repostitory.MessageRepository;
 import com.devacademy.discussionforum.repostitory.TopicRepository;
-import com.devacademy.discussionforum.security.TokenService;
 import com.jooq.discussionforum.tables.pojos.Topics;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;

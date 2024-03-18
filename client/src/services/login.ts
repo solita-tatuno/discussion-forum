@@ -11,7 +11,8 @@ const login = async ({ username, password }: UserCredentials): Promise<String> =
   });
 
   if (!response.ok) {
-    throw new Error("Error");
+    const res = await response.json() as Error;
+    throw new Error(res.message);
   }
 
   return response.text();

@@ -1,5 +1,6 @@
-package com.devacademy.discussionforum.security;
+package com.devacademy.discussionforum.service;
 
+import com.devacademy.discussionforum.security.CustomUserDetails;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
