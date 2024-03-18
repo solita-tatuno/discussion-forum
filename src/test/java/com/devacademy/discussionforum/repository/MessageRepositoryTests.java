@@ -52,7 +52,7 @@ public class MessageRepositoryTests {
         Topics topic = topicHelper.createTopic("newTopic", user);
         AddMessage newMessage = new AddMessage(topic.getId(), "newMessage", 0, user.getId());
 
-        messageRepository.save(newMessage);
+        messageRepository.create(newMessage);
 
         List<Messages> messages = messageHelper.getAllMessages();
 

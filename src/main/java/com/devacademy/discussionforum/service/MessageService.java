@@ -24,7 +24,7 @@ public class MessageService {
 
     public Messages addMessage(AddMessage message, Authentication authentication) {
         Integer userId = tokenService.extractUserIdFromAuthentication(authentication);
-        return messageRepository.save(message.withUserId(userId));
+        return messageRepository.create(message.withUserId(userId));
     }
 
     public Messages updateMessage(Integer messageId, MessageUpdate message, Authentication authentication) {

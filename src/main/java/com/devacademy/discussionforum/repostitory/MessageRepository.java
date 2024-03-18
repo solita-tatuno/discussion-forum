@@ -26,14 +26,12 @@ public class MessageRepository {
         this.dsl = dsl;
     }
 
-    public Messages save(AddMessage message) {
-        return dsl.insertInto(Tables.MESSAGES,
-                        Tables.MESSAGES.MESSAGE,
-                        Tables.MESSAGES.TOPIC_ID,
-                        Tables.MESSAGES.USER_ID,
-                        Tables.MESSAGES.UP_VOTES
-                )
-                .values(message.message(), message.topicId(), message.userId(), message.upVotes())
+    public Messages create(AddMessage message) {
+        return dsl.insertInto(Tables.MESSAGES)
+                .set(Tables.MESSAGES.MESSAGE, message.message())
+                .set(Tables.MESSAGES.TOPIC_ID, message.topicId())
+                .set(Tables.MESSAGES.USER_ID, message.userId())
+                .set(Tables.MESSAGES.UP_VOTES, message.upVotes())
                 .returning()
                 .fetchOneInto(Messages.class);
     }
@@ -54,7 +52,7 @@ public class MessageRepository {
     }
 
     public MessagesDTO getTopicMessages(Integer id, Pageable pageable) {
-        List<MessageWithUser> m = dsl.select(
+        List<MessageWithUser> messages = dsl.select(
                         Tables.MESSAGES.ID,
                         Tables.MESSAGES.TOPIC_ID,
                         Tables.MESSAGES.MESSAGE,
@@ -70,13 +68,13 @@ public class MessageRepository {
                 .from(Tables.MESSAGES)
                 .join(Tables.USERS).on(Tables.MESSAGES.USER_ID.eq(Tables.USERS.ID))
                 .where(Tables.MESSAGES.TOPIC_ID.eq(id))
-                .orderBy(Tables.MESSAGES.CREATED_AT.desc())
+                .orderBy(Tables.MESSAGES.CREATED_AT.asc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch(Records.mapping(MessageWithUser::new));
 
         int totalCount = dsl.fetchCount(selectFrom(Tables.MESSAGES).where(Tables.MESSAGES.TOPIC_ID.eq(id)));
 
-        return new MessagesDTO(m, totalCount);
+        return new MessagesDTO(messages, totalCount);
     }
 }
