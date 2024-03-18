@@ -18,9 +18,10 @@ public class UserRepository {
         this.dsl = dsl;
     }
 
-    public UserResponse save(UserRequest user, String hashedPassword) {
-        return dsl.insertInto(Tables.USERS, Tables.USERS.USERNAME, Tables.USERS.PASSWORD_HASH)
-                .values(user.username(), hashedPassword)
+    public UserResponse create(UserRequest user, String hashedPassword) {
+        return dsl.insertInto(Tables.USERS)
+                .set(Tables.USERS.USERNAME, user.username())
+                .set(Tables.USERS.PASSWORD_HASH, hashedPassword)
                 .returningResult(Tables.USERS.ID, Tables.USERS.USERNAME, Tables.USERS.IS_ADMIN)
                 .fetchOneInto(UserResponse.class);
     }

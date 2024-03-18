@@ -35,7 +35,7 @@ public class UserRepositoryTests {
     void savesUserWhenValidUser() {
         UserRequest user = new UserRequest("newUser", "password");
 
-        UserResponse newUser = userRepository.save(user, "hashedPassword");
+        UserResponse newUser = userRepository.create(user, "hashedPassword");
 
         List<Users> users = userHelper.getAllUsers();
         assertEquals(1, users.size(), "There should be only one user");

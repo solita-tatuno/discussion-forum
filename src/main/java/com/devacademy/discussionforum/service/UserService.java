@@ -31,7 +31,7 @@ public class UserService implements UserDetailsService {
 
     public UserResponse addUser(UserRequest user) {
         String hashedPassword = passwordEncoder.encode(user.password());
-        return userRepository.save(user, hashedPassword);
+        return userRepository.create(user, hashedPassword);
     }
 
     @Override
