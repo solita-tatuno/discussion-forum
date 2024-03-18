@@ -6,7 +6,6 @@ import com.jooq.discussionforum.tables.pojos.Topics;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -22,15 +21,14 @@ public class TopicController {
     }
 
     @PostMapping
-    public ResponseEntity<Topics> addTopic(@RequestBody @Valid AddTopic topic, Authentication authentication) {
-        Topics insertedTopic = topicService.addTopic(topic, authentication);
-        return new ResponseEntity<>(insertedTopic, HttpStatus.CREATED);
+    @ResponseStatus(HttpStatus.CREATED)
+    public Topics addTopic(@RequestBody @Valid AddTopic topic, Authentication authentication) {
+        return topicService.addTopic(topic, authentication);
     }
 
     @GetMapping
-    public ResponseEntity<TopicsDTO> getAll(Pageable pageable) {
-        TopicsDTO allTopics = topicService.getAll(pageable);
-        return new ResponseEntity<>(allTopics, HttpStatus.OK);
+    public TopicsDTO getAll(Pageable pageable) {
+        return topicService.getAll(pageable);
     }
 
     @GetMapping("/{id}/messages")

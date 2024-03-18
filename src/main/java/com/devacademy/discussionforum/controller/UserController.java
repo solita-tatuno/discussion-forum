@@ -6,7 +6,6 @@ import com.devacademy.discussionforum.dto.UserResponse;
 import com.devacademy.discussionforum.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,10 +19,9 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserResponse> addUser(@RequestBody @Valid UserRequest user) {
-        UserResponse newUser = userService.addUser(user);
-
-        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserResponse addUser(@RequestBody @Valid UserRequest user) {
+        return userService.addUser(user);
     }
 
     @GetMapping("/me")

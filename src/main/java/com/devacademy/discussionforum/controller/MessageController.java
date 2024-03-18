@@ -6,7 +6,6 @@ import com.devacademy.discussionforum.service.MessageService;
 import com.jooq.discussionforum.tables.pojos.Messages;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,9 +20,9 @@ public class MessageController {
     }
 
     @PostMapping
-    public ResponseEntity<Messages> addMessage(@RequestBody @Valid AddMessage message, Authentication authentication) {
-        Messages insertedTopic = messageService.addMessage(message, authentication);
-        return new ResponseEntity<>(insertedTopic, HttpStatus.CREATED);
+    @ResponseStatus(HttpStatus.CREATED)
+    public Messages addMessage(@RequestBody @Valid AddMessage message, Authentication authentication) {
+        return messageService.addMessage(message, authentication);
     }
 
     @PutMapping("/{id}")
