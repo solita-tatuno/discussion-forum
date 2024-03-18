@@ -1,7 +1,7 @@
 package com.devacademy.discussionforum.controller;
 
 import com.devacademy.discussionforum.dto.AddMessageDTO;
-import com.devacademy.discussionforum.dto.MessageUpdate;
+import com.devacademy.discussionforum.dto.MessageUpdateDTO;
 import com.devacademy.discussionforum.service.MessageService;
 import com.jooq.discussionforum.tables.pojos.Messages;
 import jakarta.validation.Valid;
@@ -27,7 +27,7 @@ public class MessageController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Messages updateMessage(@PathVariable("id") Integer id, @RequestBody @Valid MessageUpdate message, Authentication authentication) {
+    public Messages updateMessage(@PathVariable("id") Integer id, @RequestBody @Valid MessageUpdateDTO message, Authentication authentication) {
         return messageService.updateMessage(id, message, authentication);
     }
 }

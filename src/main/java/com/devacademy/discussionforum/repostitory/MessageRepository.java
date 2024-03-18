@@ -1,7 +1,7 @@
 package com.devacademy.discussionforum.repostitory;
 
 import com.devacademy.discussionforum.dto.AddMessageDTO;
-import com.devacademy.discussionforum.dto.MessageUpdate;
+import com.devacademy.discussionforum.dto.MessageUpdateDTO;
 import com.devacademy.discussionforum.dto.MessageWithUser;
 import com.devacademy.discussionforum.dto.UserResponse;
 import com.devacademy.discussionforum.dto.MessagesDTO;
@@ -36,7 +36,7 @@ public class MessageRepository {
                 .fetchOneInto(Messages.class);
     }
 
-    public Optional<Messages> update(Integer messageId, MessageUpdate message) {
+    public Optional<Messages> update(Integer messageId, MessageUpdateDTO message) {
         return dsl.update(Tables.MESSAGES)
                 .set(Tables.MESSAGES.MESSAGE, message.message())
                 .set(Tables.MESSAGES.UP_VOTES, message.upVotes())

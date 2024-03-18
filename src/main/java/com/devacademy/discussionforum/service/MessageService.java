@@ -1,7 +1,7 @@
 package com.devacademy.discussionforum.service;
 
 import com.devacademy.discussionforum.dto.AddMessageDTO;
-import com.devacademy.discussionforum.dto.MessageUpdate;
+import com.devacademy.discussionforum.dto.MessageUpdateDTO;
 import com.devacademy.discussionforum.exception.ResourceNotFoundException;
 import com.devacademy.discussionforum.repostitory.MessageRepository;
 import com.jooq.discussionforum.tables.pojos.Messages;
@@ -27,7 +27,7 @@ public class MessageService {
         return messageRepository.create(userId, message);
     }
 
-    public Messages updateMessage(Integer messageId, MessageUpdate message, Authentication authentication) {
+    public Messages updateMessage(Integer messageId, MessageUpdateDTO message, Authentication authentication) {
         Integer userId = tokenService.extractUserIdFromAuthentication(authentication);
 
         if (!Objects.equals(userId, message.userId())) {

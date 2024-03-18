@@ -1,7 +1,7 @@
 package com.devacademy.discussionforum.repository;
 
 import com.devacademy.discussionforum.dto.AddMessageDTO;
-import com.devacademy.discussionforum.dto.MessageUpdate;
+import com.devacademy.discussionforum.dto.MessageUpdateDTO;
 import com.devacademy.discussionforum.dto.MessagesDTO;
 import com.devacademy.discussionforum.helpers.MessageHelper;
 import com.devacademy.discussionforum.helpers.TopicHelper;
@@ -67,7 +67,7 @@ public class MessageRepositoryTests {
         Users user = userHelper.createUser("newUser");
         Topics topic = topicHelper.createTopic("newTopic", user);
         Messages newMessage = messageHelper.createMessage("newMessage", user, topic);
-        MessageUpdate messageUpdate = new MessageUpdate("updatedMessage", 0, newMessage.getUserId());
+        MessageUpdateDTO messageUpdate = new MessageUpdateDTO("updatedMessage", 0, newMessage.getUserId());
 
         messageRepository.update(newMessage.getId(), messageUpdate);
 
@@ -81,7 +81,7 @@ public class MessageRepositoryTests {
 
     @Test
     void updateReturnsEmptyIfInvalidId() {
-        MessageUpdate messageUpdate = new MessageUpdate("updatedMessage", 0, 1);
+        MessageUpdateDTO messageUpdate = new MessageUpdateDTO("updatedMessage", 0, 1);
         Optional<Messages> updatedMessage = messageRepository.update(0, messageUpdate);
 
         assertTrue(updatedMessage.isEmpty(), "Updated message should be empty");
