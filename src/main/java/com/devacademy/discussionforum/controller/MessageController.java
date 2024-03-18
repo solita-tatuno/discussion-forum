@@ -1,6 +1,6 @@
 package com.devacademy.discussionforum.controller;
 
-import com.devacademy.discussionforum.dto.AddMessage;
+import com.devacademy.discussionforum.dto.AddMessageDTO;
 import com.devacademy.discussionforum.dto.MessageUpdate;
 import com.devacademy.discussionforum.service.MessageService;
 import com.jooq.discussionforum.tables.pojos.Messages;
@@ -21,7 +21,7 @@ public class MessageController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Messages addMessage(@RequestBody @Valid AddMessage message, Authentication authentication) {
+    public Messages addMessage(@RequestBody @Valid AddMessageDTO message, Authentication authentication) {
         return messageService.addMessage(message, authentication);
     }
 

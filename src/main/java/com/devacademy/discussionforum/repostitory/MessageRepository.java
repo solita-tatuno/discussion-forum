@@ -1,6 +1,6 @@
 package com.devacademy.discussionforum.repostitory;
 
-import com.devacademy.discussionforum.dto.AddMessage;
+import com.devacademy.discussionforum.dto.AddMessageDTO;
 import com.devacademy.discussionforum.dto.MessageUpdate;
 import com.devacademy.discussionforum.dto.MessageWithUser;
 import com.devacademy.discussionforum.dto.UserResponse;
@@ -26,11 +26,11 @@ public class MessageRepository {
         this.dsl = dsl;
     }
 
-    public Messages create(AddMessage message) {
+    public Messages create(Integer userId, AddMessageDTO message) {
         return dsl.insertInto(Tables.MESSAGES)
                 .set(Tables.MESSAGES.MESSAGE, message.message())
                 .set(Tables.MESSAGES.TOPIC_ID, message.topicId())
-                .set(Tables.MESSAGES.USER_ID, message.userId())
+                .set(Tables.MESSAGES.USER_ID, userId)
                 .set(Tables.MESSAGES.UP_VOTES, message.upVotes())
                 .returning()
                 .fetchOneInto(Messages.class);
