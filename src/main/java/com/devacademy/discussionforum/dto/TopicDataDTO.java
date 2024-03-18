@@ -3,14 +3,9 @@ package com.devacademy.discussionforum.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record AddTopic(
+public record TopicDataDTO(
         @NotNull
         @NotBlank
-        String name,
-
-        Integer userId
+        String name
 ) {
-    public AddTopic withUserId(Integer userId) {
-        return new AddTopic(name, userId);
-    }
 }

@@ -23,9 +23,9 @@ public class TopicService {
         this.messageRepository = messageRepository;
     }
 
-    public Topics addTopic(AddTopic topic, Authentication authentication) {
+    public Topics addTopic(TopicDataDTO topic, Authentication authentication) {
         Integer userId = tokenService.extractUserIdFromAuthentication(authentication);
-        return topicRepository.create(topic.withUserId(userId));
+        return topicRepository.create(userId, topic);
     }
 
     public TopicsDTO getAll(Pageable pageable) {
@@ -42,7 +42,7 @@ public class TopicService {
         }
     }
 
-    public Topics updateTopic(Integer id, AddTopic topic) {
+    public Topics updateTopic(Integer id, TopicDataDTO topic) {
         return topicRepository.update(id, topic)
                 .orElseThrow(() -> new ResourceNotFoundException("Topic not found"));
     }

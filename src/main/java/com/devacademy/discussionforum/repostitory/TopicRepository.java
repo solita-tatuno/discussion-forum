@@ -21,9 +21,9 @@ public class TopicRepository {
         this.dsl = dsl;
     }
 
-    public Topics create(AddTopic topic) {
+    public Topics create(Integer userId, TopicDataDTO topic) {
         return dsl.insertInto(Tables.TOPICS)
-                .set(Tables.TOPICS.USER_ID, topic.userId())
+                .set(Tables.TOPICS.USER_ID, userId)
                 .set(Tables.TOPICS.NAME, topic.name())
                 .returning()
                 .fetchOneInto(Topics.class);
@@ -69,7 +69,7 @@ public class TopicRepository {
                 .execute();
     }
 
-    public Optional<Topics> update(Integer id, AddTopic topic) {
+    public Optional<Topics> update(Integer id, TopicDataDTO topic) {
         return Optional.ofNullable(dsl.update(Tables.TOPICS)
                 .set(Tables.TOPICS.NAME, topic.name())
                 .where(Tables.TOPICS.ID.eq(id))

@@ -51,14 +51,14 @@ public class TopicRepositoryTests {
     void savesTopicWhenValidTopic() {
         Users user = userHelper.createUser("newUser");
 
-        AddTopic topic = new AddTopic("newTopic", user.getId());
-        topicRepository.create(topic);
+        TopicDataDTO topic = new TopicDataDTO("newTopic");
+        topicRepository.create(user.getId(), topic);
 
         List<Topics> topics = topicHelper.getAllTopics();
 
         assertEquals(1, topics.size(), "There should be only one topic");
         assertEquals(topic.name(), topics.get(0).getName(), "Topic name should match");
-        assertEquals(topic.userId(), topics.get(0).getUserId(), "TopicUserId should match");
+        assertEquals(user.getId(), topics.get(0).getUserId(), "TopicUserId should match");
     }
 
     @Test
@@ -124,7 +124,7 @@ public class TopicRepositoryTests {
         Users user = userHelper.createUser("newUser");
         Topics topic = topicHelper.createTopic("newTopic", user);
 
-        AddTopic topicUpdate = new AddTopic("updatedTopic", null);
+        TopicDataDTO topicUpdate = new TopicDataDTO("updatedTopic");
 
         topicRepository.update(topic.getId(), topicUpdate);
 
@@ -138,7 +138,7 @@ public class TopicRepositoryTests {
 
     @Test
     void updateReturnsEmptyIfInvalidId() {
-        AddTopic topicUpdate = new AddTopic("updatedTopic", null);
+        TopicDataDTO topicUpdate = new TopicDataDTO("updatedTopic");
         Optional<Topics> updatedTopic = topicRepository.update(0, topicUpdate);
 
         assertTrue(updatedTopic.isEmpty(), "Updated topic should be empty");

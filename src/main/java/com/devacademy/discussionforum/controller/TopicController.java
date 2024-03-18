@@ -22,7 +22,7 @@ public class TopicController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Topics addTopic(@RequestBody @Valid AddTopic topic, Authentication authentication) {
+    public Topics addTopic(@RequestBody @Valid TopicDataDTO topic, Authentication authentication) {
         return topicService.addTopic(topic, authentication);
     }
 
@@ -49,7 +49,7 @@ public class TopicController {
     @PreAuthorize("hasRole(T(com.devacademy.discussionforum.security.UserRole).ROLE_ADMIN)")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Topics updateTopic(@PathVariable("id") Integer id, @RequestBody @Valid AddTopic topic) {
+    public Topics updateTopic(@PathVariable("id") Integer id, @RequestBody @Valid TopicDataDTO topic) {
         return topicService.updateTopic(id, topic);
     }
 }
