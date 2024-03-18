@@ -21,14 +21,15 @@ public class TopicRepository {
         this.dsl = dsl;
     }
 
-    public Topics save(AddTopic topic) {
-        return dsl.insertInto(Tables.TOPICS, Tables.TOPICS.USER_ID, Tables.TOPICS.NAME)
-                .values(topic.userId(), topic.name())
+    public Topics create(AddTopic topic) {
+        return dsl.insertInto(Tables.TOPICS)
+                .set(Tables.TOPICS.USER_ID, topic.userId())
+                .set(Tables.TOPICS.NAME, topic.name())
                 .returning()
                 .fetchOneInto(Topics.class);
     }
 
-    public TopicsDTO findAll(Pageable pageable) {
+    public TopicsDTO getAll(Pageable pageable) {
         int totalRows = countTotalTopics();
 
         List<TopicWithUser> topics = dsl.select(Tables.TOPICS.ID,

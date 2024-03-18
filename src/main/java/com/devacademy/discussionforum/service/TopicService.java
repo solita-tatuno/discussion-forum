@@ -25,11 +25,11 @@ public class TopicService {
 
     public Topics addTopic(AddTopic topic, Authentication authentication) {
         Integer userId = tokenService.extractUserIdFromAuthentication(authentication);
-        return topicRepository.save(topic.withUserId(userId));
+        return topicRepository.create(topic.withUserId(userId));
     }
 
     public TopicsDTO getAll(Pageable pageable) {
-        return topicRepository.findAll(pageable);
+        return topicRepository.getAll(pageable);
     }
 
     @Transactional

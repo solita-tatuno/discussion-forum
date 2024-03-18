@@ -52,7 +52,7 @@ public class TopicRepositoryTests {
         Users user = userHelper.createUser("newUser");
 
         AddTopic topic = new AddTopic("newTopic", user.getId());
-        topicRepository.save(topic);
+        topicRepository.create(topic);
 
         List<Topics> topics = topicHelper.getAllTopics();
 
@@ -69,7 +69,7 @@ public class TopicRepositoryTests {
         Topics topic2 = topicHelper.createTopic("newTopic2", user);
         Pageable pageable = Pageable.ofSize(10);
 
-        TopicsDTO dto = topicRepository.findAll(pageable);
+        TopicsDTO dto = topicRepository.getAll(pageable);
         assertEquals(2, dto.topics().size(), "There should be 2 topics");
 
         boolean topicFound = dto.topics().stream()
@@ -91,7 +91,7 @@ public class TopicRepositoryTests {
 
         Pageable pageable = Pageable.ofSize(10);
 
-        TopicsDTO dto = topicRepository.findAll(pageable);
+        TopicsDTO dto = topicRepository.getAll(pageable);
         assertEquals(1, dto.topics().size(), "There should be 1 topic");
 
         TopicWithUser singleTopic = dto.topics().get(0);
