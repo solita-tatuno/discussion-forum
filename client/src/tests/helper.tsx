@@ -36,6 +36,7 @@ export const testTopics: Topic[] = [
       isAdmin: false,
     },
     messageCount: 0,
+    lastMessageTime: new Date().toISOString(),
   },
   {
     id: 2,
@@ -47,5 +48,6 @@ export const testTopics: Topic[] = [
       isAdmin: false,
     },
     messageCount: 0,
+    lastMessageTime: new Date().toISOString(),
   },
 ];
