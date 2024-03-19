@@ -1,8 +1,8 @@
 import { expect, describe, test, vi } from "vitest";
-import { render, screen, fireEvent, act } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import CreateTopic from "../components/CreateTopic";
 import * as useCreateTopic from "../hooks/useCreateTopic";
-import { createQueryClientWrapper } from "./helper.tsx";
+import { createQueryClientWrapper, renderWithUser } from "./helper.tsx";
 
 describe("useCreateTopic tests", () => {
   const spy = vi.spyOn(useCreateTopic, "default");
@@ -17,8 +17,11 @@ describe("useCreateTopic tests", () => {
       wrapper: createQueryClientWrapper(),
     });
 
-    expect(screen.getByPlaceholderText("Create new topic")).toBeDefined();
-    expect(screen.getByText("Create")).toBeDefined();
+    const input = screen.getByPlaceholderText("Create new topic");
+    const button = screen.getByText("Create");
+
+    expect(input).toBeDefined();
+    expect(button).toBeDefined();
   });
 
   test("calls createTopic once with correct values", async () => {
@@ -28,22 +31,15 @@ describe("useCreateTopic tests", () => {
       createTopic: handleSubmit,
     });
 
-    render(<CreateTopic />, {
+    const { user } = renderWithUser(<CreateTopic />, {
       wrapper: createQueryClientWrapper(),
     });
 
     const input = screen.getByPlaceholderText("Create new topic");
     const button = screen.getByText("Create");
 
-    act(() => {
-      fireEvent.change(input, {
-        target: {
-          value: newTopicName,
-        },
-      });
-
-      button.click();
-    });
+    await user.type(input, newTopicName);
+    await user.click(button);
 
     expect(handleSubmit).toHaveBeenCalledOnce();
     expect(handleSubmit).toHaveBeenCalledWith(newTopicName);

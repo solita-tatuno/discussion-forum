@@ -1,8 +1,7 @@
 import { vi, describe, test, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import CreateMessage from "../components/CreateMessage";
-import { createQueryClientWrapper } from "./helper";
+import { createQueryClientWrapper, renderWithUser } from "./helper";
 import * as useCreateMessage from "../hooks/useCreateMessage.ts";
 
 describe("CreateMessage", () => {
@@ -20,14 +19,13 @@ describe("CreateMessage", () => {
   test("calls handleCreateMessage on button click once with correct values", async () => {
     const spy = vi.spyOn(useCreateMessage, "default");
     const mockHandleCreateMessage = vi.fn();
-    const user = userEvent.setup();
     const topicId = 1;
 
     spy.mockReturnValue({
       createMessage: mockHandleCreateMessage,
     });
 
-    render(<CreateMessage topicId={topicId} />, {
+    const { user } = renderWithUser(<CreateMessage topicId={topicId} />, {
       wrapper: createQueryClientWrapper(),
     });
 

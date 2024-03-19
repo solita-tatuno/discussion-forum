@@ -1,12 +1,16 @@
 import { describe, expect, test, vi } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import AuthForm from "../components/AuthForm";
+import { renderWithUser } from "./helper.tsx";
 
 describe("AuthForm tests", () => {
   test("initially renders empty form", () => {
     render(<AuthForm handleSubmit={() => null} />);
     const usernameInput = screen.getByPlaceholderText("username");
     const passwordInput = screen.getByPlaceholderText("password");
+
+    expect(usernameInput).toBeDefined();
+    expect(passwordInput).toBeDefined();
 
     expect(passwordInput.textContent).toBe("");
     expect(usernameInput.textContent).toBe("");
@@ -15,25 +19,20 @@ describe("AuthForm tests", () => {
   test("calls handleSubmit on form submission", async () => {
     const handleSubmit = vi.fn();
 
-    render(<AuthForm handleSubmit={handleSubmit} />);
+    const { user } = renderWithUser(<AuthForm handleSubmit={handleSubmit} />);
 
     const usernameInput = screen.getByPlaceholderText("username");
     const passwordInput = screen.getByPlaceholderText("password");
+    const submitButton = screen.getByText("Submit");
 
     const expectedValues = { username: "username", password: "password" };
 
-    fireEvent.change(usernameInput, {
-      target: { value: expectedValues.username },
-    });
-    fireEvent.change(passwordInput, {
-      target: { value: expectedValues.password },
-    });
+    await user.type(usernameInput, expectedValues.username);
+    await user.type(passwordInput, expectedValues.password);
 
-    screen.getByText("Submit").click();
+    await user.click(submitButton);
 
-    await vi.waitFor(() => {
-      expect(handleSubmit).toHaveBeenCalledOnce();
-      expect(handleSubmit).toHaveBeenCalledWith(expectedValues);
-    });
+    expect(handleSubmit).toHaveBeenCalledOnce();
+    expect(handleSubmit).toHaveBeenCalledWith(expectedValues);
   });
 });
