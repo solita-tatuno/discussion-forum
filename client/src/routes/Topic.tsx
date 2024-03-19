@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import SingleTopic from "../components/SingleTopic.tsx";
+import TopicMessages from "../components/TopicMessages.tsx";
 import CreateMessage from "../components/CreateMessage.tsx";
 import Pagination from "../components/Pagination.tsx";
 import useURLSearchParams from "../hooks/useURLSearchParams.ts";
@@ -23,7 +23,7 @@ function Topic() {
   return (
     <section className="flex flex-col flex-1 px-12 py-3 max-h-screen justify-between">
       <div className="flex flex-col flex-1 overflow-auto">
-        <SingleTopic messages={data.messages} />
+        <TopicMessages messages={data.messages} />
       </div>
       <div className="flex justify-between items-center gap-3 flex-wrap sm:flex-row flex-col">
         <CreateMessage topicId={Number(id)} />

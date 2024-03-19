@@ -41,9 +41,6 @@ export interface PageableMessages {
 
 export type MessageUpdate = Pick<Message, "id" | "message" | "upVotes"> & { userId: number };
 
-export interface SingleTopic extends Topic {
-  messages: Message[];
-}
 
 export interface PaginationValues {
   page: number;

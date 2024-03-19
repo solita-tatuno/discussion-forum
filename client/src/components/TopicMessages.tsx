@@ -1,13 +1,13 @@
 import { Link, useLocation } from "react-router-dom";
 import { formatDateString } from "../utils";
-import { Message, Topic } from "../types";
-import MessageActions from "./MessageActions.tsx";
+import { Message as MessageType, Topic } from "../types";
+import Message from "./Message";
 
 interface Props {
-  messages: Message[];
+  messages: MessageType[];
 }
 
-function SingleTopic({ messages }: Props) {
+function TopicMessages({ messages }: Props) {
   const { state } = useLocation();
   const topic = state as Topic;
 
@@ -25,20 +25,11 @@ function SingleTopic({ messages }: Props) {
       <p>Created by {topic.user.username} {formatDateString(topic.createdAt)}</p>
       <div>
         {messages.map((message) => (
-          <div key={message.id} className="flex mb-6 border-2 rounded-md relative">
-            <div className="basis-1/4 bg-gray-300 p-6 text-center">
-              <h3 className="border-b font-bold">{message.user.username}</h3>
-            </div>
-            <div className="flex flex-col gap-3 p-6 basis-3/4">
-              <p className="border-b">{formatDateString(message.createdAt)}</p>
-              <p>{message.message}</p>
-            </div>
-            <MessageActions message={message} />
-          </div>
+          <Message key={message.id} message={message} />
         ))}
       </div>
     </div>
   );
 }
 
-export default SingleTopic;
+export default TopicMessages;
