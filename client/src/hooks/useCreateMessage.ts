@@ -18,7 +18,7 @@ const useCreateMessage = (topicId: number) => {
     }),
     onSuccess: () => {
       toast.success("Message created");
-      return queryClient.invalidateQueries({ queryKey: ["topic", topicId] });
+      return queryClient.invalidateQueries({ queryKey: ["topicMessages", topicId] });
     },
     onError: (error) => {
       toast.error(error.message);
