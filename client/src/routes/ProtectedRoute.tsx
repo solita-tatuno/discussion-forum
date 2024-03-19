@@ -1,6 +1,7 @@
 import useCurrentUser from "../hooks/useCurrentUser.ts";
 import { Navigate } from "react-router-dom";
 import { ReactNode } from "react";
+import TopBar from "../components/TopBar.tsx";
 
 interface Props {
   children: ReactNode;
@@ -17,7 +18,12 @@ const ProtectedRoute = ({ children }: Props) => {
     return <Navigate to="/login" />;
   }
 
-  return children;
+  return (
+    <>
+      <TopBar username={currentUser.username} />
+      {children}
+    </>
+  );
 };
 
 export default ProtectedRoute;

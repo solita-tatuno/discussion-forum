@@ -6,7 +6,7 @@ import useURLSearchParams from "../hooks/useURLSearchParams.ts";
 
 
 function Topics() {
-  const size = 6;
+  const size = 7;
   const { page, setPage } = useURLSearchParams({ initialPage: "1" });
   const { data, isPending } = useTopics({ page, size });
 
@@ -20,7 +20,7 @@ function Topics() {
   }
 
   return (
-    <section className="flex flex-col flex-1 p-12 max-h-screen justify-between">
+    <section className="flex flex-col flex-1 px-12 py-3 max-h-screen justify-between">
       <div className="flex flex-col flex-1 overflow-auto">
         <TopicList topics={data.topics} />
       </div>

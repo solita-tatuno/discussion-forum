@@ -21,7 +21,7 @@ function Topic() {
   }
 
   return (
-    <section className="flex flex-col flex-1 p-12 max-h-screen justify-between">
+    <section className="flex flex-col flex-1 px-12 py-3 max-h-screen justify-between">
       <div className="flex flex-col flex-1 overflow-auto">
         <SingleTopic messages={data.messages} />
       </div>
