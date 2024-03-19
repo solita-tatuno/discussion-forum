@@ -35,4 +35,17 @@ describe("AuthForm tests", () => {
     expect(handleSubmit).toHaveBeenCalledOnce();
     expect(handleSubmit).toHaveBeenCalledWith(expectedValues);
   });
+
+  test("renders error message if username or password is empty", async () => {
+    const handleSubmit = vi.fn();
+
+    const { user } = renderWithUser(<AuthForm handleSubmit={handleSubmit} />);
+
+    const submitButton = screen.getByText("Submit");
+
+    await user.click(submitButton);
+
+    expect(screen.getByText("Username required")).toBeDefined();
+    expect(screen.getByText("Password required")).toBeDefined();
+  });
 });

@@ -16,6 +16,16 @@ function AuthForm({ handleSubmit }: Props) {
     <Formik
       initialValues={initialValues}
       onSubmit={(values) => handleSubmit(values)}
+      validate={(values) => {
+        const errors: Partial<UserCredentials> = {};
+        if (!values.username) {
+          errors.username = "Username required";
+        }
+        if (!values.password) {
+          errors.password = "Password required";
+        }
+        return errors;
+      }}
     >
       {({}) => (
         <Form className="flex flex-col gap-2">
@@ -25,14 +35,22 @@ function AuthForm({ handleSubmit }: Props) {
             name="username"
             placeholder="username"
           />
-          <ErrorMessage name="email" component="div" />
+          <ErrorMessage
+            name="username"
+            className="text-red-600"
+            component="span"
+          />
           <Field
             className="border-2 border-black"
             type="password"
             name="password"
             placeholder="password"
           />
-          <ErrorMessage name="password" component="div" />
+          <ErrorMessage
+            name="password"
+            className="text-red-600"
+            component="span"
+          />
           <button className="rounded-md bg-green-600 p-2" type="submit">
             Submit
           </button>
