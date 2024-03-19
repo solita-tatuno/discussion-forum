@@ -6,7 +6,6 @@ import com.devacademy.discussionforum.helpers.TopicHelper;
 import com.devacademy.discussionforum.helpers.UserHelper;
 import com.devacademy.discussionforum.jooq.tables.pojos.Topics;
 import com.devacademy.discussionforum.jooq.tables.pojos.Users;
-import com.devacademy.discussionforum.repostitory.TopicRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

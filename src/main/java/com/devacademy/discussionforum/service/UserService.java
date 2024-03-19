@@ -3,7 +3,7 @@ package com.devacademy.discussionforum.service;
 import com.devacademy.discussionforum.security.CustomUserDetails;
 import com.devacademy.discussionforum.dto.AddUserDTO;
 import com.devacademy.discussionforum.dto.UserDTO;
-import com.devacademy.discussionforum.repostitory.UserRepository;
+import com.devacademy.discussionforum.repository.UserRepository;
 import com.devacademy.discussionforum.security.UserRole;
 import com.devacademy.discussionforum.jooq.tables.pojos.Users;
 import org.springframework.security.core.GrantedAuthority;

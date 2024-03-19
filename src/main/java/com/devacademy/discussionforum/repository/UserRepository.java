@@ -1,4 +1,4 @@
-package com.devacademy.discussionforum.repostitory;
+package com.devacademy.discussionforum.repository;
 
 import com.devacademy.discussionforum.dto.AddUserDTO;
 import com.devacademy.discussionforum.dto.UserDTO;

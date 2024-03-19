@@ -9,7 +9,6 @@ import com.devacademy.discussionforum.helpers.UserHelper;
 import com.devacademy.discussionforum.jooq.tables.pojos.Messages;
 import com.devacademy.discussionforum.jooq.tables.pojos.Topics;
 import com.devacademy.discussionforum.jooq.tables.pojos.Users;
-import com.devacademy.discussionforum.repostitory.MessageRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

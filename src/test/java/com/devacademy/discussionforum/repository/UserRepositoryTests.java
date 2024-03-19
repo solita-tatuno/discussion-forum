@@ -5,7 +5,6 @@ import com.devacademy.discussionforum.dto.AddUserDTO;
 import com.devacademy.discussionforum.dto.UserDTO;
 import com.devacademy.discussionforum.helpers.UserHelper;
 import com.devacademy.discussionforum.jooq.tables.pojos.Users;
-import com.devacademy.discussionforum.repostitory.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,8 +2,8 @@ package com.devacademy.discussionforum.service;
 
 import com.devacademy.discussionforum.dto.*;
 import com.devacademy.discussionforum.exception.ResourceNotFoundException;
-import com.devacademy.discussionforum.repostitory.MessageRepository;
-import com.devacademy.discussionforum.repostitory.TopicRepository;
+import com.devacademy.discussionforum.repository.MessageRepository;
+import com.devacademy.discussionforum.repository.TopicRepository;
 import com.devacademy.discussionforum.jooq.tables.pojos.Topics;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;

@@ -3,7 +3,7 @@ package com.devacademy.discussionforum.service;
 import com.devacademy.discussionforum.dto.AddMessageDTO;
 import com.devacademy.discussionforum.dto.MessageUpdateDTO;
 import com.devacademy.discussionforum.exception.ResourceNotFoundException;
-import com.devacademy.discussionforum.repostitory.MessageRepository;
+import com.devacademy.discussionforum.repository.MessageRepository;
 import com.devacademy.discussionforum.jooq.tables.pojos.Messages;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
