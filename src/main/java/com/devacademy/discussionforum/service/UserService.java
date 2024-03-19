@@ -5,7 +5,7 @@ import com.devacademy.discussionforum.dto.AddUserDTO;
 import com.devacademy.discussionforum.dto.UserDTO;
 import com.devacademy.discussionforum.repostitory.UserRepository;
 import com.devacademy.discussionforum.security.UserRole;
-import com.jooq.discussionforum.tables.pojos.Users;
+import com.devacademy.discussionforum.jooq.tables.pojos.Users;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;

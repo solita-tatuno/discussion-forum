@@ -1,8 +1,8 @@
 package com.devacademy.discussionforum.repostitory;
 
 import com.devacademy.discussionforum.dto.*;
-import com.jooq.discussionforum.Tables;
-import com.jooq.discussionforum.tables.pojos.Topics;
+import com.devacademy.discussionforum.jooq.Tables;
+import com.devacademy.discussionforum.jooq.tables.pojos.Topics;
 import org.jooq.*;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;

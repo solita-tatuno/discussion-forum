@@ -72,7 +72,7 @@ jooq {
                     pojos = true
                 }
                 target {
-                    packageName = 'com.jooq.discussionforum'
+                    packageName = 'com.devacademy.discussionforum.jooq'
                     directory = 'src/main/java'
                 }
             }

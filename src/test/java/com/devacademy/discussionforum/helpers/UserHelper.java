@@ -1,7 +1,7 @@
 package com.devacademy.discussionforum.helpers;
 
-import com.jooq.discussionforum.Tables;
-import com.jooq.discussionforum.tables.pojos.Users;
+import com.devacademy.discussionforum.jooq.Tables;
+import com.devacademy.discussionforum.jooq.tables.pojos.Users;
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

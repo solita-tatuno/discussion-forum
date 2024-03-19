@@ -2,8 +2,8 @@ package com.devacademy.discussionforum.repostitory;
 
 import com.devacademy.discussionforum.dto.AddUserDTO;
 import com.devacademy.discussionforum.dto.UserDTO;
-import com.jooq.discussionforum.Tables;
-import com.jooq.discussionforum.tables.pojos.Users;
+import com.devacademy.discussionforum.jooq.Tables;
+import com.devacademy.discussionforum.jooq.tables.pojos.Users;
 import org.springframework.stereotype.Repository;
 import org.jooq.DSLContext;
 

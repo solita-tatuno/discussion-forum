@@ -2,7 +2,7 @@ package com.devacademy.discussionforum.controller;
 
 import com.devacademy.discussionforum.dto.*;
 import com.devacademy.discussionforum.service.TopicService;
-import com.jooq.discussionforum.tables.pojos.Topics;
+import com.devacademy.discussionforum.jooq.tables.pojos.Topics;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;

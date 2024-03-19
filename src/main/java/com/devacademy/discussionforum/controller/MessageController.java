@@ -3,7 +3,7 @@ package com.devacademy.discussionforum.controller;
 import com.devacademy.discussionforum.dto.AddMessageDTO;
 import com.devacademy.discussionforum.dto.MessageUpdateDTO;
 import com.devacademy.discussionforum.service.MessageService;
-import com.jooq.discussionforum.tables.pojos.Messages;
+import com.devacademy.discussionforum.jooq.tables.pojos.Messages;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
