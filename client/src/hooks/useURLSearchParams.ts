@@ -8,7 +8,9 @@ const useURLSearchParams = ({ initialPage }: Params) => {
   const location = useLocation();
   const state = location.state;
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams({ page: initialPage });
+  const [searchParams, setSearchParams] = useSearchParams({
+    page: initialPage,
+  });
 
   const page = Number(searchParams.get("page"));
 

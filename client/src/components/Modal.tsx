@@ -11,10 +11,10 @@ function Modal({ isOpen, onClose, children }: Props) {
   if (!isOpen) return null;
 
   return createPortal(
-    <div className="fixed inset-0 bg-gray-600 bg-opacity-20 z-50 flex justify-center items-center">
-      <div className="bg-white p-4 rounded-lg max-w-sm w-full">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-600 bg-opacity-20">
+      <div className="w-full max-w-sm rounded-lg bg-white p-4">
         <button
-          className="float-right top-0 right-0 text-xl font-semibold"
+          className="right-0 top-0 float-right text-xl font-semibold"
           onClick={onClose}
         >
           &times;
@@ -22,7 +22,7 @@ function Modal({ isOpen, onClose, children }: Props) {
         {children}
       </div>
     </div>,
-    document.body,
+    document.body
   );
 }
 

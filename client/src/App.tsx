@@ -1,7 +1,4 @@
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Signup from "./routes/Signup.tsx";
 import Login from "./routes/Login.tsx";
 import Topics from "./routes/Topics.tsx";
@@ -36,4 +33,3 @@ function App() {
 }
 
 export default App;
-

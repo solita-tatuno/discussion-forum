@@ -4,10 +4,9 @@ import { PaginationValues } from "../types";
 
 const useTopics = (pagination: PaginationValues) => {
   const { data, isPending } = useQuery({
-      queryKey: ["topics", pagination],
-      queryFn: () => topicService.getAll(pagination),
-    },
-  );
+    queryKey: ["topics", pagination],
+    queryFn: () => topicService.getAll(pagination),
+  });
 
   return { data, isPending };
 };

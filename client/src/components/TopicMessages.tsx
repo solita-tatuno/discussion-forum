@@ -18,11 +18,17 @@ function TopicMessages({ messages }: Props) {
           Topics
         </Link>
         <span>&gt; </span>
-        <Link className="text-black no-underline" to={`/topics/${topic.id}`} state={topic}>
+        <Link
+          className="text-black no-underline"
+          to={`/topics/${topic.id}`}
+          state={topic}
+        >
           {topic.name}
         </Link>
       </div>
-      <p>Created by {topic.user.username} {formatDateString(topic.createdAt)}</p>
+      <p>
+        Created by {topic.user.username} {formatDateString(topic.createdAt)}
+      </p>
       <div>
         {messages.map((message) => (
           <Message key={message.id} message={message} />

@@ -6,7 +6,6 @@ import TopicList from "../components/TopicList.tsx";
 import { testTopics } from "./helper.tsx";
 import { createQueryClientWrapper } from "./helper.tsx";
 
-
 describe("TopicList tests", () => {
   test("renders topics", () => {
     render(
@@ -15,7 +14,7 @@ describe("TopicList tests", () => {
       </MemoryRouter>,
       {
         wrapper: createQueryClientWrapper(),
-      },
+      }
     );
 
     testTopics.forEach((topic) => {

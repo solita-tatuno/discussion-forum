@@ -3,7 +3,7 @@ import { UserCredentials } from "../types";
 import { UseMutateFunction } from "@tanstack/react-query";
 
 interface Props {
-  handleSubmit: UseMutateFunction<unknown, Error, UserCredentials, unknown>,
+  handleSubmit: UseMutateFunction<unknown, Error, UserCredentials, unknown>;
 }
 
 function AuthForm({ handleSubmit }: Props) {
@@ -19,11 +19,21 @@ function AuthForm({ handleSubmit }: Props) {
     >
       {({}) => (
         <Form className="flex flex-col gap-2">
-          <Field className="border-2 border-black" type="text" name="username" placeholder="username" />
+          <Field
+            className="border-2 border-black"
+            type="text"
+            name="username"
+            placeholder="username"
+          />
           <ErrorMessage name="email" component="div" />
-          <Field className="border-2 border-black" type="password" name="password" placeholder="password" />
+          <Field
+            className="border-2 border-black"
+            type="password"
+            name="password"
+            placeholder="password"
+          />
           <ErrorMessage name="password" component="div" />
-          <button className="bg-green-600 p-2 rounded-md" type="submit">
+          <button className="rounded-md bg-green-600 p-2" type="submit">
             Submit
           </button>
         </Form>

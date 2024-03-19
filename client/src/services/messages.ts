@@ -16,34 +16,38 @@ const create = async (payload: CreateMessagePayload): Promise<Message> => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(payload),
   });
 
   if (!response.ok) {
-    const res = await response.json() as Error;
+    const res = (await response.json()) as Error;
     throw new Error(res.message);
   }
 
   return response.json();
 };
 
-
-const updateOne = async ({ id, message, userId, upVotes }: MessageUpdate): Promise<Message> => {
+const updateOne = async ({
+  id,
+  message,
+  userId,
+  upVotes,
+}: MessageUpdate): Promise<Message> => {
   const token = getTokenFromLocalStorage();
 
   const response = await fetch(`${baseUrl}/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ message, userId, upVotes }),
   });
 
   if (!response.ok) {
-    const res = await response.json() as Error;
+    const res = (await response.json()) as Error;
     throw new Error(res.message);
   }
 

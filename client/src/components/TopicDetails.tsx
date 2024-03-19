@@ -7,13 +7,10 @@ interface Props {
 
 function TopicDetails({ topic }: Props) {
   return (
-    <div
-      className="border-2 p-6 rounded-md flex justify-between hover:bg-gray-300 sm:flex-row flex-col items-start gap-3">
+    <div className="flex flex-col items-start justify-between gap-3 rounded-md border-2 p-6 hover:bg-gray-300 sm:flex-row">
       <div className="basis-1/4 break-all">
         <p className="font-bold">Topic</p>
-        <p>
-          {topic.name}
-        </p>
+        <p>{topic.name}</p>
       </div>
       <div className="basis-1/4">
         <p className="font-bold">Created by</p>

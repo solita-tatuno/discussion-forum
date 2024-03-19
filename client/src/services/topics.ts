@@ -1,19 +1,28 @@
-import { Topic, TopicUpdate, PaginationValues, PageableTopics, PageableMessages } from "../types";
+import {
+  Topic,
+  TopicUpdate,
+  PaginationValues,
+  PageableTopics,
+  PageableMessages,
+} from "../types";
 import { getTokenFromLocalStorage } from "../utils";
 
 const baseUrl = "http://localhost:8080/api/topics";
 
-const getAll = async ({ page, size }: PaginationValues): Promise<PageableTopics> => {
+const getAll = async ({
+  page,
+  size,
+}: PaginationValues): Promise<PageableTopics> => {
   const token = getTokenFromLocalStorage();
 
   const response = await fetch(`${baseUrl}?page=${page}&size=${size}`, {
     headers: {
-      "Authorization": `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   });
 
   if (!response.ok) {
-    const res = await response.json() as Error;
+    const res = (await response.json()) as Error;
     throw new Error(res.message);
   }
 
@@ -27,13 +36,13 @@ const create = async (name: string): Promise<Topic> => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ name }),
   });
 
   if (!response.ok) {
-    const res = await response.json() as Error;
+    const res = (await response.json()) as Error;
     throw new Error(res.message);
   }
 
@@ -46,12 +55,12 @@ const deleteOne = async (id: number): Promise<void> => {
   const response = await fetch(`${baseUrl}/${id}`, {
     method: "DELETE",
     headers: {
-      "Authorization": `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   });
 
   if (!response.ok) {
-    const res = await response.json() as Error;
+    const res = (await response.json()) as Error;
     throw new Error(res.message);
   }
 };
@@ -63,29 +72,35 @@ const updateOne = async ({ id, name }: TopicUpdate): Promise<Topic> => {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ name }),
   });
 
   if (!response.ok) {
-    const res = await response.json() as Error;
+    const res = (await response.json()) as Error;
     throw new Error(res.message);
   }
 
   return response.json();
 };
 
-const getMessages = async (topicId: number, pagination: PaginationValues): Promise<PageableMessages> => {
+const getMessages = async (
+  topicId: number,
+  pagination: PaginationValues
+): Promise<PageableMessages> => {
   const token = getTokenFromLocalStorage();
-  const response = await fetch(`${baseUrl}/${topicId}/messages?page=${pagination.page}&size=${pagination.size}`, {
-    headers: {
-      "Authorization": `Bearer ${token}`,
-    },
-  });
+  const response = await fetch(
+    `${baseUrl}/${topicId}/messages?page=${pagination.page}&size=${pagination.size}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
   if (!response.ok) {
-    const res = await response.json() as Error;
+    const res = (await response.json()) as Error;
     throw new Error(res.message);
   }
 

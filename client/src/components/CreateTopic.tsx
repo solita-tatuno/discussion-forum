@@ -11,13 +11,14 @@ function CreateTopic() {
   };
 
   return (
-    <section className="flex gap-6 items-center">
+    <section className="flex items-center gap-6">
       <input
         placeholder="Create new topic"
         value={topicName}
-        onChange={e => setTopicName(e.target.value)} />
+        onChange={(e) => setTopicName(e.target.value)}
+      />
       <button
-        className="bg-green-600 p-2 rounded-md"
+        className="rounded-md bg-green-600 p-2"
         onClick={handleCreateTopic}
       >
         Create

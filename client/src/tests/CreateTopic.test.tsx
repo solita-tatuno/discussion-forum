@@ -13,12 +13,9 @@ describe("useCreateTopic tests", () => {
       createTopic: handleSubmit,
     });
 
-    render(
-      <CreateTopic />,
-      {
-        wrapper: createQueryClientWrapper(),
-      },
-    );
+    render(<CreateTopic />, {
+      wrapper: createQueryClientWrapper(),
+    });
 
     expect(screen.getByPlaceholderText("Create new topic")).toBeDefined();
     expect(screen.getByText("Create")).toBeDefined();
@@ -31,11 +28,9 @@ describe("useCreateTopic tests", () => {
       createTopic: handleSubmit,
     });
 
-    render(
-      <CreateTopic />, {
-        wrapper: createQueryClientWrapper(),
-      },
-    );
+    render(<CreateTopic />, {
+      wrapper: createQueryClientWrapper(),
+    });
 
     const input = screen.getByPlaceholderText("Create new topic");
     const button = screen.getByText("Create");

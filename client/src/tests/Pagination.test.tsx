@@ -3,9 +3,10 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import Pagination from "../components/Pagination";
 
 describe("Pagination tests", () => {
-
   test("renders correct page count", () => {
-    render(<Pagination itemCount={16} page={0} setPage={() => null} size={5} />);
+    render(
+      <Pagination itemCount={16} page={0} setPage={() => null} size={5} />
+    );
     expect(screen.getByText("1")).toBeDefined();
     expect(screen.getByText("2")).toBeDefined();
     expect(screen.getByText("3")).toBeDefined();
@@ -20,7 +21,6 @@ describe("Pagination tests", () => {
     fireEvent.click(screen.getByText(">"));
     expect(setPage).toHaveBeenCalledWith(2);
 
-
     fireEvent.click(screen.getByText(">"));
     expect(setPage).toHaveBeenCalledWith(3);
   });
@@ -34,7 +34,9 @@ describe("Pagination tests", () => {
     ];
 
     testCases.forEach(({ page, expectedText }) => {
-      render(<Pagination itemCount={16} page={page} setPage={() => null} size={5} />);
+      render(
+        <Pagination itemCount={16} page={page} setPage={() => null} size={5} />
+      );
       expect(screen.getByText(expectedText)).toBeDefined();
     });
   });

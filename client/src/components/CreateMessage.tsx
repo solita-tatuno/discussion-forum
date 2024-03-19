@@ -1,7 +1,6 @@
 import { useState } from "react";
 import useCreateMessage from "../hooks/useCreateMessage";
 
-
 interface Props {
   topicId: number;
 }
@@ -16,14 +15,15 @@ function CreateMessage({ topicId }: Props) {
   };
 
   return (
-    <section className="flex gap-6 items-center">
+    <section className="flex items-center gap-6">
       <textarea
-        className="w-full h-20 border-2 rounded-md"
+        className="h-20 w-full rounded-md border-2"
         placeholder="Create new message"
         value={message}
-        onChange={e => setMessage(e.target.value)} />
+        onChange={(e) => setMessage(e.target.value)}
+      />
       <button
-        className="bg-green-600 p-2 rounded-md"
+        className="rounded-md bg-green-600 p-2"
         onClick={() => handleCreateMessage(topicId)}
       >
         Create

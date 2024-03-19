@@ -23,7 +23,7 @@ export interface Topic {
   lastMessageTime?: string;
 }
 
-export type TopicUpdate = Pick<Topic, "id" | "name">
+export type TopicUpdate = Pick<Topic, "id" | "name">;
 
 export interface Message {
   id: number;
@@ -39,8 +39,9 @@ export interface PageableMessages {
   totalCount: number;
 }
 
-export type MessageUpdate = Pick<Message, "id" | "message" | "upVotes"> & { userId: number };
-
+export type MessageUpdate = Pick<Message, "id" | "message" | "upVotes"> & {
+  userId: number;
+};
 
 export interface PaginationValues {
   page: number;

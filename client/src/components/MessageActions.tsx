@@ -24,26 +24,40 @@ function MessageActions({ message }: Props) {
   };
 
   const handleUpdateMessage = () => {
-    updateMessage({ id: message.id, message: messageToEdit, userId: message.user.id, upVotes: message.upVotes });
+    updateMessage({
+      id: message.id,
+      message: messageToEdit,
+      userId: message.user.id,
+      upVotes: message.upVotes,
+    });
     setIsModalOpen(false);
   };
 
   return (
     <div className="absolute right-2">
-      <button className="bg-green-600 py-1 px-2 rounded-md" onClick={() => setIsModalOpen(true)}>Edit</button>
+      <button
+        className="rounded-md bg-green-600 px-2 py-1"
+        onClick={() => setIsModalOpen(true)}
+      >
+        Edit
+      </button>
 
       <Modal isOpen={isModalOpen} onClose={modalOnClose}>
         <div className="flex flex-col gap-3 text-center">
           <h2 className="text-2xl font-bold">Edit Message</h2>
           <textarea
-            className="w-full p-2 rounded-md border-2"
+            className="w-full rounded-md border-2 p-2"
             defaultValue={messageToEdit}
             onChange={(e) => setMessageToEdit(e.target.value)}
           />
-          <button className="bg-green-600 py-1 px-2 rounded-md" onClick={handleUpdateMessage}>Save</button>
+          <button
+            className="rounded-md bg-green-600 px-2 py-1"
+            onClick={handleUpdateMessage}
+          >
+            Save
+          </button>
         </div>
       </Modal>
-
     </div>
   );
 }

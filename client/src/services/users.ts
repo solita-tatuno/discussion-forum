@@ -13,7 +13,7 @@ const createOne = async (userCredentials: UserCredentials): Promise<User> => {
   });
 
   if (!response.ok) {
-    const res = await response.json() as Error;
+    const res = (await response.json()) as Error;
     throw new Error(res.message);
   }
 
@@ -25,12 +25,12 @@ const getCurrentUser = async (): Promise<User> => {
 
   const response = await fetch(`${baseUrl}/me`, {
     headers: {
-      "Authorization": `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   });
 
   if (!response.ok) {
-    const res = await response.json() as Error;
+    const res = (await response.json()) as Error;
     throw new Error(res.message);
   }
 

@@ -21,13 +21,18 @@ function Topic() {
   }
 
   return (
-    <section className="flex flex-col flex-1 px-12 py-3 max-h-screen justify-between">
-      <div className="flex flex-col flex-1 overflow-auto">
+    <section className="flex max-h-screen flex-1 flex-col justify-between px-12 py-3">
+      <div className="flex flex-1 flex-col overflow-auto">
         <TopicMessages messages={data.messages} />
       </div>
-      <div className="flex justify-between items-center gap-3 flex-wrap sm:flex-row flex-col">
+      <div className="flex flex-col flex-wrap items-center justify-between gap-3 sm:flex-row">
         <CreateMessage topicId={Number(id)} />
-        <Pagination itemCount={data.totalCount} page={page} setPage={setPage} size={size} />
+        <Pagination
+          itemCount={data.totalCount}
+          page={page}
+          setPage={setPage}
+          size={size}
+        />
       </div>
     </section>
   );

@@ -22,19 +22,14 @@ function Pagination({ itemCount, page, setPage, size }: Props) {
     <>
       <ReactPaginate
         containerClassName="flex list-none border border-gray-200 rounded-lg overflow-hidden p-3"
-
         pageClassName="inline-flex items-center justify-center px-3 border-r border-gray-200"
         pageLinkClassName="no-underline text-black"
-
         activeClassName="bg-gray-400 rounded-md text-white"
         activeLinkClassName="no-underline text-black"
-
         previousClassName="inline-flex items-center justify-center px-3 border-r border-gray-200"
         previousLinkClassName="no-underline text-black"
-
         nextClassName="inline-flex items-center px-3 justify-center"
         nextLinkClassName="no-underline text-black"
-
         breakClassName="inline-flex items-center justify-center px-3 border-r border-gray-200"
         breakLinkClassName="no-underline text-black"
         breakLabel="..."
@@ -51,8 +46,7 @@ function Pagination({ itemCount, page, setPage, size }: Props) {
         Showing {first} to {last} of {itemCount} results
       </p>
     </>
-  )
-    ;
+  );
 }
 
 export default Pagination;

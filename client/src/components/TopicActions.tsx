@@ -14,9 +14,19 @@ function TopicActions({ setEditModalOpen, handleDelete }: EditActionsProps) {
   }
 
   return (
-    <div className="gap-3 top-0 right-1 absolute hidden group-hover:flex">
-      <button className="bg-green-600 py-1 px-2 rounded-md" onClick={() => setEditModalOpen(true)}>Edit</button>
-      <button className="bg-red-600 py-1 px-2 rounded-md" onClick={handleDelete}>Delete</button>
+    <div className="absolute right-1 top-0 hidden gap-3 group-hover:flex">
+      <button
+        className="rounded-md bg-green-600 px-2 py-1"
+        onClick={() => setEditModalOpen(true)}
+      >
+        Edit
+      </button>
+      <button
+        className="rounded-md bg-red-600 px-2 py-1"
+        onClick={handleDelete}
+      >
+        Delete
+      </button>
     </div>
   );
 }

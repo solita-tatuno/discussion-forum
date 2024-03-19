@@ -13,7 +13,7 @@ const useCreateTopic = () => {
     },
     onError: (error) => {
       toast.error(error.message);
-    }
+    },
   });
 
   return { createTopic: mutate };

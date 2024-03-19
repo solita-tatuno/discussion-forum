@@ -5,7 +5,8 @@ import { toast } from "react-toastify";
 
 const useSignup = () => {
   const { mutate } = useMutation({
-    mutationFn: (credentials: UserCredentials) => userService.createOne(credentials),
+    mutationFn: (credentials: UserCredentials) =>
+      userService.createOne(credentials),
     onError: (error) => {
       toast.error(error.message);
     },

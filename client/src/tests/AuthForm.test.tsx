@@ -22,8 +22,12 @@ describe("AuthForm tests", () => {
 
     const expectedValues = { username: "username", password: "password" };
 
-    fireEvent.change(usernameInput, { target: { value: expectedValues.username } });
-    fireEvent.change(passwordInput, { target: { value: expectedValues.password } });
+    fireEvent.change(usernameInput, {
+      target: { value: expectedValues.username },
+    });
+    fireEvent.change(passwordInput, {
+      target: { value: expectedValues.password },
+    });
 
     screen.getByText("Submit").click();
 

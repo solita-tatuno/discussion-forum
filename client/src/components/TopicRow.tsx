@@ -23,7 +23,9 @@ function TopicRow({ topic }: Props) {
   };
 
   const handleDelete = () => {
-    const confirm = window.confirm("Are you sure you want to delete this topic?");
+    const confirm = window.confirm(
+      "Are you sure you want to delete this topic?"
+    );
 
     if (!confirm) {
       return;
@@ -39,8 +41,11 @@ function TopicRow({ topic }: Props) {
 
   return (
     <li className="group relative">
-
-      <Link className="no-underline text-black" to={`/topics/${topic.id}`} state={topic}>
+      <Link
+        className="text-black no-underline"
+        to={`/topics/${topic.id}`}
+        state={topic}
+      >
         <TopicDetails topic={topic} />
       </Link>
 
@@ -58,13 +63,16 @@ function TopicRow({ topic }: Props) {
             value={newTopicName}
             onChange={(e) => setNewTopicName(e.target.value)}
           />
-          <button className="bg-green-600 rounded-md p-3" onClick={handleUpdateTopic}>Update</button>
+          <button
+            className="rounded-md bg-green-600 p-3"
+            onClick={handleUpdateTopic}
+          >
+            Update
+          </button>
         </div>
       </Modal>
-
     </li>
   );
 }
-
 
 export default TopicRow;

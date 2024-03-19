@@ -8,7 +8,8 @@ import { toast } from "react-toastify";
 const useLogin = () => {
   const navigate = useNavigate();
   const { mutate } = useMutation({
-    mutationFn: (credentials: UserCredentials) => loginService.login(credentials),
+    mutationFn: (credentials: UserCredentials) =>
+      loginService.login(credentials),
     onSuccess: (token) => {
       localStorage.setItem("df-token", JSON.stringify(token));
       navigate("/topics");
