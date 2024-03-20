@@ -39,9 +39,7 @@ public class TopicController {
     @PreAuthorize("hasRole(T(com.devacademy.discussionforum.security.UserRole).ROLE_ADMIN)")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteTopic(@PathVariable("id") Integer id, Authentication authentication) {
-        System.out.println(authentication.getName());
-        System.out.println(authentication);
+    public void deleteTopic(@PathVariable("id") Integer id) {
         topicService.deleteOne(id);
     }
 

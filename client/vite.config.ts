@@ -8,4 +8,8 @@ export default defineConfig({
     globals: true,
     environment: "jsdom",
   },
+  build: {
+    outDir: "../src/main/resources/static/",
+    emptyOutDir: true,
+  },
 });

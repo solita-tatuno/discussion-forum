@@ -1,7 +1,10 @@
 import { getTokenFromLocalStorage } from "../utils";
 import { Message, MessageUpdate } from "../types";
 
-const baseUrl = "http://localhost:8080/api/messages";
+const baseUrl =
+  process.env.NODE_ENV === "dev"
+    ? "http://localhost:8080/api/messages"
+    : "/api/messages";
 
 interface CreateMessagePayload {
   message: string;
