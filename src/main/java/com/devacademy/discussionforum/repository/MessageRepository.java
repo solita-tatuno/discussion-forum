@@ -6,7 +6,7 @@ import com.devacademy.discussionforum.dto.UserMessageDTO;
 import com.devacademy.discussionforum.dto.UserDTO;
 import com.devacademy.discussionforum.dto.MessagesDTO;
 import com.devacademy.discussionforum.jooq.Tables;
-import com.devacademy.discussionforum.jooq.tables.pojos.Messages;
+import com.devacademy.discussionforum.jooq.tables.pojos.Message;
 import org.jooq.DSLContext;
 import org.jooq.Records;
 import org.springframework.data.domain.Pageable;
@@ -26,54 +26,54 @@ public class MessageRepository {
         this.dsl = dsl;
     }
 
-    public Messages create(Integer userId, AddMessageDTO message) {
-        return dsl.insertInto(Tables.MESSAGES)
-                .set(Tables.MESSAGES.MESSAGE, message.message())
-                .set(Tables.MESSAGES.TOPIC_ID, message.topicId())
-                .set(Tables.MESSAGES.USER_ID, userId)
-                .set(Tables.MESSAGES.UP_VOTES, message.upVotes())
+    public Message create(Integer userId, AddMessageDTO message) {
+        return dsl.insertInto(Tables.MESSAGE)
+                .set(Tables.MESSAGE.MESSAGE_, message.message())
+                .set(Tables.MESSAGE.TOPIC_ID, message.topicId())
+                .set(Tables.MESSAGE.USER_ID, userId)
+                .set(Tables.MESSAGE.UP_VOTES, message.upVotes())
                 .returning()
-                .fetchOneInto(Messages.class);
+                .fetchOneInto(Message.class);
     }
 
-    public Optional<Messages> update(Integer messageId, MessageUpdateDTO message) {
-        return dsl.update(Tables.MESSAGES)
-                .set(Tables.MESSAGES.MESSAGE, message.message())
-                .set(Tables.MESSAGES.UP_VOTES, message.upVotes())
-                .where(Tables.MESSAGES.ID.eq(messageId))
+    public Optional<Message> update(Integer messageId, MessageUpdateDTO message) {
+        return dsl.update(Tables.MESSAGE)
+                .set(Tables.MESSAGE.MESSAGE_, message.message())
+                .set(Tables.MESSAGE.UP_VOTES, message.upVotes())
+                .where(Tables.MESSAGE.ID.eq(messageId))
                 .returning()
-                .fetchOptionalInto(Messages.class);
+                .fetchOptionalInto(Message.class);
     }
 
     public int deleteTopicMessages(Integer topicId) {
-        return dsl.deleteFrom(Tables.MESSAGES)
-                .where(Tables.MESSAGES.TOPIC_ID.eq(topicId))
+        return dsl.deleteFrom(Tables.MESSAGE)
+                .where(Tables.MESSAGE.TOPIC_ID.eq(topicId))
                 .execute();
     }
 
     public MessagesDTO getTopicMessages(Integer id, Pageable pageable) {
         List<UserMessageDTO> messages = dsl.select(
-                        Tables.MESSAGES.ID,
-                        Tables.MESSAGES.TOPIC_ID,
-                        Tables.MESSAGES.MESSAGE,
-                        Tables.MESSAGES.UP_VOTES,
-                        Tables.MESSAGES.CREATED_AT,
-                        Tables.MESSAGES.UPDATED_AT,
+                        Tables.MESSAGE.ID,
+                        Tables.MESSAGE.TOPIC_ID,
+                        Tables.MESSAGE.MESSAGE_,
+                        Tables.MESSAGE.UP_VOTES,
+                        Tables.MESSAGE.CREATED_AT,
+                        Tables.MESSAGE.UPDATED_AT,
                         row(
-                                Tables.USERS.ID,
-                                Tables.USERS.USERNAME,
-                                Tables.USERS.IS_ADMIN
+                                Tables.FORUM_USER.ID,
+                                Tables.FORUM_USER.USERNAME,
+                                Tables.FORUM_USER.IS_ADMIN
                         )
                                 .mapping(UserDTO::new))
-                .from(Tables.MESSAGES)
-                .join(Tables.USERS).on(Tables.MESSAGES.USER_ID.eq(Tables.USERS.ID))
-                .where(Tables.MESSAGES.TOPIC_ID.eq(id))
-                .orderBy(Tables.MESSAGES.CREATED_AT.asc())
+                .from(Tables.MESSAGE)
+                .join(Tables.FORUM_USER).on(Tables.MESSAGE.USER_ID.eq(Tables.FORUM_USER.ID))
+                .where(Tables.MESSAGE.TOPIC_ID.eq(id))
+                .orderBy(Tables.MESSAGE.CREATED_AT.asc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch(Records.mapping(UserMessageDTO::new));
 
-        int totalCount = dsl.fetchCount(selectFrom(Tables.MESSAGES).where(Tables.MESSAGES.TOPIC_ID.eq(id)));
+        int totalCount = dsl.fetchCount(selectFrom(Tables.MESSAGE).where(Tables.MESSAGE.TOPIC_ID.eq(id)));
 
         return new MessagesDTO(messages, totalCount);
     }

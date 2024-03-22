@@ -2,7 +2,7 @@ package com.devacademy.discussionforum.controller;
 
 import com.devacademy.discussionforum.dto.*;
 import com.devacademy.discussionforum.service.TopicService;
-import com.devacademy.discussionforum.jooq.tables.pojos.Topics;
+import com.devacademy.discussionforum.jooq.tables.pojos.Topic;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,7 @@ public class TopicController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Topics addTopic(@RequestBody @Valid TopicDataDTO topic, Authentication authentication) {
+    public Topic addTopic(@RequestBody @Valid TopicDataDTO topic, Authentication authentication) {
         return topicService.addTopic(topic, authentication);
     }
 
@@ -47,7 +47,7 @@ public class TopicController {
     @PreAuthorize("hasRole(T(com.devacademy.discussionforum.security.UserRole).ROLE_ADMIN)")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Topics updateTopic(@PathVariable("id") Integer id, @RequestBody @Valid TopicDataDTO topic) {
+    public Topic updateTopic(@PathVariable("id") Integer id, @RequestBody @Valid TopicDataDTO topic) {
         return topicService.updateTopic(id, topic);
     }
 }

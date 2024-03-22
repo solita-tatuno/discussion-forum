@@ -2,9 +2,10 @@ package com.devacademy.discussionforum.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import java.util.Collection;
+import org.springframework.security.core.userdetails.User;
 
 
-public class CustomUserDetails extends org.springframework.security.core.userdetails.User {
+public class CustomUserDetails extends User {
     private final Integer id;
     private final boolean isAdmin;
 

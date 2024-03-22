@@ -4,12 +4,12 @@
 package com.devacademy.discussionforum.jooq;
 
 
-import com.devacademy.discussionforum.jooq.tables.Messages;
-import com.devacademy.discussionforum.jooq.tables.Topics;
-import com.devacademy.discussionforum.jooq.tables.Users;
-import com.devacademy.discussionforum.jooq.tables.records.MessagesRecord;
-import com.devacademy.discussionforum.jooq.tables.records.TopicsRecord;
-import com.devacademy.discussionforum.jooq.tables.records.UsersRecord;
+import com.devacademy.discussionforum.jooq.tables.ForumUser;
+import com.devacademy.discussionforum.jooq.tables.Message;
+import com.devacademy.discussionforum.jooq.tables.Topic;
+import com.devacademy.discussionforum.jooq.tables.records.ForumUserRecord;
+import com.devacademy.discussionforum.jooq.tables.records.MessageRecord;
+import com.devacademy.discussionforum.jooq.tables.records.TopicRecord;
 
 import org.jooq.ForeignKey;
 import org.jooq.TableField;
@@ -29,16 +29,16 @@ public class Keys {
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
-    public static final UniqueKey<MessagesRecord> MESSAGES_PKEY = Internal.createUniqueKey(Messages.MESSAGES, DSL.name("messages_pkey"), new TableField[] { Messages.MESSAGES.ID }, true);
-    public static final UniqueKey<TopicsRecord> TOPICS_PKEY = Internal.createUniqueKey(Topics.TOPICS, DSL.name("topics_pkey"), new TableField[] { Topics.TOPICS.ID }, true);
-    public static final UniqueKey<UsersRecord> USERNAME_UNIQUE = Internal.createUniqueKey(Users.USERS, DSL.name("username_unique"), new TableField[] { Users.USERS.USERNAME }, true);
-    public static final UniqueKey<UsersRecord> USERS_PKEY = Internal.createUniqueKey(Users.USERS, DSL.name("users_pkey"), new TableField[] { Users.USERS.ID }, true);
+    public static final UniqueKey<ForumUserRecord> FORUM_USER_PKEY = Internal.createUniqueKey(ForumUser.FORUM_USER, DSL.name("forum_user_pkey"), new TableField[] { ForumUser.FORUM_USER.ID }, true);
+    public static final UniqueKey<ForumUserRecord> FORUM_USER_USERNAME_KEY = Internal.createUniqueKey(ForumUser.FORUM_USER, DSL.name("forum_user_username_key"), new TableField[] { ForumUser.FORUM_USER.USERNAME }, true);
+    public static final UniqueKey<MessageRecord> MESSAGE_PKEY = Internal.createUniqueKey(Message.MESSAGE, DSL.name("message_pkey"), new TableField[] { Message.MESSAGE.ID }, true);
+    public static final UniqueKey<TopicRecord> TOPIC_PKEY = Internal.createUniqueKey(Topic.TOPIC, DSL.name("topic_pkey"), new TableField[] { Topic.TOPIC.ID }, true);
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions
     // -------------------------------------------------------------------------
 
-    public static final ForeignKey<MessagesRecord, TopicsRecord> MESSAGES__MESSAGES_TOPIC_ID_FKEY = Internal.createForeignKey(Messages.MESSAGES, DSL.name("messages_topic_id_fkey"), new TableField[] { Messages.MESSAGES.TOPIC_ID }, Keys.TOPICS_PKEY, new TableField[] { Topics.TOPICS.ID }, true);
-    public static final ForeignKey<MessagesRecord, UsersRecord> MESSAGES__MESSAGES_USER_ID_FKEY = Internal.createForeignKey(Messages.MESSAGES, DSL.name("messages_user_id_fkey"), new TableField[] { Messages.MESSAGES.USER_ID }, Keys.USERS_PKEY, new TableField[] { Users.USERS.ID }, true);
-    public static final ForeignKey<TopicsRecord, UsersRecord> TOPICS__TOPICS_USER_ID_FKEY = Internal.createForeignKey(Topics.TOPICS, DSL.name("topics_user_id_fkey"), new TableField[] { Topics.TOPICS.USER_ID }, Keys.USERS_PKEY, new TableField[] { Users.USERS.ID }, true);
+    public static final ForeignKey<MessageRecord, TopicRecord> MESSAGE__MESSAGE_TOPIC_ID_FKEY = Internal.createForeignKey(Message.MESSAGE, DSL.name("message_topic_id_fkey"), new TableField[] { Message.MESSAGE.TOPIC_ID }, Keys.TOPIC_PKEY, new TableField[] { Topic.TOPIC.ID }, true);
+    public static final ForeignKey<MessageRecord, ForumUserRecord> MESSAGE__MESSAGE_USER_ID_FKEY = Internal.createForeignKey(Message.MESSAGE, DSL.name("message_user_id_fkey"), new TableField[] { Message.MESSAGE.USER_ID }, Keys.FORUM_USER_PKEY, new TableField[] { ForumUser.FORUM_USER.ID }, true);
+    public static final ForeignKey<TopicRecord, ForumUserRecord> TOPIC__TOPIC_USER_ID_FKEY = Internal.createForeignKey(Topic.TOPIC, DSL.name("topic_user_id_fkey"), new TableField[] { Topic.TOPIC.USER_ID }, Keys.FORUM_USER_PKEY, new TableField[] { ForumUser.FORUM_USER.ID }, true);
 }

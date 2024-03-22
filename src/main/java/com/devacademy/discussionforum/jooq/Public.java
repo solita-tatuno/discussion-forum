@@ -4,9 +4,9 @@
 package com.devacademy.discussionforum.jooq;
 
 
-import com.devacademy.discussionforum.jooq.tables.Messages;
-import com.devacademy.discussionforum.jooq.tables.Topics;
-import com.devacademy.discussionforum.jooq.tables.Users;
+import com.devacademy.discussionforum.jooq.tables.ForumUser;
+import com.devacademy.discussionforum.jooq.tables.Message;
+import com.devacademy.discussionforum.jooq.tables.Topic;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,19 +30,19 @@ public class Public extends SchemaImpl {
     public static final Public PUBLIC = new Public();
 
     /**
-     * The table <code>public.messages</code>.
+     * The table <code>public.forum_user</code>.
      */
-    public final Messages MESSAGES = Messages.MESSAGES;
+    public final ForumUser FORUM_USER = ForumUser.FORUM_USER;
 
     /**
-     * The table <code>public.topics</code>.
+     * The table <code>public.message</code>.
      */
-    public final Topics TOPICS = Topics.TOPICS;
+    public final Message MESSAGE = Message.MESSAGE;
 
     /**
-     * The table <code>public.users</code>.
+     * The table <code>public.topic</code>.
      */
-    public final Users USERS = Users.USERS;
+    public final Topic TOPIC = Topic.TOPIC;
 
     /**
      * No further instances allowed
@@ -60,9 +60,9 @@ public class Public extends SchemaImpl {
     @Override
     public final List<Table<?>> getTables() {
         return Arrays.asList(
-            Messages.MESSAGES,
-            Topics.TOPICS,
-            Users.USERS
+            ForumUser.FORUM_USER,
+            Message.MESSAGE,
+            Topic.TOPIC
         );
     }
 }

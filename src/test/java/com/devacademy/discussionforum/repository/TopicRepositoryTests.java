@@ -4,8 +4,8 @@ import com.devacademy.discussionforum.dto.*;
 import com.devacademy.discussionforum.helpers.MessageHelper;
 import com.devacademy.discussionforum.helpers.TopicHelper;
 import com.devacademy.discussionforum.helpers.UserHelper;
-import com.devacademy.discussionforum.jooq.tables.pojos.Topics;
-import com.devacademy.discussionforum.jooq.tables.pojos.Users;
+import com.devacademy.discussionforum.jooq.tables.pojos.Topic;
+import com.devacademy.discussionforum.jooq.tables.pojos.ForumUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -48,12 +48,12 @@ public class TopicRepositoryTests {
 
     @Test
     void savesTopicWhenValidTopic() {
-        Users user = userHelper.createUser("newUser");
+        ForumUser user = userHelper.createUser("newUser");
 
         TopicDataDTO topic = new TopicDataDTO("newTopic");
         topicRepository.create(user.getId(), topic);
 
-        List<Topics> topics = topicHelper.getAllTopics();
+        List<Topic> topics = topicHelper.getAllTopics();
 
         assertEquals(1, topics.size(), "There should be only one topic");
         assertEquals(topic.name(), topics.get(0).getName(), "Topic name should match");
@@ -62,10 +62,10 @@ public class TopicRepositoryTests {
 
     @Test
     void findsAllTopics() {
-        Users user = userHelper.createUser("newUser");
+        ForumUser user = userHelper.createUser("newUser");
 
-        Topics topic = topicHelper.createTopic("newTopic", user);
-        Topics topic2 = topicHelper.createTopic("newTopic2", user);
+        Topic topic = topicHelper.createTopic("newTopic", user);
+        Topic topic2 = topicHelper.createTopic("newTopic2", user);
         Pageable pageable = Pageable.ofSize(10);
 
         TopicsDTO dto = topicRepository.getAll(pageable);
@@ -83,8 +83,8 @@ public class TopicRepositoryTests {
     @ParameterizedTest
     @ValueSource(ints = {1, 5, 10})
     void correctMessageCountWhenTopicHasMessages(int numberOfMessages) {
-        Users user = userHelper.createUser("newUser");
-        Topics topic = topicHelper.createTopic("newTopic", user);
+        ForumUser user = userHelper.createUser("newUser");
+        Topic topic = topicHelper.createTopic("newTopic", user);
 
         IntStream.range(0, numberOfMessages).forEach(i -> messageHelper.createMessage("Message " + i, user, topic));
 
@@ -99,11 +99,11 @@ public class TopicRepositoryTests {
 
     @Test
     void deletesTopicWhenValidId() {
-        Users user = userHelper.createUser("newUser");
-        Topics topic = topicHelper.createTopic("newTopic", user);
+        ForumUser user = userHelper.createUser("newUser");
+        Topic topic = topicHelper.createTopic("newTopic", user);
 
         int deletedTopicRowsCount = topicRepository.deleteOne(topic.getId());
-        List<Topics> topics = topicHelper.getAllTopics();
+        List<Topic> topics = topicHelper.getAllTopics();
 
         assertEquals(1, deletedTopicRowsCount, "One row should be deleted");
         assertTrue(topics.isEmpty(), "There should be no topics");
@@ -111,8 +111,8 @@ public class TopicRepositoryTests {
 
     @Test
     void exceptionIfDeletingTopicWithMessages() {
-        Users user = userHelper.createUser("newUser");
-        Topics topic = topicHelper.createTopic("newTopic", user);
+        ForumUser user = userHelper.createUser("newUser");
+        Topic topic = topicHelper.createTopic("newTopic", user);
         messageHelper.createMessage("newMessage", user, topic);
 
         assertThrows(DataAccessException.class, () -> topicRepository.deleteOne(topic.getId()), "Should throw exception");
@@ -120,14 +120,14 @@ public class TopicRepositoryTests {
 
     @Test
     void updatesTopicWhenValidId() {
-        Users user = userHelper.createUser("newUser");
-        Topics topic = topicHelper.createTopic("newTopic", user);
+        ForumUser user = userHelper.createUser("newUser");
+        Topic topic = topicHelper.createTopic("newTopic", user);
 
         TopicDataDTO topicUpdate = new TopicDataDTO("updatedTopic");
 
         topicRepository.update(topic.getId(), topicUpdate);
 
-        List<Topics> topicsInDb = topicHelper.getAllTopics();
+        List<Topic> topicsInDb = topicHelper.getAllTopics();
 
 
         assertEquals(1, topicsInDb.size(), "There should be only one topic");
@@ -138,7 +138,7 @@ public class TopicRepositoryTests {
     @Test
     void updateReturnsEmptyIfInvalidId() {
         TopicDataDTO topicUpdate = new TopicDataDTO("updatedTopic");
-        Optional<Topics> updatedTopic = topicRepository.update(0, topicUpdate);
+        Optional<Topic> updatedTopic = topicRepository.update(0, topicUpdate);
 
         assertTrue(updatedTopic.isEmpty(), "Updated topic should be empty");
     }

@@ -25,7 +25,7 @@ public class UserController {
     }
 
     @GetMapping("/me")
-    public UserDTO getCurrentUser(Authentication authentication) {
+    public UserDTO findCurrentUser(Authentication authentication) {
         CustomUserDetails user = userService.loadUserByUsername(authentication.getName());
         return new UserDTO(user.getId(), user.getUsername(), user.isAdmin());
     }

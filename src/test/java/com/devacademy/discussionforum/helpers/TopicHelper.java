@@ -1,8 +1,8 @@
 package com.devacademy.discussionforum.helpers;
 
 import com.devacademy.discussionforum.jooq.Tables;
-import com.devacademy.discussionforum.jooq.tables.pojos.Topics;
-import com.devacademy.discussionforum.jooq.tables.pojos.Users;
+import com.devacademy.discussionforum.jooq.tables.pojos.Topic;
+import com.devacademy.discussionforum.jooq.tables.pojos.ForumUser;
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,16 +17,16 @@ public class TopicHelper {
     private DSLContext dsl;
 
     public void clearTable() {
-        dsl.truncate(Tables.TOPICS).cascade().execute();
+        dsl.truncate(Tables.TOPIC).cascade().execute();
     }
 
-    public Topics createTopic(String topicName, Users user) {
-        String query = "INSERT INTO topics (user_id, name) VALUES (?, ?) RETURNING *";
-        return Objects.requireNonNull(dsl.fetchOne(query, user.getId(), topicName)).into(Topics.class);
+    public Topic createTopic(String topicName, ForumUser user) {
+        String query = "INSERT INTO topic (user_id, name) VALUES (?, ?) RETURNING *";
+        return Objects.requireNonNull(dsl.fetchOne(query, user.getId(), topicName)).into(Topic.class);
     }
 
-    public List<Topics> getAllTopics() {
-        String query = "SELECT * FROM topics";
-        return dsl.fetch(query).into(Topics.class);
+    public List<Topic> getAllTopics() {
+        String query = "SELECT * FROM topic";
+        return dsl.fetch(query).into(Topic.class);
     }
 }

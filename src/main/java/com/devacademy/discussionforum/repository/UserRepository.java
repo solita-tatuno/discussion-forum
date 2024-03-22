@@ -3,7 +3,7 @@ package com.devacademy.discussionforum.repository;
 import com.devacademy.discussionforum.dto.AddUserDTO;
 import com.devacademy.discussionforum.dto.UserDTO;
 import com.devacademy.discussionforum.jooq.Tables;
-import com.devacademy.discussionforum.jooq.tables.pojos.Users;
+import com.devacademy.discussionforum.jooq.tables.pojos.ForumUser;
 import org.springframework.stereotype.Repository;
 import org.jooq.DSLContext;
 
@@ -19,17 +19,17 @@ public class UserRepository {
     }
 
     public UserDTO create(AddUserDTO user, String hashedPassword) {
-        return dsl.insertInto(Tables.USERS)
-                .set(Tables.USERS.USERNAME, user.username())
-                .set(Tables.USERS.PASSWORD_HASH, hashedPassword)
-                .returningResult(Tables.USERS.ID, Tables.USERS.USERNAME, Tables.USERS.IS_ADMIN)
+        return dsl.insertInto(Tables.FORUM_USER)
+                .set(Tables.FORUM_USER.USERNAME, user.username())
+                .set(Tables.FORUM_USER.PASSWORD_HASH, hashedPassword)
+                .returningResult(Tables.FORUM_USER.ID, Tables.FORUM_USER.USERNAME, Tables.FORUM_USER.IS_ADMIN)
                 .fetchOneInto(UserDTO.class);
     }
 
-    public Optional<Users> findByUsername(String username) {
-        return dsl.select(Tables.USERS.fields())
-                .from(Tables.USERS)
-                .where(Tables.USERS.USERNAME.eq(username))
-                .fetchOptionalInto(Users.class);
+    public Optional<ForumUser> findByUsername(String username) {
+        return dsl.select(Tables.FORUM_USER.fields())
+                .from(Tables.FORUM_USER)
+                .where(Tables.FORUM_USER.USERNAME.eq(username))
+                .fetchOptionalInto(ForumUser.class);
     }
 }

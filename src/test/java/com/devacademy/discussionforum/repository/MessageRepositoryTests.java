@@ -6,9 +6,9 @@ import com.devacademy.discussionforum.dto.MessagesDTO;
 import com.devacademy.discussionforum.helpers.MessageHelper;
 import com.devacademy.discussionforum.helpers.TopicHelper;
 import com.devacademy.discussionforum.helpers.UserHelper;
-import com.devacademy.discussionforum.jooq.tables.pojos.Messages;
-import com.devacademy.discussionforum.jooq.tables.pojos.Topics;
-import com.devacademy.discussionforum.jooq.tables.pojos.Users;
+import com.devacademy.discussionforum.jooq.tables.pojos.Message;
+import com.devacademy.discussionforum.jooq.tables.pojos.Topic;
+import com.devacademy.discussionforum.jooq.tables.pojos.ForumUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,13 +47,13 @@ public class MessageRepositoryTests {
 
     @Test
     void savesMessage() {
-        Users user = userHelper.createUser("newUser");
-        Topics topic = topicHelper.createTopic("newTopic", user);
+        ForumUser user = userHelper.createUser("newUser");
+        Topic topic = topicHelper.createTopic("newTopic", user);
         AddMessageDTO newMessage = new AddMessageDTO(topic.getId(), "newMessage", 0);
 
         messageRepository.create(user.getId(), newMessage);
 
-        List<Messages> messages = messageHelper.getAllMessages();
+        List<Message> messages = messageHelper.getAllMessages();
 
         assertEquals(1, messages.size(), "There should be only one message");
         assertEquals(newMessage.message(), messages.get(0).getMessage(), "Message should match");
@@ -63,14 +63,14 @@ public class MessageRepositoryTests {
 
     @Test
     void updatesMessage() {
-        Users user = userHelper.createUser("newUser");
-        Topics topic = topicHelper.createTopic("newTopic", user);
-        Messages newMessage = messageHelper.createMessage("newMessage", user, topic);
+        ForumUser user = userHelper.createUser("newUser");
+        Topic topic = topicHelper.createTopic("newTopic", user);
+        Message newMessage = messageHelper.createMessage("newMessage", user, topic);
         MessageUpdateDTO messageUpdate = new MessageUpdateDTO("updatedMessage", 0, newMessage.getUserId());
 
         messageRepository.update(newMessage.getId(), messageUpdate);
 
-        List<Messages> messages = messageHelper.getAllMessages();
+        List<Message> messages = messageHelper.getAllMessages();
 
         assertEquals(1, messages.size(), "There should be only one message");
         assertEquals(messageUpdate.message(), messages.get(0).getMessage(), "Message should match");
@@ -81,22 +81,22 @@ public class MessageRepositoryTests {
     @Test
     void updateReturnsEmptyIfInvalidId() {
         MessageUpdateDTO messageUpdate = new MessageUpdateDTO("updatedMessage", 0, 1);
-        Optional<Messages> updatedMessage = messageRepository.update(0, messageUpdate);
+        Optional<Message> updatedMessage = messageRepository.update(0, messageUpdate);
 
         assertTrue(updatedMessage.isEmpty(), "Updated message should be empty");
     }
 
     @Test
     void deletesTopicMessagesWhenValidTopicId() {
-        Users user = userHelper.createUser("newUser");
-        Topics topic = topicHelper.createTopic("newTopic", user);
+        ForumUser user = userHelper.createUser("newUser");
+        Topic topic = topicHelper.createTopic("newTopic", user);
 
         messageHelper.createMessage("newMessage", user, topic);
         messageHelper.createMessage("newMessage2", user, topic);
 
         int rowsDeleted = messageRepository.deleteTopicMessages(topic.getId());
 
-        List<Messages> messages = messageHelper.getAllMessages();
+        List<Message> messages = messageHelper.getAllMessages();
 
         assertEquals(2, rowsDeleted, "2 messages should be deleted");
         assertEquals(0, messages.size(), "Messages should be deleted");
@@ -104,8 +104,8 @@ public class MessageRepositoryTests {
 
     @Test
     void getTopicMessagesReturnsAllTopicMessagesWithCorrectTotal() {
-        Users user = userHelper.createUser("newUser");
-        Topics topic = topicHelper.createTopic("newTopic", user);
+        ForumUser user = userHelper.createUser("newUser");
+        Topic topic = topicHelper.createTopic("newTopic", user);
 
         messageHelper.createMessage("newMessage", user, topic);
         messageHelper.createMessage("newMessage2", user, topic);

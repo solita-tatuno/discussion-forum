@@ -2,7 +2,7 @@ package com.devacademy.discussionforum.repository;
 
 import com.devacademy.discussionforum.dto.*;
 import com.devacademy.discussionforum.jooq.Tables;
-import com.devacademy.discussionforum.jooq.tables.pojos.Topics;
+import com.devacademy.discussionforum.jooq.tables.pojos.Topic;
 import org.jooq.*;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -21,37 +21,37 @@ public class TopicRepository {
         this.dsl = dsl;
     }
 
-    public Topics create(Integer userId, TopicDataDTO topic) {
-        return dsl.insertInto(Tables.TOPICS)
-                .set(Tables.TOPICS.USER_ID, userId)
-                .set(Tables.TOPICS.NAME, topic.name())
+    public Topic create(Integer userId, TopicDataDTO topic) {
+        return dsl.insertInto(Tables.TOPIC)
+                .set(Tables.TOPIC.USER_ID, userId)
+                .set(Tables.TOPIC.NAME, topic.name())
                 .returning()
-                .fetchOneInto(Topics.class);
+                .fetchOneInto(Topic.class);
     }
 
     public TopicsDTO getAll(Pageable pageable) {
         int totalRows = countTotalTopics();
 
-        List<UserTopicDTO> topics = dsl.select(Tables.TOPICS.ID,
-                        Tables.TOPICS.NAME,
-                        Tables.TOPICS.CREATED_AT,
-                        Tables.TOPICS.UPDATED_AT,
-                        row(Tables.USERS.ID, Tables.USERS.USERNAME, Tables.USERS.IS_ADMIN)
+        List<UserTopicDTO> topics = dsl.select(Tables.TOPIC.ID,
+                        Tables.TOPIC.NAME,
+                        Tables.TOPIC.CREATED_AT,
+                        Tables.TOPIC.UPDATED_AT,
+                        row(Tables.FORUM_USER.ID, Tables.FORUM_USER.USERNAME, Tables.FORUM_USER.IS_ADMIN)
                                 .mapping(UserDTO::new),
-                        count(Tables.MESSAGES.ID).as("messageCount"),
-                        max(Tables.MESSAGES.CREATED_AT).as("lastMessageTime"))
-                .from(Tables.TOPICS)
-                .join(Tables.USERS).on(Tables.TOPICS.USER_ID.eq(Tables.USERS.ID))
-                .leftJoin(Tables.MESSAGES)
-                .on(Tables.MESSAGES.TOPIC_ID.eq(Tables.TOPICS.ID))
-                .groupBy(Tables.TOPICS.ID,
-                        Tables.TOPICS.NAME,
-                        Tables.TOPICS.CREATED_AT,
-                        Tables.TOPICS.UPDATED_AT,
-                        Tables.USERS.ID,
-                        Tables.USERS.USERNAME,
-                        Tables.USERS.IS_ADMIN)
-                .orderBy(max(Tables.MESSAGES.CREATED_AT).desc().nullsLast())
+                        count(Tables.MESSAGE.ID).as("messageCount"),
+                        max(Tables.MESSAGE.CREATED_AT).as("lastMessageTime"))
+                .from(Tables.TOPIC)
+                .join(Tables.FORUM_USER).on(Tables.TOPIC.USER_ID.eq(Tables.FORUM_USER.ID))
+                .leftJoin(Tables.MESSAGE)
+                .on(Tables.MESSAGE.TOPIC_ID.eq(Tables.TOPIC.ID))
+                .groupBy(Tables.TOPIC.ID,
+                        Tables.TOPIC.NAME,
+                        Tables.TOPIC.CREATED_AT,
+                        Tables.TOPIC.UPDATED_AT,
+                        Tables.FORUM_USER.ID,
+                        Tables.FORUM_USER.USERNAME,
+                        Tables.FORUM_USER.IS_ADMIN)
+                .orderBy(max(Tables.MESSAGE.CREATED_AT).desc().nullsLast())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch(Records.mapping(UserTopicDTO::new));
@@ -60,20 +60,20 @@ public class TopicRepository {
     }
 
     public int countTotalTopics() {
-        return dsl.fetchCount(dsl.selectFrom(Tables.TOPICS));
+        return dsl.fetchCount(dsl.selectFrom(Tables.TOPIC));
     }
 
     public int deleteOne(Integer id) {
-        return dsl.deleteFrom(Tables.TOPICS)
-                .where(Tables.TOPICS.ID.eq(id))
+        return dsl.deleteFrom(Tables.TOPIC)
+                .where(Tables.TOPIC.ID.eq(id))
                 .execute();
     }
 
-    public Optional<Topics> update(Integer id, TopicDataDTO topic) {
-        return Optional.ofNullable(dsl.update(Tables.TOPICS)
-                .set(Tables.TOPICS.NAME, topic.name())
-                .where(Tables.TOPICS.ID.eq(id))
+    public Optional<Topic> update(Integer id, TopicDataDTO topic) {
+        return Optional.ofNullable(dsl.update(Tables.TOPIC)
+                .set(Tables.TOPIC.NAME, topic.name())
+                .where(Tables.TOPIC.ID.eq(id))
                 .returning()
-                .fetchOneInto(Topics.class));
+                .fetchOneInto(Topic.class));
     }
 }

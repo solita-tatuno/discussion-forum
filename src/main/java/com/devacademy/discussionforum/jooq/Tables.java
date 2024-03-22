@@ -4,9 +4,9 @@
 package com.devacademy.discussionforum.jooq;
 
 
-import com.devacademy.discussionforum.jooq.tables.Messages;
-import com.devacademy.discussionforum.jooq.tables.Topics;
-import com.devacademy.discussionforum.jooq.tables.Users;
+import com.devacademy.discussionforum.jooq.tables.ForumUser;
+import com.devacademy.discussionforum.jooq.tables.Message;
+import com.devacademy.discussionforum.jooq.tables.Topic;
 
 
 /**
@@ -16,17 +16,17 @@ import com.devacademy.discussionforum.jooq.tables.Users;
 public class Tables {
 
     /**
-     * The table <code>public.messages</code>.
+     * The table <code>public.forum_user</code>.
      */
-    public static final Messages MESSAGES = Messages.MESSAGES;
+    public static final ForumUser FORUM_USER = ForumUser.FORUM_USER;
 
     /**
-     * The table <code>public.topics</code>.
+     * The table <code>public.message</code>.
      */
-    public static final Topics TOPICS = Topics.TOPICS;
+    public static final Message MESSAGE = Message.MESSAGE;
 
     /**
-     * The table <code>public.users</code>.
+     * The table <code>public.topic</code>.
      */
-    public static final Users USERS = Users.USERS;
+    public static final Topic TOPIC = Topic.TOPIC;
 }
