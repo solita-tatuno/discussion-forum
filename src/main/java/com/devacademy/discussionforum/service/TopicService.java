@@ -50,4 +50,9 @@ public class TopicService {
     public MessagesDTO getTopicMessages(Integer id, Pageable pageable) {
         return messageRepository.getTopicMessages(id, pageable);
     }
+
+    public TopicDTO findOne(Integer id) {
+        return topicRepository.findOne(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Topic not found"));
+    }
 }

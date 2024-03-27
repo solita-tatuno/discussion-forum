@@ -76,4 +76,21 @@ public class TopicRepository {
                 .returning()
                 .fetchOneInto(Topic.class));
     }
+
+    public Optional<TopicDTO> findOne(Integer id) {
+        return dsl.select(Tables.TOPIC.ID,
+                        Tables.TOPIC.NAME,
+                        Tables.TOPIC.CREATED_AT,
+                        Tables.TOPIC.UPDATED_AT,
+                        row(
+                                Tables.FORUM_USER.ID,
+                                Tables.FORUM_USER.USERNAME,
+                                Tables.FORUM_USER.IS_ADMIN
+                        )
+                                .mapping(UserDTO::new))
+                .from(Tables.TOPIC)
+                .join(Tables.FORUM_USER).on(Tables.TOPIC.USER_ID.eq(Tables.FORUM_USER.ID))
+                .where(Tables.TOPIC.ID.eq(id))
+                .fetchOptionalInto(TopicDTO.class);
+    }
 }

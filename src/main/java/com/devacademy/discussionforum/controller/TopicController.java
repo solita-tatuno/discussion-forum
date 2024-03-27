@@ -36,6 +36,11 @@ public class TopicController {
         return topicService.getTopicMessages(id, pageable);
     }
 
+    @GetMapping("/{id}")
+    public TopicDTO findOne(@PathVariable("id") Integer id) {
+        return topicService.findOne(id);
+    }
+
     @PreAuthorize("hasRole(T(com.devacademy.discussionforum.security.UserRole).ROLE_ADMIN)")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
