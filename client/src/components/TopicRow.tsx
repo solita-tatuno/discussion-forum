@@ -10,11 +10,7 @@ interface Props {
 function TopicRow({ topic }: Props) {
   return (
     <li className="group relative">
-      <Link
-        className="text-black no-underline"
-        to={`/topics/${topic.id}`}
-        state={topic}
-      >
+      <Link className="text-black no-underline" to={`/topics/${topic.id}`}>
         <TopicDetails topic={topic} />
       </Link>
 

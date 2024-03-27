@@ -110,10 +110,27 @@ const getMessages = async (
   return response.json();
 };
 
+const findOne = async (id: number): Promise<Topic> => {
+  const token = getTokenFromLocalStorage();
+  const response = await fetch(`${baseUrl}/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    const res = (await response.json()) as Error;
+    throw new Error(res.message);
+  }
+
+  return response.json();
+};
+
 export default {
   getAll,
   create,
   deleteOne,
   updateOne,
   getMessages,
+  findOne,
 };

@@ -1,16 +1,14 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { formatDateString } from "../utils";
 import { Message as MessageType, Topic } from "../types";
 import Message from "./Message";
 
 interface Props {
   messages: MessageType[];
+  topic: Topic;
 }
 
-function TopicMessages({ messages }: Props) {
-  const { state } = useLocation();
-  const topic = state as Topic;
-
+function TopicMessages({ messages, topic }: Props) {
   return (
     <div className="flex-1">
       <div className="flex gap-2 text-2xl font-bold">
@@ -18,11 +16,7 @@ function TopicMessages({ messages }: Props) {
           Topics
         </Link>
         <span>&gt; </span>
-        <Link
-          className="text-black no-underline"
-          to={`/topics/${topic.id}`}
-          state={topic}
-        >
+        <Link className="text-black no-underline" to={`/topics/${topic.id}`}>
           {topic.name}
         </Link>
       </div>

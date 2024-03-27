@@ -1,13 +1,10 @@
-import { useSearchParams, useLocation, useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 interface Params {
   initialPage: string;
 }
 
 const useURLSearchParams = ({ initialPage }: Params) => {
-  const location = useLocation();
-  const state = location.state;
-  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams({
     page: initialPage,
   });
@@ -16,7 +13,6 @@ const useURLSearchParams = ({ initialPage }: Params) => {
 
   const setPage = (page: number) => {
     setSearchParams({ page: page.toString() });
-    navigate(`${location.pathname}?page=${page}`, { state: state });
   };
 
   return { page, setPage };
