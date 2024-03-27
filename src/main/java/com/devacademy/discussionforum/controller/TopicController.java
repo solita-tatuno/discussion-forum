@@ -1,16 +1,14 @@
 package com.devacademy.discussionforum.controller;
 
-import com.devacademy.discussionforum.dto.SingleTopic;
-import com.devacademy.discussionforum.dto.TopicRequest;
-import com.devacademy.discussionforum.dto.TopicWithUser;
+import com.devacademy.discussionforum.dto.*;
 import com.devacademy.discussionforum.service.TopicService;
-import com.jooq.discussionforum.tables.pojos.Topics;
+import com.devacademy.discussionforum.jooq.tables.pojos.Topic;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/topics")
@@ -23,21 +21,38 @@ public class TopicController {
     }
 
     @PostMapping
-    public ResponseEntity<Topics> addTopic(@RequestBody @Valid TopicRequest topic) {
-        Topics newTopic = topicService.addTopic(topic);
-
-        return new ResponseEntity<>(newTopic, HttpStatus.CREATED);
+    @ResponseStatus(HttpStatus.CREATED)
+    public Topic addTopic(@RequestBody @Valid TopicDataDTO topic, Authentication authentication) {
+        return topicService.addTopic(topic, authentication);
     }
 
     @GetMapping
-    public ResponseEntity<List<TopicWithUser>> getAll() {
-        List<TopicWithUser> allTopics = topicService.getAll();
-        return new ResponseEntity<>(allTopics, HttpStatus.OK);
+    public TopicsDTO getAll(Pageable pageable) {
+        return topicService.getAll(pageable);
+    }
+
+    @GetMapping("/{id}/messages")
+    public MessagesDTO getMessages(@PathVariable("id") Integer id, Pageable pageable) {
+        return topicService.getTopicMessages(id, pageable);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SingleTopic> findOne(@PathVariable("id") Integer id) {
-        SingleTopic topic = topicService.findOne(id);
-        return new ResponseEntity<>(topic, HttpStatus.OK);
+    public TopicDTO findOne(@PathVariable("id") Integer id) {
+        return topicService.findOne(id);
+    }
+
+    @PreAuthorize("hasRole(T(com.devacademy.discussionforum.security.UserRole).ROLE_ADMIN)")
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteTopic(@PathVariable("id") Integer id) {
+        topicService.deleteOne(id);
+    }
+
+
+    @PreAuthorize("hasRole(T(com.devacademy.discussionforum.security.UserRole).ROLE_ADMIN)")
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Topic updateTopic(@PathVariable("id") Integer id, @RequestBody @Valid TopicDataDTO topic) {
+        return topicService.updateTopic(id, topic);
     }
 }

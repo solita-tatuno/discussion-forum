@@ -8,6 +8,7 @@ data
 .env
 gradle.properties
 src/main/resources/certs
+src/main/resources/static
 
 ### STS ###
 .apt_generated

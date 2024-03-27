@@ -1,7 +1,7 @@
 package com.devacademy.discussionforum.helpers;
 
-import com.jooq.discussionforum.Tables;
-import com.jooq.discussionforum.tables.pojos.Users;
+import com.devacademy.discussionforum.jooq.Tables;
+import com.devacademy.discussionforum.jooq.tables.pojos.ForumUser;
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,16 +16,16 @@ public class UserHelper {
     private DSLContext dsl;
 
     public void clearTable() {
-        dsl.truncate(Tables.USERS).cascade().execute();
+        dsl.truncate(Tables.FORUM_USER).cascade().execute();
     }
 
-    public Users createUser(String username) {
-        String query = "INSERT INTO users (username, password_hash, is_admin) VALUES (?, ?, ?) RETURNING *";
-        return Objects.requireNonNull(dsl.fetchOne(query, username, "password", false)).into(Users.class);
+    public ForumUser createUser(String username) {
+        String query = "INSERT INTO forum_user (username, password_hash, is_admin) VALUES (?, ?, ?) RETURNING *";
+        return Objects.requireNonNull(dsl.fetchOne(query, username, "password", false)).into(ForumUser.class);
     }
 
-    public List<Users> findUsersByUsername(String username) {
-        String query = "SELECT * FROM users WHERE username = ?";
-        return dsl.fetch(query, username).into(Users.class);
+    public List<ForumUser> getAllUsers() {
+        String query = "SELECT * FROM forum_user";
+        return dsl.fetch(query).into(ForumUser.class);
     }
 }

@@ -1,11 +1,12 @@
 package com.devacademy.discussionforum.controller;
 
-import com.devacademy.discussionforum.dto.UserRequest;
-import com.devacademy.discussionforum.dto.UserResponse;
+import com.devacademy.discussionforum.security.CustomUserDetails;
+import com.devacademy.discussionforum.dto.AddUserDTO;
+import com.devacademy.discussionforum.dto.UserDTO;
 import com.devacademy.discussionforum.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,9 +19,14 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserResponse> addUser(@RequestBody @Valid UserRequest user) {
-        UserResponse newUser = userService.addUser(user);
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserDTO addUser(@RequestBody @Valid AddUserDTO user) {
+        return userService.addUser(user);
+    }
 
-        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
+    @GetMapping("/me")
+    public UserDTO findCurrentUser(Authentication authentication) {
+        CustomUserDetails user = userService.loadUserByUsername(authentication.getName());
+        return new UserDTO(user.getId(), user.getUsername(), user.isAdmin());
     }
 }
